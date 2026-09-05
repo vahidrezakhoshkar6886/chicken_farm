@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مزرعه مرغ وحید</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    font-family:Tahoma,Arial,sans-serif;
+}
+
+body{
+    margin:0;
+    background:#eef4ea;
+    color:#26352a;
+}
+
+.app{
+    max-width:520px;
+    min-height:100vh;
+    margin:auto;
+    background:#f9fbf7;
+    padding-bottom:80px;
+}
+
+.header{
+    background:#ffffff;
+    padding:18px 15px 12px;
+    position:sticky;
+    top:0;
+    z-index:10;
+    border-bottom:1px solid #dde5dc;
+}
+
+.title{
+    font-size:23px;
+    font-weight:bold;
+}
+
+.subtitle{
+    color:#758078;
+    font-size:12px;
+    margin-top:4px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+    margin-top:14px;
+}
+
+.stat{
+    background:#edf4e9;
+    border-radius:12px;
+    padding:8px 2px;
+    text-align:center;
+    font-size:11px;
+}
+
+.stat b{
+    display:block;
+    font-size:15px;
+    margin-top:3px;
+}
+
+.page{
+    display:none;
+    padding:15px;
+}
+
+.page.active{
+    display:block;
+}
+
+.hero{
+    background:#dcebd5;
+    border-radius:22px;
+    padding:20px;
+    text-align:center;
+}
+
+.chicken{
+    font-size:75px;
+}
+
+.level{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.card{
+    background:white;
+    border:1px solid #e0e7de;
+    border-radius:18px;
+    padding:15px;
+    margin-top:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.04);
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.big{
+    font-size:28px;
+    font-weight:bold;
+}
+
+.muted{
+    color:#788179;
+    font-size:12px;
+}
+
+.actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:12px;
+}
+
+button{
+    border:0;
+    border-radius:13px;
+    padding:13px 7px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#52734d;
+    color:white;
+}
+
+button.secondary{
+    background:#eaf0e8;
+    color:#334733;
+}
+
+.bottom{
+    position:fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    max-width:520px;
+    margin:auto;
+    background:white;
+    border-top:1px solid #dce2da;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    padding:7px 5px;
+    z-index:20;
+}
+
+.bottom button{
+    background:transparent;
+    color:#687268;
+    padding:6px 2px;
+    font-size:11px;
+}
+
+.bottom button.active{
+    color:#315d31;
+}
+
+.toast{
+    position:fixed;
+    bottom:90px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#26352a;
+    color:white;
+    padding:11px 16px;
+    border-radius:12px;
+    display:none;
+    z-index:50;
+    white-space:nowrap;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+
+<div class="title">
+🐔 مزرعه مرغ وحید
+</div>
+
+<div class="subtitle">
+شبیه‌ساز مرغداری
+</div>
+
+<div class="stats">
+
+<div class="stat">
+💰
+<b id="tokens">300</b>
+توکن
+</div>
+
+<div class="stat">
+🐔
+<b id="chickens">100</b>
+مرغ
+</div>
+
+<div class="stat">
+🥚
+<b id="eggs">0</b>
+تخم‌مرغ
+</div>
+
+<div class="stat">
+🌾
+<b id="feed">100</b>
+کیلو
+</div>
+
+</div>
+
+</header>
+
+
+<!-- FARM -->
+
+<section id="farm" class="page active">
+
+<div class="hero">
+
+<div class="chicken">
+🐔🏡
+</div>
+
+<div class="level">
+مزرعه سطح ۱
+</div>
+
+<div class="muted">
+ظرفیت: ۱۰۰ مرغ
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="row">
+
+<div>
+
+<div class="muted">
+تولید امروز
+</div>
+
+<div class="big" id="dailyEggs">
+80 🥚
+</div>
+
+</div>
+
+<div style="font-size:45px">
+🥚
+</div>
+
+</div>
+
+<div class="muted">
+بازده کامل در شرایط مناسب
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="row">
+
+<b>
+💧 وضعیت آب
+</b>
+
+<span id="water">
+پر
+</span>
+
+</div>
+
+<div class="actions">
+
+<button onclick="fillWater()">
+پر کردن آب
+</button>
+
+<button class="secondary" onclick="cleanFarm()">
+🧹 نظافت
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="row">
+
+<b>
+🌾 خوراک
+</b>
+
+<span>
+<b id="feed2">100</b> کیلو
+</span>
+
+</div>
+
+<div class="muted">
+مصرف روزانه برای ۱۰۰ مرغ: ۱۰ کیلو
+</div>
+
+<div class="actions">
+
+<button onclick="buyFeed()">
+خرید ۱۰۰ کیلو
+</button>
+
+<button class="secondary" onclick="collectEggs()">
+🥚 جمع‌آوری
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- MARKET -->
+
+<section id="market" class="page">
+
+<h2>
+🏪 بازار
+</h2>
+
+<div class="card">
+
+<div class="muted">
+قیمت پایه تخم‌مرغ
+</div>
+
+<div class="big">
+1 توکن
+</div>
+
+<p class="muted">
+قیمت بازار روزانه تغییر می‌کند.
+</p>
+
+<button onclick="sellEggs()">
+فروش تخم‌مرغ
+</button>
+
+</div>
+
+
+<div class="card">
+
+<b>
+🚚 کامیون بازار
+</b>
+
+<p class="muted">
+فعالیت روزانه از ساعت ۷ تا ۱۸
+</p>
+
+<button class="secondary"
+onclick="showToast('درخواست شما وارد صف بازار شد')">
+ثبت درخواست فروش
+</button>
+
+</div>
+
+
+<div class="card">
+
+<b>
+🤝 بازار بازیکنان
+</b>
+
+<p class="muted">
+خرید و فروش تخم‌مرغ و خوراک بین بازیکنان.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- ADS -->
+
+<section id="ads" class="page">
+
+<h2>
+📺 تبلیغات من
+</h2>
+
+<div class="card">
+
+<div style="font-size:50px">
+🎁
+</div>
+
+<b>
+تبلیغ پاداشی
+</b>
+
+<p class="muted">
+مشاهده کامل تبلیغ = ۱۰ توکن
+</p>
+
+<button onclick="watchAd()">
+مشاهده تبلیغ +۱۰ توکن
+</button>
+
+</div>
+
+<div class="card">
+
+<b>
+وضعیت تبلیغ
+</b>
+
+<p class="muted" id="adStatus">
+هنوز تبلیغی دریافت نشده.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profile" class="page">
+
+<h2>
+👤 پروفایل
+</h2>
+
+<div class="card">
+
+<div class="row">
+
+<b>
+Player_001
+</b>
+
+<span>
+سطح ۱
+</span>
+
+</div>
+
+<p>
+🏡 مزرعه وحید
+</p>
+
+<p>
+🐔 ۱۰۰ مرغ
+</p>
+
+<p>
+🥚 تولید روزانه ۸۰
+</p>
+
+<p>
+🏆 رتبه: —
+</p>
+
+<p>
+👥 دنبال‌کنندگان: ۰
+</p>
+
+</div>
+
+</section>
+
+
+<nav class="bottom">
+
+<button class="active"
+onclick="openPage('farm',this)">
+🏡
+<br>
+مزرعه
+</button>
+
+<button
+onclick="openPage('market',this)">
+🏪
+<br>
+بازار
+</button>
+
+<button
+onclick="openPage('ads',this)">
+📺
+<br>
+تبلیغات
+</button>
+
+<button
+onclick="openPage('profile',this)">
+👤
+<br>
+پروفایل
+</button>
+
+</nav>
+
+
+<div class="toast" id="toast"></div>
+
+</div>
+
+
+<script>
+
+let game = JSON.parse(
+localStorage.getItem("vahidChickenFarm")
+||
+'{"tokens":300,"chickens":100,"eggs":0,"feed":100,"ad":false}'
+);
+
+
+function saveGame(){
+
+localStorage.setItem(
+"vahidChickenFarm",
+JSON.stringify(game)
+);
+
+render();
+
+}
+
+
+function render(){
+
+document.getElementById("tokens").textContent =
+game.tokens;
+
+document.getElementById("chickens").textContent =
+game.chickens;
+
+document.getElementById("eggs").textContent =
+game.eggs;
+
+document.getElementById("feed").textContent =
+game.feed;
+
+document.getElementById("feed2").textContent =
+game.feed;
+
+document.getElementById("dailyEggs").textContent =
+Math.floor(game.chickens * 0.8)
++
+" 🥚";
+
+document.getElementById("adStatus").textContent =
+game.ad
+?
+"این تبلیغ قبلاً پاداش داده است."
+:
+"هنوز تبلیغی دریافت نشده.";
+
+}
+
+
+function fillWater(){
+
+document.getElementById("water").textContent =
+"پر 💧";
+
+showToast("آب مزرعه پر شد");
+
+}
+
+
+function cleanFarm(){
+
+showToast("مزرعه تمیز شد 🧹");
+
+}
+
+
+function buyFeed(){
+
+if(game.tokens < 30){
+
+showToast("توکن کافی نیست");
+
+return;
+
+}
+
+game.tokens -= 30;
+
+game.feed += 100;
+
+showToast("۱۰۰ کیلو خوراک خریداری شد 🌾");
+
+saveGame();
+
+}
+
+
+function collectEggs(){
+
+let amount =
+Math.floor(game.chickens * 0.8);
+
+game.eggs += amount;
+
+showToast(
+amount +
+" تخم‌مرغ جمع‌آوری شد 🥚"
+);
+
+saveGame();
+
+}
+
+
+function sellEggs(){
+
+if(game.eggs <= 0){
+
+showToast(
+"تخم‌مرغی برای فروش ندارید"
+);
+
+return;
+
+}
+
+let amount = game.eggs;
+
+game.tokens += amount;
+
+game.eggs = 0;
+
+showToast(
+amount +
+" تخم‌مرغ فروخته شد 💰"
+);
+
+saveGame();
+
+}
+
+
+function watchAd(){
+
+if(game.ad){
+
+showToast(
+"این تبلیغ قبلاً دریافت شده"
+);
+
+return;
+
+}
+
+game.ad = true;
+
+game.tokens += 10;
+
+showToast(
+"۱۰ توکن پاداش گرفتی 🎁"
+);
+
+saveGame();
+
+}
+
+
+function openPage(id,button){
+
+document
+.querySelectorAll(".page")
+.forEach(
+page => page.classList.remove("active")
+);
+
+document
+.getElementById(id)
+.classList.add("active");
+
+document
+.querySelectorAll(".bottom button")
+.forEach(
+b => b.classList.remove("active")
+);
+
+button.classList.add("active");
+
+window.scrollTo(0,0);
+
+}
+
+
+function showToast(message){
+
+let toast =
+document.getElementById("toast");
+
+toast.textContent = message;
+
+toast.style.display = "block";
+
+setTimeout(
+() => toast.style.display="none",
+2000
+);
+
+}
+
+
+render();
+
+</script>
+
+</body>
+</html>
