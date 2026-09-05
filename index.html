@@ -1,75 +1,723 @@
-function automaticFeedWater(time){
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>مزرعه مرغ بومی</title>
 
-    const needed =
-        game.chickens *
-        CONFIG.feedPerChickenPerMeal;
-
-    let feedOK = false;
-
-    /*
-      بررسی خوراک
-    */
-
-    if(game.feed >= needed){
-
-        game.feed -= needed;
-
-        feedOK = true;
-
-        game.feedShortageDays = 0;
-
-    }else{
-
-        game.feedShortageDays++;
-
-    }
-
-    /*
-      بررسی آب
-      آب در هر وعده باید تأمین شود.
-    */
-
-    if(game.water > 0){
-
-        game.water = 100;
-
-        game.waterShortageDays = 0;
-
-    }else{
-
-        game.waterShortageDays++;
-
-    }
-
-    /*
-      اگر هر دو مورد درست باشند،
-      تولید تخم مرغ انجام می‌شود.
-    */
-
-    if(feedOK && game.waterShortageDays === 0){
-
-        const produced = produceEggs();
-
-        showToast(
-            "⏰ وعده " + time +
-            " انجام شد؛ " +
-            formatNumber(produced) +
-            " تخم‌مرغ تولید شد"
-        );
-
-    }else{
-
-        showToast(
-            "⚠️ وعده " +
-            time +
-            " با مشکل خوراک یا آب مواجه شد"
-        );
-
-        applyShortageEffects();
-
-    }
-
-    saveSilently();
-
-    render();
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:Tahoma,Arial,sans-serif;
+    background:#f3f5f7;
+    color:#222;
 }
+button{
+    border:0;
+    border-radius:12px;
+    padding:12px 15px;
+    cursor:pointer;
+    font-family:inherit;
+    font-size:14px;
+    background:#198754;
+    color:white;
+}
+button:active{transform:scale(.98)}
+button.danger{background:#dc3545}
+button.warning{background:#f0ad00;color:#222}
+button.blue{background:#0d6efd}
+button.gray{background:#6c757d}
+button:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+input,select{
+    width:100%;
+    padding:11px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    margin-top:6px;
+    font-family:inherit;
+}
+.header{
+    background:#176b3a;
+    color:#fff;
+    padding:15px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+.header-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+.title{
+    font-size:19px;
+    font-weight:bold;
+}
+.wallet{
+    background:rgba(255,255,255,.16);
+    padding:8px 12px;
+    border-radius:12px;
+}
+.clock{
+    margin-top:8px;
+    font-size:12px;
+    opacity:.9;
+}
+.nav{
+    display:flex;
+    gap:6px;
+    overflow:auto;
+    padding:8px;
+    background:#fff;
+    border-bottom:1px solid #ddd;
+    position:sticky;
+    top:74px;
+    z-index:19;
+}
+.nav button{
+    white-space:nowrap;
+    background:#e9ecef;
+    color:#333;
+    padding:9px 12px;
+}
+.nav button.active{
+    background:#198754;
+    color:#fff;
+}
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:12px;
+}
+.page{display:none}
+.page.active{display:block}
+.card{
+    background:#fff;
+    border-radius:16px;
+    padding:15px;
+    margin-bottom:12px;
+    box-shadow:0 2px 10px rgba(0,0,0,.06);
+}
+.card h3{
+    margin:0 0 12px;
+    font-size:17px;
+}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+}
+.stat{
+    background:#f7f8f9;
+    border-radius:12px;
+    padding:12px;
+}
+.stat-title{
+    color:#777;
+    font-size:12px;
+}
+.stat-value{
+    font-size:20px;
+    font-weight:bold;
+    margin-top:5px;
+}
+.actions{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+}
+.full{grid-column:1/-1}
+.row{
+    display:flex;
+    gap:8px;
+    align-items:center;
+}
+.row>*{flex:1}
+.progress{
+    height:12px;
+    background:#e9ecef;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+}
+.progress>div{
+    height:100%;
+    background:#198754;
+}
+.small{
+    font-size:12px;
+    color:#666;
+}
+.notice{
+    background:#fff3cd;
+    border:1px solid #ffe69c;
+    padding:10px;
+    border-radius:12px;
+    margin-bottom:10px;
+}
+.good{
+    background:#d1e7dd;
+    border:1px solid #a3cfbb;
+    padding:10px;
+    border-radius:12px;
+}
+.bad{
+    background:#f8d7da;
+    border:1px solid #f1aeb5;
+    padding:10px;
+    border-radius:12px;
+}
+.modal-bg{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:100;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+.modal{
+    background:white;
+    width:100%;
+    max-width:500px;
+    max-height:90vh;
+    overflow:auto;
+    border-radius:18px;
+    padding:18px;
+}
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:20px;
+    transform:translateX(-50%);
+    background:#222;
+    color:#fff;
+    padding:12px 18px;
+    border-radius:12px;
+    z-index:200;
+    display:none;
+    max-width:90%;
+    text-align:center;
+}
+hr{
+    border:0;
+    border-top:1px solid #eee;
+    margin:14px 0;
+}
+.tag{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    background:#e9ecef;
+    font-size:11px;
+    margin:2px;
+}
+@media(min-width:700px){
+    .grid{grid-template-columns:repeat(4,1fr)}
+    .actions{grid-template-columns:repeat(4,1fr)}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="header-top">
+        <div>
+            <div class="title">🐔 مزرعه مرغ بومی</div>
+            <div class="clock" id="clock">در حال محاسبه زمان...</div>
+        </div>
+        <div class="wallet">
+            🪙 <span id="tokens">300</span>
+        </div>
+    </div>
+</div>
+
+<div class="nav">
+    <button class="active" onclick="openPage('farm',this)">🏠 مزرعه</button>
+    <button onclick="openPage('market',this)">🛒 بازار</button>
+    <button onclick="openPage('storage',this)">📦 انبار</button>
+    <button onclick="openPage('upgrade',this)">🏗️ توسعه</button>
+    <button onclick="openPage('profile',this)">👤 پروفایل</button>
+</div>
+
+<div class="container">
+
+<!-- FARM -->
+<div id="farm" class="page active">
+
+    <div id="alerts"></div>
+
+    <div class="card">
+        <h3>📊 وضعیت مزرعه</h3>
+
+        <div class="grid">
+            <div class="stat">
+                <div class="stat-title">مرغ‌ها</div>
+                <div class="stat-value" id="chickens">100</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">ظرفیت</div>
+                <div class="stat-value" id="capacity">100</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">تخم امروز</div>
+                <div class="stat-value" id="todayEggs">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">تخم کل</div>
+                <div class="stat-value" id="totalEggs">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">دان</div>
+                <div class="stat-value" id="feed">100</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">آب</div>
+                <div class="stat-value" id="water">100</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">سلامت</div>
+                <div class="stat-value" id="health">100%</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">سن متوسط</div>
+                <div class="stat-value" id="age">1</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>🌡️ شرایط محیطی</h3>
+
+        <div class="grid">
+            <div class="stat">
+                <div class="stat-title">دمای فعلی</div>
+                <div class="stat-value"><span id="temperature">24</span>°C</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">فصل</div>
+                <div class="stat-value" id="season">بهار</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">سطح مزرعه</div>
+                <div class="stat-value" id="level">1</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">بازده امروز</div>
+                <div class="stat-value" id="efficiency">80%</div>
+            </div>
+        </div>
+
+        <div id="climateStatus" class="good" style="margin-top:10px">
+            شرایط مناسب است.
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>🍚 مدیریت خوراک و آب</h3>
+
+        <div class="small">
+            هر مرغ در هر وعده ۵۰ گرم دان مصرف می‌کند.
+            دو وعده در روز: ساعت ۷ صبح و ۱۸ عصر.
+        </div>
+
+        <div class="actions" style="margin-top:12px">
+            <button onclick="feedFlock()">🍚 دادن دان</button>
+            <button onclick="giveWater()" class="blue">💧 دادن آب</button>
+            <button onclick="treatFlock()" class="warning">💊 درمان گله</button>
+            <button onclick="cleanFarm()" class="gray">🧹 نظافت مزرعه</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>🥚 تخم‌مرغ</h3>
+
+        <div class="grid">
+            <div class="stat">
+                <div class="stat-title">تخم جمع‌نشده</div>
+                <div class="stat-value" id="uncollectedEggs">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">تخم تازه</div>
+                <div class="stat-value" id="freshEggs">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">داخل سردخانه</div>
+                <div class="stat-value" id="coldEggs">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">قیمت امروز</div>
+                <div class="stat-value" id="eggPrice">1.00</div>
+            </div>
+        </div>
+
+        <div class="actions" style="margin-top:12px">
+            <button onclick="collectEggs()">🥚 جمع‌آوری تخم</button>
+            <button onclick="moveToCold()" class="blue">❄️ انتقال به سردخانه</button>
+            <button onclick="sellEggs()">💰 فروش تخم</button>
+            <button onclick="discardSpoiledEggs()" class="danger">🗑️ دورریز فاسد</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>🐔 خرید و فروش مرغ</h3>
+
+        <div class="small">
+            مرغ جدید از روز بعد شروع به تخم‌گذاری می‌کند.
+            مرغ ۵۰۰ روزه دیگر تخم نمی‌گذارد.
+        </div>
+
+        <div class="row" style="margin-top:10px">
+            <div>
+                <label>تعداد خرید</label>
+                <input id="buyChickenCount" type="number" min="1" value="1">
+            </div>
+            <button onclick="buyChickens()">خرید مرغ</button>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <div>
+                <label>تعداد مرغ پیر</label>
+                <input id="sellOldCount" type="number" min="1" value="1">
+            </div>
+            <button onclick="sellOldChickens()" class="warning">فروش مرغ پیر</button>
+        </div>
+
+        <div class="small" style="margin-top:8px">
+            قیمت مرغ جایگزین: ۲۰۰ توکن
+            <br>
+            قیمت پایه مرغ پیر: ۵۰ توکن، با نوسان ۳۵ تا ۶۵
+        </div>
+    </div>
+
+</div>
+
+<!-- MARKET -->
+<div id="market" class="page">
+
+    <div class="card">
+        <h3>🛒 بازار تخم‌مرغ</h3>
+
+        <div class="grid">
+            <div class="stat">
+                <div class="stat-title">قیمت امروز</div>
+                <div class="stat-value" id="marketEggPrice">1.00</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">ظرفیت کامیون امروز</div>
+                <div class="stat-value" id="truckCapacity">50%</div>
+            </div>
+        </div>
+
+        <div class="notice" style="margin-top:12px">
+            کامیون بازار هر روز از ساعت ۷ تا ۱۸ فعال است.
+            سفارش‌ها به ترتیب FIFO انجام می‌شوند.
+        </div>
+
+        <div class="actions">
+            <button onclick="orderTruck()">🚚 ثبت سفارش کامیون</button>
+            <button onclick="cancelTruck()" class="danger">لغو سفارش</button>
+            <button onclick="sellEggs()">💰 فروش مستقیم</button>
+        </div>
+
+        <div id="truckStatus" style="margin-top:12px"></div>
+    </div>
+
+    <div class="card">
+        <h3>🌐 بازار بازیکنان</h3>
+
+        <div class="notice">
+            بازار بازیکنان در نسخه آنلاین به سرور متصل می‌شود.
+            در این نسخه آفلاین، اطلاعات بازار نمایشی است.
+        </div>
+
+        <div class="actions">
+            <button onclick="showPlayerMarket()">🥚 بازار تخم</button>
+            <button onclick="showPlayerMarket()">🍚 بازار دان</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>💹 قیمت بازار</h3>
+        <p class="small">
+            قیمت تخم‌مرغ روزانه تغییر می‌کند و بین ۰٫۹ تا ۱٫۱ توکن قرار دارد.
+        </p>
+
+        <div class="progress">
+            <div id="priceBar" style="width:50%"></div>
+        </div>
+    </div>
+
+</div>
+
+<!-- STORAGE -->
+<div id="storage" class="page">
+
+    <div class="card">
+        <h3>📦 انبار دان</h3>
+
+        <div class="grid">
+            <div class="stat">
+                <div class="stat-title">دان موجود</div>
+                <div class="stat-value" id="storageFeed">100</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">ظرفیت</div>
+                <div class="stat-value" id="feedCapacity">1000</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">قیمت معمولی</div>
+                <div class="stat-value" id="normalFeedPrice">30</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">قیمت اقتصادی</div>
+                <div class="stat-value" id="ecoFeedPrice">20</div>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <button onclick="buyFeed('normal')">خرید دان معمولی ۱۰۰kg</button>
+            <button onclick="buyFeed('eco')" class="blue">خرید دان اقتصادی ۱۰۰kg</button>
+        </div>
+
+        <div class="actions" style="margin-top:10px">
+            <button onclick="discardExpiredFeed()" class="danger">
+                🗑️ حذف دان منقضی
+            </button>
+            <button onclick="cleanStorage()" class="gray">
+                🧹 نظافت انبار
+            </button>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>❄️ سردخانه</h3>
+
+        <div class="grid">
+            <div class="stat">
+                <div class="stat-title">ظرفیت</div>
+                <div class="stat-value" id="coldCapacity">1500</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">تخم موجود</div>
+                <div class="stat-value" id="coldStorageEggs">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">دما</div>
+                <div class="stat-value">15°C</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">عمر استاندارد</div>
+                <div class="stat-value">30 روز</div>
+            </div>
+        </div>
+
+        <button onclick="cleanCold()" class="gray" style="margin-top:10px">
+            🧹 نظافت سردخانه
+        </button>
+
+        <button onclick="discardExpiredColdEggs()" class="danger" style="margin-top:10px">
+            🗑️ حذف تخم منقضی
+        </button>
+    </div>
+
+</div>
+
+<!-- UPGRADE -->
+<div id="upgrade" class="page">
+
+    <div class="card">
+        <h3>🏗️ توسعه مزرعه</h3>
+
+        <div id="upgradeList"></div>
+    </div>
+
+</div>
+
+<!-- PROFILE -->
+<div id="profile" class="page">
+
+    <div class="card">
+        <h3>👤 پروفایل مزرعه</h3>
+
+        <div class="grid">
+            <div class="stat">
+                <div class="stat-title">سطح</div>
+                <div class="stat-value" id="profileLevel">1</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">مرغ</div>
+                <div class="stat-value" id="profileChickens">100</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">تخم تولیدشده</div>
+                <div class="stat-value" id="profileEggs">0</div>
+            </div>
+
+            <div class="stat">
+                <div class="stat-title">فروش کل</div>
+                <div class="stat-value" id="profileSales">0</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>⚙️ مدیریت بازی</h3>
+
+        <button onclick="saveGame()" class="blue">
+            💾 ذخیره بازی
+        </button>
+
+        <button onclick="resetGame()" class="danger" style="margin-top:10px">
+            ♻️ شروع مجدد بازی
+        </button>
+
+        <p class="small" style="margin-top:12px">
+            اطلاعات این نسخه در حافظه مرورگر دستگاه ذخیره می‌شود.
+        </p>
+    </div>
+
+</div>
+
+</div>
+
+<div class="modal-bg" id="modalBg">
+    <div class="modal">
+        <div id="modalContent"></div>
+        <button onclick="closeModal()" class="gray" style="margin-top:12px;width:100%">
+            بستن
+        </button>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+/* =========================
+   CONFIG
+========================= */
+
+const CONFIG = {
+
+    morningHour: 7,
+    eveningHour: 18,
+
+    feedPerChickenPerMeal: 0.05,
+
+    normalEfficiency: 0.80,
+    ecoEfficiency: 0.60,
+
+    baseEggPrice: 1,
+
+    medicinePer100: 300,
+
+    newChickenPrice: 200,
+
+    oldChickenBasePrice: 50,
+
+    feedExpiryDays: 180,
+
+    freshEggDays: 3,
+
+    coldEggDays: 30,
+
+    idealTemperature: 24,
+
+    levels: {
+
+        1:{
+            capacity:100,
+            upgrade:0,
+            feedCapacity:1000,
+            coldCapacity:1500,
+            waterCost:30
+        },
+
+        2:{
+            capacity:500,
+            upgrade:10000,
+            feedCapacity:5000,
+            coldCapacity:5000,
+            waterCost:60
+        },
+
+        3:{
+            capacity:1000,
+            upgrade:15000,
+            feedCapacity:10000,
+            coldCapacity:10000,
+            waterCost:120
+        },
+
+        4:{
+            capacity:2000,
+            upgrade:20000,
+            feedCapacity:10000,
+            coldCapacity:10000,
+            waterCost:240
+        },
+
+        5:{
+            capacity:5000,
+            upgrade:40000,
+            feedCapacity:10000,
+            coldCapacity:10000,
+            waterCost:480
+        }
+    }
+};
+
+
+/* =========================
+   DEFAULT GAME
+========================= */
+
+function defaultGame(){
+
+    const now = Date.now();
+
+    return {
+
+        tokens:300,
+
+        level:1,
+
+        water:100,
+
+        temperature:24,
+
+        health
