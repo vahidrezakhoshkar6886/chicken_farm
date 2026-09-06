@@ -1,0 +1,14 @@
+{
+  "name": "vahid-chicken-farm",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vahid Chicken Farm - Online Android Game Server",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.3.0"
+  }
+}
