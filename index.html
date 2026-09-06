@@ -3,203 +3,183 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>مزرعه مرغ وحید - نسخه 12</title>
+<title>مزرعه مرغ وحید - نسخه 13</title>
 
 <style>
 *{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:Tahoma,Arial,sans-serif;
-  background:#f2f6f3;
-  color:#19352a;
+ margin:0;
+ font-family:Tahoma,Arial,sans-serif;
+ background:#f2f6f3;
+ color:#19352a
 }
 header{
-  background:#198754;
-  color:white;
-  padding:14px 12px;
-  position:sticky;
-  top:0;
-  z-index:20;
+ background:#198754;
+ color:white;
+ padding:14px 12px;
+ position:sticky;
+ top:0;
+ z-index:20
 }
 .head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:8px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:8px
 }
 h1{font-size:19px;margin:0}
-.day{
-  font-size:12px;
-  margin-top:5px;
-  opacity:.9;
-}
+.day{font-size:12px;margin-top:5px;opacity:.9}
 .wallet{
-  background:#fff;
-  color:#146c43;
-  padding:8px 10px;
-  border-radius:10px;
-  font-weight:bold;
-  white-space:nowrap;
+ background:white;
+ color:#146c43;
+ padding:8px 10px;
+ border-radius:10px;
+ font-weight:bold;
+ white-space:nowrap
 }
 main{padding:10px 10px 85px}
-.tab{
-  display:none;
-}
+.tab{display:none}
 .tab.active{display:block}
 .card{
-  background:white;
-  border-radius:14px;
-  padding:12px;
-  margin-bottom:10px;
-  box-shadow:0 2px 8px rgba(0,0,0,.07);
+ background:white;
+ border-radius:14px;
+ padding:12px;
+ margin-bottom:10px;
+ box-shadow:0 2px 8px rgba(0,0,0,.07)
 }
-.card h2{
-  margin:0 0 10px;
-  font-size:16px;
-}
+.card h2{margin:0 0 10px;font-size:16px}
 .grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:8px;
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:8px
 }
 .stat{
-  background:#eef8f2;
-  border-radius:11px;
-  padding:10px;
+ background:#eef8f2;
+ border-radius:11px;
+ padding:10px
 }
 .stat b{
-  display:block;
-  font-size:17px;
-  margin-top:4px;
+ display:block;
+ font-size:17px;
+ margin-top:4px
 }
-.small{
-  font-size:11px;
-  color:#65756d;
-}
+.small{font-size:11px;color:#65756d}
 button{
-  border:0;
-  border-radius:10px;
-  padding:10px 12px;
-  margin:3px 0;
-  font-family:inherit;
-  font-weight:bold;
-  cursor:pointer;
-  background:#198754;
-  color:white;
+ border:0;
+ border-radius:10px;
+ padding:10px 12px;
+ margin:3px 0;
+ font-family:inherit;
+ font-weight:bold;
+ cursor:pointer;
+ background:#198754;
+ color:white
 }
 button.secondary{
-  background:#e9f2ed;
-  color:#146c43;
+ background:#e9f2ed;
+ color:#146c43
 }
-button.danger{
-  background:#dc3545;
-}
-button:disabled{
-  opacity:.45;
-}
+button.danger{background:#dc3545}
+button:disabled{opacity:.45}
 .row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:5px;
-  align-items:center;
+ display:flex;
+ flex-wrap:wrap;
+ gap:5px;
+ align-items:center
 }
 input{
-  width:100%;
-  padding:10px;
-  border:1px solid #ccd8d1;
-  border-radius:9px;
-  font-family:inherit;
+ width:100%;
+ padding:10px;
+ border:1px solid #ccd8d1;
+ border-radius:9px;
+ font-family:inherit
 }
 .progress{
-  height:9px;
-  background:#e5ece8;
-  border-radius:20px;
-  overflow:hidden;
-  margin:7px 0;
+ height:9px;
+ background:#e5ece8;
+ border-radius:20px;
+ overflow:hidden;
+ margin:7px 0
 }
 .progress span{
-  display:block;
-  height:100%;
-  background:#198754;
+ display:block;
+ height:100%;
+ background:#198754
 }
 .batch{
-  border:1px solid #dbe7df;
-  border-radius:10px;
-  padding:9px;
-  margin:6px 0;
+ border:1px solid #dbe7df;
+ border-radius:10px;
+ padding:9px;
+ margin:6px 0
 }
 .batch.old{
-  background:#fff5f5;
-  border-color:#f0caca;
+ background:#fff5f5;
+ border-color:#f0caca
 }
-.batch.good{
-  background:#f4fbf7;
+.batch.warn{
+ background:#fff9e8;
+ border-color:#ead58b
 }
+.batch.good{background:#f4fbf7}
 .notice{
-  padding:10px;
-  border-radius:10px;
-  background:#fff8df;
-  color:#705900;
-  margin-bottom:8px;
-  font-size:13px;
+ padding:10px;
+ border-radius:10px;
+ background:#fff8df;
+ color:#705900;
+ margin-bottom:8px;
+ font-size:13px
 }
-.ok{
-  background:#e9f8ef;
-  color:#146c43;
-}
-.bad{
-  background:#fff0f0;
-  color:#a12626;
-}
+.ok{background:#e9f8ef;color:#146c43}
+.bad{background:#fff0f0;color:#a12626}
 .nav{
-  position:fixed;
-  bottom:0;
-  right:0;
-  left:0;
-  background:white;
-  border-top:1px solid #dce5df;
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  z-index:30;
+ position:fixed;
+ bottom:0;
+ right:0;
+ left:0;
+ background:white;
+ border-top:1px solid #dce5df;
+ display:grid;
+ grid-template-columns:repeat(5,1fr);
+ z-index:30
 }
 .nav button{
-  background:white;
-  color:#52645b;
-  border-radius:0;
-  margin:0;
-  padding:9px 2px;
-  font-size:11px;
+ background:white;
+ color:#52645b;
+ border-radius:0;
+ margin:0;
+ padding:9px 2px;
+ font-size:11px
 }
 .nav button.active{
-  color:#198754;
-  background:#eff9f3;
+ color:#198754;
+ background:#eff9f3
 }
 table{
-  width:100%;
-  border-collapse:collapse;
-  font-size:12px;
+ width:100%;
+ border-collapse:collapse;
+ font-size:12px
 }
 td,th{
-  border-bottom:1px solid #e6ece8;
-  padding:7px 4px;
-  text-align:right;
+ border-bottom:1px solid #e6ece8;
+ padding:7px 4px;
+ text-align:right
 }
 .badge{
-  display:inline-block;
-  padding:3px 7px;
-  border-radius:20px;
-  background:#e8f4ed;
-  color:#146c43;
-  font-size:10px;
+ display:inline-block;
+ padding:3px 7px;
+ border-radius:20px;
+ background:#e8f4ed;
+ color:#146c43;
+ font-size:10px
 }
 footer{
-  text-align:center;
-  font-size:10px;
-  color:#7a8781;
-  margin:20px 0;
+ text-align:center;
+ font-size:10px;
+ color:#7a8781;
+ margin:20px 0
 }
 @media(min-width:700px){
-  main{max-width:900px;margin:auto}
+ main{max-width:900px;margin:auto}
 }
 </style>
 </head>
@@ -207,13 +187,13 @@ footer{
 <body>
 
 <header>
-  <div class="head">
-    <div>
-      <h1>🐔 مزرعه مرغ وحید</h1>
-      <div class="day" id="dayInfo">روز 1</div>
-    </div>
-    <div class="wallet">🪙 <span id="tokens">300</span></div>
-  </div>
+<div class="head">
+<div>
+<h1>🐔 مزرعه مرغ وحید</h1>
+<div class="day" id="dayInfo">روز 1</div>
+</div>
+<div class="wallet">🪙 <span id="tokens">300</span></div>
+</div>
 </header>
 
 <main>
@@ -221,83 +201,85 @@ footer{
 <!-- FARM -->
 <section id="farmTab" class="tab active">
 
-  <div class="card">
-    <h2>وضعیت مزرعه</h2>
+<div class="card">
+<h2>وضعیت مزرعه</h2>
 
-    <div class="grid">
-      <div class="stat">
-        مرغ فعال
-        <b id="activeChickens">100</b>
-      </div>
+<div class="grid">
 
-      <div class="stat">
-        مرغ پیر
-        <b id="oldChickens">0</b>
-      </div>
+<div class="stat">
+مرغ فعال
+<b id="activeChickens">100</b>
+</div>
 
-      <div class="stat">
-        تخم تازه
-        <b id="freshEggs">0</b>
-      </div>
+<div class="stat">
+مرغ پیر
+<b id="oldChickens">0</b>
+</div>
 
-      <div class="stat">
-        تخم سردخانه
-        <b id="coldEggs">0</b>
-      </div>
+<div class="stat">
+تخم تازه
+<b id="freshEggs">0</b>
+</div>
 
-      <div class="stat">
-        خوراک
-        <b id="feed">100</b>
-        <span class="small">کیلوگرم</span>
-      </div>
+<div class="stat">
+تخم سردخانه
+<b id="coldEggs">0</b>
+</div>
 
-      <div class="stat">
-        دما
-        <b id="temperature">24°C</b>
-      </div>
-    </div>
-  </div>
+<div class="stat">
+خوراک
+<b id="feed">100</b>
+<span class="small">کیلوگرم</span>
+</div>
 
-  <div class="card">
-    <h2>⏰ عملیات امروز</h2>
+<div class="stat">
+دما
+<b id="temperature">24°C</b>
+</div>
 
-    <div class="row">
-      <button onclick="feedMorning()">🍚 خوراک ساعت ۷</button>
-      <button onclick="waterMorning()">💧 آب ساعت ۷</button>
-      <button onclick="feedEvening()">🍚 خوراک ساعت ۱۸</button>
-      <button onclick="waterEvening()">💧 آب ساعت ۱۸</button>
-    </div>
+</div>
+</div>
 
-    <div id="actionStatus" class="notice">
-      عملیات روزانه هنوز انجام نشده است.
-    </div>
-  </div>
+<div class="card">
+<h2>⏰ عملیات امروز</h2>
 
-  <div class="card">
-    <h2>🌡 وضعیت محیط</h2>
-    <div id="weatherBox"></div>
-  </div>
+<div class="row">
+<button onclick="feedMorning()">🍚 خوراک ساعت ۷</button>
+<button onclick="waterMorning()">💧 آب ساعت ۷</button>
+<button onclick="feedEvening()">🍚 خوراک ساعت ۱۸</button>
+<button onclick="waterEvening()">💧 آب ساعت ۱۸</button>
+</div>
 
-  <div class="card">
-    <h2>🐔 سن گله</h2>
-    <div id="ageSummary"></div>
-  </div>
+<div id="actionStatus" class="notice">
+عملیات روزانه هنوز انجام نشده است.
+</div>
+</div>
 
-  <div class="card">
-    <h2>🥚 تولید امروز</h2>
-    <div id="todayProduction"></div>
-  </div>
+<div class="card">
+<h2>🌡 وضعیت محیط</h2>
+<div id="weatherBox"></div>
+</div>
 
-  <div class="card">
-    <h2>🧹 نظافت</h2>
-    <div id="cleanStatus"></div>
-    <button onclick="cleanFarm()">🧹 نظافت مزرعه</button>
-  </div>
+<div class="card">
+<h2>🐔 سن گله</h2>
+<div id="ageSummary"></div>
+</div>
 
-  <div class="card">
-    <h2>🌙 پایان روز</h2>
-    <button onclick="closeDay()">رفتن به روز بعد ➜</button>
-  </div>
+<div class="card">
+<h2>🥚 تولید امروز</h2>
+<div id="todayProduction"></div>
+</div>
+
+<div class="card">
+<h2>🧹 نظافت</h2>
+<div id="cleanStatus"></div>
+<button onclick="cleanFarm()">🧹 نظافت مزرعه</button>
+</div>
+
+<div class="card">
+<h2>🌙 پایان روز</h2>
+<button onclick="closeDay()">رفتن به روز بعد ➜</button>
+</div>
 
 </section>
 
@@ -305,46 +287,56 @@ footer{
 <!-- MARKET -->
 <section id="marketTab" class="tab">
 
-  <div class="card">
-    <h2>🥚 بازار تخم‌مرغ</h2>
+<div class="card">
+<h2>🥚 بازار تخم‌مرغ</h2>
 
-    <div class="grid">
-      <div class="stat">
-        قیمت امروز
-        <b id="eggPrice">1.00</b>
-        <span class="small">توکن / تخم</span>
-      </div>
+<div class="grid">
 
-      <div class="stat">
-        ظرفیت کامیون
-        <b id="truckCapacity">5000</b>
-        <span class="small">تخم</span>
-      </div>
-    </div>
+<div class="stat">
+قیمت امروز
+<b id="eggPrice">1.00</b>
+<span class="small">توکن / تخم</span>
+</div>
 
-    <div class="notice">
-      بازار از ساعت ۷ تا ۱۸ فعال است.
-      فروش به‌صورت FIFO انجام می‌شود؛ یعنی ابتدا تخم‌های قدیمی‌تر فروخته می‌شوند.
-    </div>
+<div class="stat">
+ظرفیت کامیون
+<b>5000</b>
+<span class="small">تخم</span>
+</div>
 
-    <input id="sellEggAmount" type="number" min="1" placeholder="تعداد تخم برای فروش">
+</div>
 
-    <button onclick="sellEggs()">🚚 فروش به کامیون بازار</button>
-    <button class="secondary" onclick="sellAllEggs()">فروش حداکثری</button>
-  </div>
+<div class="notice">
+بازار از ساعت ۷ تا ۱۸ فعال است.
+فروش به ترتیب قدیمی‌ترین تخم‌ها انجام می‌شود.
+</div>
 
-  <div class="card">
-    <h2>📦 فروش مستقیم در مزرعه</h2>
-    <p class="small">
-      قیمت فروش مستقیم: 1 توکن برای هر تخم.
-    </p>
-    <button onclick="sellDirect()">فروش همه تخم‌های قابل فروش</button>
-  </div>
+<input id="sellEggAmount"
+type="number"
+min="1"
+placeholder="تعداد تخم برای فروش">
 
-  <div class="card">
-    <h2>📊 سابقه قیمت تخم‌مرغ</h2>
-    <div id="priceHistory"></div>
-  </div>
+<button onclick="sellEggs()">🚚 فروش به بازار</button>
+<button class="secondary" onclick="sellAllEggs()">فروش حداکثری</button>
+
+</div>
+
+<div class="card">
+<h2>📦 فروش مستقیم</h2>
+
+<p class="small">
+قیمت فروش مستقیم: ۱ توکن برای هر تخم.
+</p>
+
+<button onclick="sellDirect()">
+فروش همه تخم‌های قابل فروش
+</button>
+</div>
+
+<div class="card">
+<h2>📊 سابقه قیمت</h2>
+<div id="priceHistory"></div>
+</div>
 
 </section>
 
@@ -352,71 +344,88 @@ footer{
 <!-- STORAGE -->
 <section id="storageTab" class="tab">
 
-  <div class="card">
-    <h2>🥚 تخم‌مرغ تازه</h2>
+<div class="card">
+<h2>🥚 تخم‌مرغ تازه</h2>
 
-    <div class="notice">
-      تخم تازه حداکثر ۳ روز خارج از سردخانه قابل فروش است.
-      پس از پایان مهلت، فاسد شده و باید دور ریخته شود.
-    </div>
+<div class="notice">
+تخم تازه حداکثر ۳ روز خارج از سردخانه قابل فروش است.
+</div>
 
-    <div id="freshBatches"></div>
+<div id="freshBatches"></div>
 
-    <input id="coldAmount" type="number" min="1" placeholder="تعداد برای انتقال به سردخانه">
+<input
+id="coldAmount"
+type="number"
+min="1"
+placeholder="تعداد برای انتقال به سردخانه">
 
-    <button onclick="moveToCold()">❄️ انتقال به سردخانه</button>
-  </div>
+<button onclick="moveToCold()">
+❄️ انتقال به سردخانه
+</button>
 
-  <div class="card">
-    <h2>❄️ سردخانه</h2>
+</div>
 
-    <div class="grid">
-      <div class="stat">
-        ظرفیت
-        <b id="coldCapacity">1500</b>
-        <span class="small">تخم</span>
-      </div>
 
-      <div class="stat">
-        موجودی
-        <b id="coldStored">0</b>
-        <span class="small">تخم</span>
-      </div>
-    </div>
+<div class="card">
+<h2>❄️ سردخانه</h2>
 
-    <div class="progress">
-      <span id="coldProgress"></span>
-    </div>
+<div class="grid">
 
-    <div id="coldBatches"></div>
+<div class="stat">
+ظرفیت
+<b id="coldCapacity">1500</b>
+<span class="small">تخم</span>
+</div>
 
-    <button onclick="cleanColdStorage()">🧹 نظافت سردخانه</button>
-  </div>
+<div class="stat">
+موجودی
+<b id="coldStored">0</b>
+<span class="small">تخم</span>
+</div>
 
-  <div class="card">
-    <h2>🗑 ضایعات</h2>
+</div>
 
-    <div class="grid">
-      <div class="stat">
-        تخم فاسد
-        <b id="spoiledEggs">0</b>
-      </div>
+<div class="progress">
+<span id="coldProgress"></span>
+</div>
 
-      <div class="stat">
-        فروش کل
-        <b id="totalSold">0</b>
-      </div>
-    </div>
+<div id="coldBatches"></div>
 
-    <button class="danger" onclick="discardSpoiled()">
-      دور ریختن تخم‌های فاسد
-    </button>
-  </div>
+<button onclick="cleanColdStorage()">
+🧹 نظافت سردخانه
+</button>
 
-  <div class="card">
-    <h2>📅 تاریخچه تولید</h2>
-    <div id="history"></div>
-  </div>
+</div>
+
+
+<div class="card">
+<h2>🗑 ضایعات</h2>
+
+<div class="grid">
+
+<div class="stat">
+تخم فاسد
+<b id="spoiledEggs">0</b>
+</div>
+
+<div class="stat">
+فروش کل
+<b id="totalSold">0</b>
+</div>
+
+</div>
+
+<button class="danger" onclick="discardSpoiled()">
+دور ریختن تخم فاسد
+</button>
+
+</div>
+
+
+<div class="card">
+<h2>📅 تاریخچه تولید</h2>
+<div id="history"></div>
+</div>
 
 </section>
 
@@ -424,67 +433,98 @@ footer{
 <!-- UPGRADE -->
 <section id="upgradeTab" class="tab">
 
-  <div class="card">
-    <h2>🏠 سطح مزرعه</h2>
+<div class="card">
+<h2>🏠 سطح مزرعه</h2>
 
-    <div id="farmLevelInfo"></div>
+<div id="farmLevelInfo"></div>
 
-    <button onclick="upgradeFarm()">⬆️ ارتقای مزرعه</button>
-  </div>
+<button onclick="upgradeFarm()">
+⬆️ ارتقای مزرعه
+</button>
+</div>
 
-  <div class="card">
-    <h2>🐔 خرید مرغ</h2>
 
-    <p class="small">
-      قیمت هر مرغ جدید: ۲۰۰ توکن
-    </p>
+<div class="card">
+<h2>🐔 خرید مرغ</h2>
 
-    <input id="buyChickenAmount" type="number" min="1" placeholder="تعداد مرغ">
+<p class="small">
+قیمت هر مرغ جدید: ۲۰۰ توکن
+</p>
 
-    <button onclick="buyChickens()">خرید مرغ</button>
-  </div>
+<input
+id="buyChickenAmount"
+type="number"
+min="1"
+placeholder="تعداد مرغ">
 
-  <div class="card">
-    <h2>🐔 فروش مرغ پیر</h2>
+<button onclick="buyChickens()">خرید مرغ</button>
+</div>
 
-    <p class="small">
-      مرغ از سن ۵۰۰ روزگی به بعد تولید تخم ندارد و می‌توان آن را فروخت.
-      قیمت هر مرغ بین ۳۵ تا ۶۵ توکن محاسبه می‌شود.
-    </p>
 
-    <input id="sellOldAmount" type="number" min="1" placeholder="تعداد مرغ پیر">
+<div class="card">
+<h2>🐔 فروش مرغ پیر</h2>
 
-    <button onclick="sellOldChickens()">فروش مرغ پیر</button>
-  </div>
+<p class="small">
+مرغ از ۵۰۰ روزگی به بعد تولید ندارد.
+قیمت هر مرغ ۳۵ تا ۶۵ توکن.
+</p>
 
-  <div class="card">
-    <h2>❄️ ارتقای سردخانه</h2>
-    <div id="coldUpgradeInfo"></div>
-    <button onclick="upgradeColdStorage()">⬆️ ارتقای سردخانه</button>
-  </div>
+<input
+id="sellOldAmount"
+type="number"
+min="1"
+placeholder="تعداد مرغ پیر">
 
-  <div class="card">
-    <h2>🍚 خرید خوراک</h2>
+<button onclick="sellOldChickens()">
+فروش مرغ پیر
+</button>
+</div>
 
-    <div class="grid">
-      <div class="stat">
-        قیمت عادی
-        <b id="normalFeedPrice">30</b>
-        <span class="small">توکن / ۱۰۰ کیلو</span>
-      </div>
 
-      <div class="stat">
-        قیمت اقتصادی
-        <b id="ecoFeedPrice">20</b>
-        <span class="small">توکن / ۱۰۰ کیلو</span>
-      </div>
-    </div>
+<div class="card">
+<h2>❄️ سردخانه</h2>
 
-    <button onclick="buyFeed('normal')">خرید ۱۰۰ کیلو خوراک عادی</button>
-    <button onclick="buyFeed('eco')">خرید ۱۰۰ کیلو خوراک اقتصادی</button>
+<div id="coldUpgradeInfo"></div>
 
-    <div id="feedStorageInfo"></div>
-  </div>
+<button onclick="upgradeColdStorage()">
+⬆️ ارتقای سردخانه
+</button>
+
+</div>
+
+
+<!-- FEED -->
+<div class="card">
+
+<h2>🍚 بازار خوراک</h2>
+
+<div class="grid">
+
+<div class="stat">
+خوراک عادی
+<b id="normalFeedPrice">30</b>
+<span class="small">توکن / ۱۰۰ کیلو</span>
+</div>
+
+<div class="stat">
+خوراک اقتصادی
+<b id="ecoFeedPrice">20</b>
+<span class="small">توکن / ۱۰۰ کیلو</span>
+</div>
+
+</div>
+
+<button onclick="buyFeed('normal')">
+خرید ۱۰۰ کیلو عادی
+</button>
+
+<button onclick="buyFeed('eco')">
+خرید ۱۰۰ کیلو اقتصادی
+</button>
+
+<div id="feedStorageInfo"></div>
+
+</div>
 
 </section>
 
@@ -492,93 +532,130 @@ footer{
 <!-- PROFILE -->
 <section id="profileTab" class="tab">
 
-  <div class="card">
-    <h2>👤 پروفایل</h2>
+<div class="card">
+<h2>👤 پروفایل</h2>
 
-    <div class="grid">
-      <div class="stat">
-        سطح مزرعه
-        <b id="profileLevel">1</b>
-      </div>
+<div class="grid">
 
-      <div class="stat">
-        تعداد مرغ
-        <b id="profileChickens">100</b>
-      </div>
+<div class="stat">
+سطح مزرعه
+<b id="profileLevel">1</b>
+</div>
 
-      <div class="stat">
-        تولید امروز
-        <b id="profileProduction">0</b>
-      </div>
+<div class="stat">
+تعداد مرغ
+<b id="profileChickens">100</b>
+</div>
 
-      <div class="stat">
-        دارایی توکنی
-        <b id="profileTokens">300</b>
-      </div>
-    </div>
-  </div>
+<div class="stat">
+تولید امروز
+<b id="profileProduction">0</b>
+</div>
 
-  <div class="card">
-    <h2>📈 آمار کلی</h2>
-    <div id="globalStats"></div>
-  </div>
+<div class="stat">
+دارایی توکنی
+<b id="profileTokens">300</b>
+</div>
 
-  <div class="card">
-    <h2>⚙️ مدیریت بازی</h2>
-    <button class="danger" onclick="resetGame()">
-      شروع دوباره بازی
-    </button>
-  </div>
+</div>
+</div>
+
+
+<div class="card">
+<h2>📊 اقتصاد خوراک</h2>
+<div id="feedStats"></div>
+</div>
+
+
+<div class="card">
+<h2>📈 آمار کلی</h2>
+<div id="globalStats"></div>
+</div>
+
+
+<div class="card">
+<h2>⚙️ مدیریت بازی</h2>
+
+<button class="danger" onclick="resetGame()">
+شروع دوباره بازی
+</button>
+
+</div>
 
 </section>
 
 <footer>
-نسخه ۱۲ — Chicken Farm
+نسخه ۱۳ — Chicken Farm
 </footer>
 
 </main>
 
 
 <nav class="nav">
-  <button id="navFarm" class="active" onclick="showTab('farm')">🏠<br>مزرعه</button>
-  <button id="navMarket" onclick="showTab('market')">🚚<br>بازار</button>
-  <button id="navStorage" onclick="showTab('storage')">📦<br>انبار</button>
-  <button id="navUpgrade" onclick="showTab('upgrade')">⬆️<br>ارتقا</button>
-  <button id="navProfile" onclick="showTab('profile')">👤<br>پروفایل</button>
+
+<button id="navFarm"
+class="active"
+onclick="showTab('farm')">
+🏠<br>مزرعه
+</button>
+
+<button id="navMarket"
+onclick="showTab('market')">
+🚚<br>بازار
+</button>
+
+<button id="navStorage"
+onclick="showTab('storage')">
+📦<br>انبار
+</button>
+
+<button id="navUpgrade"
+onclick="showTab('upgrade')">
+⬆️<br>ارتقا
+</button>
+
+<button id="navProfile"
+onclick="showTab('profile')">
+👤<br>پروفایل
+</button>
+
 </nav>
 
 
 <script>
 
-const KEY = "vahid_chicken_farm_v12";
-const OLD_KEY = "vahid_chicken_farm_v11";
+/* =====================================================
+   VERSION 13
+===================================================== */
 
-const FARM_LEVELS = {
-  1:{capacity:100, upgrade:0, feedStorage:1000},
-  2:{capacity:500, upgrade:10000, feedStorage:5000},
-  3:{capacity:1000, upgrade:15000, feedStorage:10000},
-  4:{capacity:2000, upgrade:20000, feedStorage:10000},
-  5:{capacity:5000, upgrade:40000, feedStorage:10000}
+const KEY="vahid_chicken_farm_v13";
+const OLD_KEY="vahid_chicken_farm_v12";
+
+const FEED_SHELF_LIFE=180;
+const MONTH_DAYS=30;
+
+const MARKET_TRUCK_CAPACITY=5000;
+
+const FARM_LEVELS={
+  1:{capacity:100,upgrade:0,feedStorage:1000},
+  2:{capacity:500,upgrade:10000,feedStorage:5000},
+  3:{capacity:1000,upgrade:15000,feedStorage:10000},
+  4:{capacity:2000,upgrade:20000,feedStorage:10000},
+  5:{capacity:5000,upgrade:40000,feedStorage:10000}
 };
 
-const COLD_LEVELS = {
-  1:{capacity:1500, upgrade:0},
-  2:{capacity:5000, upgrade:10000},
-  3:{capacity:10000, upgrade:16000}
+const COLD_LEVELS={
+  1:{capacity:1500,upgrade:0},
+  2:{capacity:5000,upgrade:10000},
+  3:{capacity:10000,upgrade:16000}
 };
-
-const MARKET_TRUCK_CAPACITY = 5000;
 
 let g;
 
 
-/* =========================
-   ابزارها
-========================= */
-
-function save(){
-  localStorage.setItem(KEY,JSON.stringify(g));
-}
+/* =====================================================
+   HELPERS
+===================================================== */
 
 function num(v){
   return Number(v)||0;
@@ -588,32 +665,8 @@ function money(v){
   return Number(v).toFixed(2);
 }
 
-function esc(v){
-  return String(v)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;");
-}
-
-function getActiveChickens(){
-  return g.chickenGroups.reduce((s,x)=>{
-    return s + ((x.age>0 && x.age<500)?x.amount:0);
-  },0);
-}
-
-function getOldChickens(){
-  return g.chickenGroups.reduce((s,x)=>{
-    return s + (x.age>=500?x.amount:0);
-  },0);
-}
-
-function getTotalChickens(){
-  return g.chickenGroups.reduce((s,x)=>s+x.amount,0);
-}
-
-function getOldestAge(){
-  if(!g.chickenGroups.length)return 0;
-  return Math.max(...g.chickenGroups.map(x=>x.age));
+function save(){
+  localStorage.setItem(KEY,JSON.stringify(g));
 }
 
 function freshTotal(){
@@ -624,1785 +677,2746 @@ function coldTotal(){
   return g.coldBatches.reduce((s,x)=>s+x.amount,0);
 }
 
-function sellableEggs(){
-  return freshTotal()+coldTotal();
+function getTotalChickens(){
+  return g.chickenGroups.reduce((s,x)=>s+x.amount,0);
+}
+
+function getActiveChickens(){
+  return g.chickenGroups.reduce(
+    (s,x)=>s+((x.age>0&&x.age<500)?x.amount:0),
+    0
+  );
+}
+
+function getOldChickens(){
+  return g.chickenGroups.reduce(
+    (s,x)=>s+(x.age>=500?x.amount:0),
+    0
+  );
+}
+
+function getOldestAge(){
+  if(!g.chickenGroups.length)return 0;
+  return Math.max(...g.chickenGroups.map(x=>x.age));
 }
 
 
-/* =========================
-   مهاجرت نسخه ۱۱
-========================= */
-
-function migrateOld(){
-
-  let old=null;
-
-  try{
-    old=JSON.parse(localStorage.getItem(OLD_KEY)||"null");
-  }catch(e){
-    old=null;
-  }
-
-  if(!old)return null;
-
-  let fresh=[];
-  let cold=[];
-
-  if(Array.isArray(old.freshBatches)){
-    fresh=old.freshBatches
-      .filter(x=>num(x.amount)>0)
-      .map(x=>({
-        amount:num(x.amount),
-        age:num(x.age)
-      }));
-  }
-
-  if(Array.isArray(old.coldBatches)){
-    cold=old.coldBatches
-      .filter(x=>num(x.amount)>0)
-      .map(x=>({
-        amount:num(x.amount),
-        age:num(x.age)
-      }));
-  }
-
-  /* اگر نسخه قدیمی فقط یک عدد تخم تازه داشت */
-  if(!fresh.length && num(old.freshEggs)>0){
-    fresh=[{
-      amount:num(old.freshEggs),
-      age:num(old.freshEggAge)
-    }];
-  }
-
-  if(!cold.length && Array.isArray(old.coldEggAges)){
-    const map={};
-
-    old.coldEggAges.forEach(a=>{
-      a=num(a);
-      map[a]=(map[a]||0)+1;
-    });
-
-    cold=Object.keys(map).map(a=>({
-      age:num(a),
-      amount:map[a]
-    }));
-  }
-
-  let chickens=num(old.chickens)||100;
-
-  return {
-    ...old,
-
-    chickenGroups:
-      Array.isArray(old.chickenGroups)&&old.chickenGroups.length
-      ?old.chickenGroups
-      :[{amount:chickens,age:num(old.flockAge)}],
-
-    freshBatches:fresh,
-    coldBatches:cold,
-
-    spoiledEggs:num(old.spoiledEggs),
-    totalSold:num(old.totalSold),
-
-    coldLevel:num(old.coldLevel)||1,
-
-    history:Array.isArray(old.history)?old.history:[],
-    priceHistory:Array.isArray(old.priceHistory)?old.priceHistory:[],
-
-    version:12
-  };
-}
-
-
-/* =========================
-   بازی جدید
-========================= */
+/* =====================================================
+   NEW GAME
+===================================================== */
 
 function newGame(){
 
-  return {
-    version:12,
+return{
 
-    day:1,
+version:13,
 
-    tokens:300,
+day:1,
 
-    feed:100,
+tokens:300,
 
-    feedStorageLevel:1,
+farmLevel:1,
 
-    chickenGroups:[
-      {amount:100,age:0}
-    ],
+coldLevel:1,
 
-    farmLevel:1,
+eggPrice:1,
 
-    coldLevel:1,
+feed:100,
 
-    eggPrice:1,
+/*
+  feedBatches:
+  هر خرید خوراک یک بچ مستقل است.
+*/
+feedBatches:[
+ {
+   amount:100,
+   purchaseDay:1,
+   price:30,
+   type:"normal",
+   quality:100
+ }
+],
 
-    priceHistory:[],
+feedStorageCleanDay:1,
 
-    freshBatches:[],
+totalFeedPurchased:100,
 
-    coldBatches:[],
+totalFeedConsumed:0,
 
-    spoiledEggs:0,
+totalFeedCost:0,
 
-    totalSold:0,
+totalFeedExpired:0,
 
-    totalProduced:0,
+totalFeedWasted:0,
 
-    totalBoughtFeed:100,
+totalFeedQualityLoss:0,
 
-    totalBoughtChickens:0,
+chickenGroups:[
+ {
+   amount:100,
+   age:0
+ }
+],
 
-    totalDeaths:0,
+freshBatches:[],
 
-    totalMedicine:0,
+coldBatches:[],
 
-    history:[],
+spoiledEggs:0,
 
-    lastProduction:0,
+totalSold:0,
 
-    lastTemperature:24,
+totalProduced:0,
 
-    sick:false,
+totalBoughtChickens:0,
 
-    sickDays:0,
+totalDeaths:0,
 
-    feedShortageDays:0,
+totalMedicine:0,
 
-    waterShortageDays:0,
+lastProduction:0,
 
-    cleanFarmDay:1,
+lastTemperature:24,
 
-    cleanColdDay:1,
+sick:false,
 
-    lastTime:Date.now(),
+sickDays:0,
 
-    actions:{
-      morningFeed:false,
-      morningWater:false,
-      eveningFeed:false,
-      eveningWater:false
-    }
-  };
+feedShortageDays:0,
+
+waterShortageDays:0,
+
+cleanFarmDay:1,
+
+cleanColdDay:1,
+
+history:[],
+
+priceHistory:[],
+
+feedPriceHistory:[],
+
+lastTime:Date.now(),
+
+actions:{
+ morningFeed:false,
+ morningWater:false,
+ eveningFeed:false,
+ eveningWater:false
+}
+
+};
+
 }
 
 
-/* =========================
-   بارگذاری
-========================= */
+/* =====================================================
+   MIGRATION V12
+===================================================== */
+
+function migrateOld(){
+
+let old=null;
+
+try{
+ old=JSON.parse(
+  localStorage.getItem(OLD_KEY)||"null"
+ );
+}catch(e){
+ old=null;
+}
+
+if(!old)return null;
+
+
+/* خوراک قدیمی تبدیل به یک بچ */
+
+let feedBatches=[];
+
+if(Array.isArray(old.feedBatches)){
+
+ feedBatches=old.feedBatches
+ .filter(x=>num(x.amount)>0)
+ .map(x=>({
+   amount:num(x.amount),
+   purchaseDay:num(x.purchaseDay)||1,
+   price:num(x.price)||30,
+   type:x.type||"normal",
+   quality:num(x.quality)||100
+ }));
+
+}
+
+if(!feedBatches.length && num(old.feed)>0){
+
+ feedBatches=[{
+   amount:num(old.feed),
+   purchaseDay:num(old.day)||1,
+   price:30,
+   type:"normal",
+   quality:100
+ }];
+
+}
+
+
+return{
+
+...old,
+
+version:13,
+
+feedBatches:feedBatches,
+
+feedStorageCleanDay:
+ num(old.feedStorageCleanDay)||1,
+
+totalFeedPurchased:
+ num(old.totalFeedPurchased)||num(old.feed)||0,
+
+totalFeedConsumed:
+ num(old.totalFeedConsumed)||0,
+
+totalFeedCost:
+ num(old.totalFeedCost)||0,
+
+totalFeedExpired:
+ num(old.totalFeedExpired)||0,
+
+totalFeedWasted:
+ num(old.totalFeedWasted)||0,
+
+totalFeedQualityLoss:
+ num(old.totalFeedQualityLoss)||0,
+
+feedPriceHistory:
+ Array.isArray(old.feedPriceHistory)
+ ?old.feedPriceHistory
+ :[]
+
+};
+
+}
+
+
+/* =====================================================
+   LOAD
+===================================================== */
 
 function loadGame(){
 
-  let saved=null;
+let saved=null;
 
-  try{
-    saved=JSON.parse(localStorage.getItem(KEY)||"null");
-  }catch(e){
-    saved=null;
-  }
-
-  if(saved){
-    g=saved;
-  }else{
-
-    const migrated=migrateOld();
-
-    if(migrated){
-      g=migrated;
-      save();
-    }else{
-      g=newGame();
-      save();
-    }
-  }
-
-  normalize();
+try{
+ saved=JSON.parse(
+  localStorage.getItem(KEY)||"null"
+ );
+}catch(e){
+ saved=null;
 }
+
+if(saved){
+
+ g=saved;
+
+}else{
+
+ const migrated=migrateOld();
+
+ if(migrated){
+
+   g=migrated;
+   save();
+
+ }else{
+
+   g=newGame();
+   save();
+
+ }
+
+}
+
+normalize();
+
+}
+
+
+/* =====================================================
+   NORMALIZE
+===================================================== */
 
 function normalize(){
 
-  g.day=num(g.day)||1;
-  g.tokens=num(g.tokens);
-  g.feed=num(g.feed);
+g.day=num(g.day)||1;
 
-  if(!Array.isArray(g.chickenGroups)){
-    g.chickenGroups=[
-      {amount:num(g.chickens)||100,age:num(g.flockAge)}
-    ];
-  }
+g.tokens=num(g.tokens);
 
-  if(!Array.isArray(g.freshBatches))
-    g.freshBatches=[];
+g.farmLevel=num(g.farmLevel)||1;
 
-  if(!Array.isArray(g.coldBatches))
-    g.coldBatches=[];
+g.coldLevel=num(g.coldLevel)||1;
 
-  if(!Array.isArray(g.history))
-    g.history=[];
+g.feedBatches=
+ Array.isArray(g.feedBatches)
+ ?g.feedBatches
+ :[];
 
-  if(!Array.isArray(g.priceHistory))
-    g.priceHistory=[];
+g.freshBatches=
+ Array.isArray(g.freshBatches)
+ ?g.freshBatches
+ :[];
 
-  g.farmLevel=num(g.farmLevel)||1;
-  g.coldLevel=num(g.coldLevel)||1;
+g.coldBatches=
+ Array.isArray(g.coldBatches)
+ ?g.coldBatches
+ :[];
 
-  if(!g.actions){
-    g.actions={
-      morningFeed:false,
-      morningWater:false,
-      eveningFeed:false,
-      eveningWater:false
-    };
-  }
+g.chickenGroups=
+ Array.isArray(g.chickenGroups)
+ ?g.chickenGroups
+ :[{amount:100,age:0}];
 
-  g.spoiledEggs=num(g.spoiledEggs);
-  g.totalSold=num(g.totalSold);
-  g.totalProduced=num(g.totalProduced);
+g.history=
+ Array.isArray(g.history)
+ ?g.history
+ :[];
 
-  save();
+g.priceHistory=
+ Array.isArray(g.priceHistory)
+ ?g.priceHistory
+ :[];
+
+g.feedPriceHistory=
+ Array.isArray(g.feedPriceHistory)
+ ?g.feedPriceHistory
+ :[];
+
+if(!g.actions){
+
+g.actions={
+ morningFeed:false,
+ morningWater:false,
+ eveningFeed:false,
+ eveningWater:false
+};
+
+}
+
+if(!g.feedStorageCleanDay)
+g.feedStorageCleanDay=g.day;
+
+save();
+
 }
 
 
-/* =========================
-   زمان و آفلاین
-========================= */
-
-function processTime(){
-
-  /*
-    برای جلوگیری از تولید چندباره در هر بار باز کردن صفحه،
-    فقط وقتی روز واقعی تغییر کرده باشد بازی جلو می‌رود.
-  */
-
-  const now=new Date();
-  const last=new Date(g.lastTime||Date.now());
-
-  const todayKey=now.toDateString();
-  const lastKey=last.toDateString();
-
-  if(todayKey!==lastKey){
-
-    let diff=Math.floor(
-      (new Date(todayKey)-new Date(lastKey))/86400000
-    );
-
-    diff=Math.min(diff,30);
-
-    for(let i=0;i<diff;i++){
-      closeDay(true);
-    }
-  }
-
-  g.lastTime=Date.now();
-  save();
-}
-
-
-/* =========================
-   فصل و دما
-========================= */
+/* =====================================================
+   FEED PRICE
+===================================================== */
 
 function getSeason(day){
 
-  if(day<=93)return "بهار";
-  if(day<=186)return "تابستان";
-  if(day<=279)return "پاییز";
-  return "زمستان";
+if(day<=93)return"بهار";
+
+if(day<=186)return"تابستان";
+
+if(day<=279)return"پاییز";
+
+return"زمستان";
+
+}
+
+function getFeedMarketPrice(type){
+
+const base=type==="normal"?30:20;
+
+let maxIncrease;
+
+const season=getSeason(g.day);
+
+if(season==="تابستان")
+ maxIncrease=.10;
+else
+ maxIncrease=.20;
+
+
+/*
+ قیمت روزانه می‌تواند بالا یا پایین برود،
+ اما از قیمت پایه پایین‌تر نمی‌رود.
+*/
+
+let previous=
+ g.feedMarketPrices &&
+ g.feedMarketPrices[type];
+
+if(!previous){
+ previous=base;
+}
+
+const change=
+ (Math.random()*.08)-.04;
+
+let price=previous*(1+change);
+
+price=Math.max(base,price);
+
+price=Math.min(
+ base*(1+maxIncrease),
+ price
+);
+
+return Math.round(price*100)/100;
+
+}
+
+
+/* =====================================================
+   CURRENT FEED PRICES
+===================================================== */
+
+function currentFeedPrice(type){
+
+if(!g.currentFeedPrices)
+ g.currentFeedPrices={};
+
+const base=type==="normal"?30:20;
+
+if(
+ !g.currentFeedPrices[type] ||
+ g.currentFeedPricesDay!==g.day
+){
+
+g.currentFeedPrices[type]=
+ getFeedMarketPrice(type);
+
+}
+
+g.currentFeedPricesDay=g.day;
+
+return g.currentFeedPrices[type];
+
+}
+
+
+/* =====================================================
+   BUY FEED
+===================================================== */
+
+function buyFeed(type){
+
+const price=currentFeedPrice(type);
+
+const capacity=
+ FARM_LEVELS[g.farmLevel].feedStorage;
+
+const currentFeed=
+ g.feedBatches.reduce(
+  (s,x)=>s+x.amount,
+  0
+ );
+
+if(currentFeed+100>capacity){
+
+alert(
+ "ظرفیت انبار خوراک کافی نیست.\n"+
+ "ظرفیت: "+capacity+
+ " کیلو"
+);
+
+return;
+
+}
+
+if(g.tokens<price){
+
+alert(
+ "توکن کافی نیست.\n"+
+ "قیمت این بچ: "+money(price)+
+ " توکن"
+);
+
+return;
+
+}
+
+g.tokens-=price;
+
+g.feedBatches.push({
+
+amount:100,
+
+purchaseDay:g.day,
+
+price:price,
+
+type:type,
+
+quality:100
+
+});
+
+g.totalFeedPurchased+=100;
+
+g.totalFeedCost+=price;
+
+g.feedPriceHistory.unshift({
+
+day:g.day,
+
+type:type,
+
+price:price
+
+});
+
+g.feedPriceHistory=
+ g.feedPriceHistory.slice(0,30);
+
+save();
+
+render();
+
+alert(
+ "۱۰۰ کیلو خوراک خریداری شد.\n"+
+ "نوع: "+
+ (type==="normal"?"عادی":"اقتصادی")+
+ "\nقیمت: "+
+ money(price)+
+ " توکن"
+);
+
+}
+
+
+/* =====================================================
+   TOTAL FEED
+===================================================== */
+
+function totalFeed(){
+
+return g.feedBatches.reduce(
+ (s,x)=>s+x.amount,
+ 0
+);
+
+}
+
+
+/* =====================================================
+   FEED QUALITY
+===================================================== */
+
+function feedQuality(batch){
+
+const storageDays=
+ Math.max(0,g.day-batch.purchaseDay);
+
+const cleaningDelay=
+ Math.max(
+  0,
+  g.day-g.feedStorageCleanDay-30
+);
+
+let quality=100;
+
+/*
+ هر هفته بعد از عقب افتادن نظافت:
+ ۵٪ افت کیفیت
+*/
+
+if(cleaningDelay>0){
+
+const weeks=Math.floor(
+ cleaningDelay/7
+)+1;
+
+quality-=weeks*5;
+
+}
+
+return Math.max(0,quality);
+
+}
+
+
+/* =====================================================
+   FEED EXPIRY
+===================================================== */
+
+function processFeedExpiry(){
+
+let expired=0;
+
+const next=[];
+
+g.feedBatches.forEach(batch=>{
+
+const age=
+ g.day-batch.purchaseDay;
+
+if(age>=FEED_SHELF_LIFE){
+
+expired+=batch.amount;
+
+}else{
+
+batch.quality=
+ feedQuality(batch);
+
+next.push(batch);
+
+}
+
+});
+
+g.feedBatches=next;
+
+if(expired>0){
+
+g.totalFeedExpired+=expired;
+
+}
+
+}
+
+
+/* =====================================================
+   CONSUME FEED FIFO
+===================================================== */
+
+function consumeFeed(amount){
+
+amount=Math.max(0,num(amount));
+
+if(amount<=0)return true;
+
+let remaining=amount;
+
+let consumed=0;
+
+g.feedBatches.sort(
+ (a,b)=>a.purchaseDay-b.purchaseDay
+);
+
+const next=[];
+
+g.feedBatches.forEach(batch=>{
+
+if(remaining<=0){
+
+ next.push(batch);
+
+ return;
+
+}
+
+const take=
+ Math.min(batch.amount,remaining);
+
+batch.amount-=take;
+
+remaining-=take;
+
+consumed+=take;
+
+if(batch.amount>0)
+ next.push(batch);
+
+});
+
+g.feedBatches=next;
+
+g.totalFeedConsumed+=consumed;
+
+return remaining<=0;
+
+}
+
+
+/* =====================================================
+   CHICKEN
+===================================================== */
+
+function ageChickens(){
+
+g.chickenGroups.forEach(
+ x=>x.age++
+);
+
 }
 
 function getTemperature(day){
 
-  let avg;
+let avg;
 
-  if(day<=93)avg=18;
-  else if(day<=186)avg=30;
-  else if(day<=279)avg=17;
-  else avg=5;
+if(day<=93)avg=18;
+else if(day<=186)avg=30;
+else if(day<=279)avg=17;
+else avg=5;
 
-  const variation=
-    Math.sin(day*.73)*3+
-    Math.sin(day*.19)*1.5;
+const variation=
+ Math.sin(day*.73)*3+
+ Math.sin(day*.19)*1.5;
 
-  return Math.round((avg+variation)*10)/10;
+return Math.round(
+ (avg+variation)*10
+)/10;
+
 }
 
 function temperatureEfficiency(t){
 
-  if(t<24){
-    return Math.max(0,1-(24-t)*.05);
-  }
+if(t<24)
+ return Math.max(
+  0,
+  1-(24-t)*.05
+ );
 
-  if(t>24){
-    return Math.max(0,1-(t-24)*.03);
-  }
+if(t>24)
+ return Math.max(
+  0,
+  1-(t-24)*.03
+ );
 
-  return 1;
+return 1;
+
 }
 
 
-/* =========================
-   خوراک و آب
-========================= */
+/* =====================================================
+   WATER / FEED BUTTONS
+===================================================== */
 
 function feedMorning(){
 
-  g.actions.morningFeed=true;
+g.actions.morningFeed=true;
 
-  document.getElementById("actionStatus").innerHTML=
-    '<div class="ok">خوراک ساعت ۷ ثبت شد.</div>';
+save();
 
-  save();
-  render();
+render();
+
 }
 
 function feedEvening(){
 
-  g.actions.eveningFeed=true;
+g.actions.eveningFeed=true;
 
-  document.getElementById("actionStatus").innerHTML=
-    '<div class="ok">خوراک ساعت ۱۸ ثبت شد.</div>';
+save();
 
-  save();
-  render();
+render();
+
 }
 
 function waterMorning(){
 
-  g.actions.morningWater=true;
+g.actions.morningWater=true;
 
-  document.getElementById("actionStatus").innerHTML=
-    '<div class="ok">آب ساعت ۷ ثبت شد.</div>';
+save();
 
-  save();
-  render();
+render();
+
 }
 
 function waterEvening(){
 
-  g.actions.eveningWater=true;
+g.actions.eveningWater=true;
 
-  document.getElementById("actionStatus").innerHTML=
-    '<div class="ok">آب ساعت ۱۸ ثبت شد.</div>';
+save();
 
-  save();
-  render();
+render();
+
 }
 
 
-/* =========================
-   بیماری
-========================= */
+/* =====================================================
+   PRODUCTION
+===================================================== */
+
+function calculateProduction(){
+
+const active=
+ getActiveChickens();
+
+if(active<=0)return 0;
+
+let efficiency=.80;
+
+efficiency*=
+ temperatureEfficiency(
+  getTemperature(g.day)
+ );
+
+if(
+ !g.actions.morningFeed||
+ !g.actions.eveningFeed
+){
+
+if(g.feedShortageDays===0)
+ efficiency*=.70;
+
+else if(g.feedShortageDays===1)
+ efficiency*=.40;
+
+else
+ efficiency=0;
+
+}
+
+if(
+ !g.actions.morningWater||
+ !g.actions.eveningWater
+){
+
+if(g.waterShortageDays===0)
+ efficiency*=.70;
+
+else if(g.waterShortageDays===1)
+ efficiency*=.40;
+
+else
+ efficiency=0;
+
+}
+
+if(g.sick)
+ efficiency*=.50;
+
+return Math.max(
+ 0,
+ Math.floor(active*efficiency)
+);
+
+}
+
+
+/* =====================================================
+   DISEASE
+===================================================== */
 
 function diseaseDeath(){
 
-  const total=getTotalChickens();
+const total=
+ getTotalChickens();
 
-  const dead=Math.floor(total*.30);
+const dead=
+ Math.floor(total*.30);
 
-  if(dead<=0)return;
+if(dead<=0)return;
 
-  let remaining=dead;
+let remaining=dead;
 
-  g.chickenGroups.sort((a,b)=>b.age-a.age);
+g.chickenGroups.sort(
+ (a,b)=>b.age-a.age
+);
 
-  for(const group of g.chickenGroups){
+for(const group of g.chickenGroups){
 
-    if(remaining<=0)break;
+if(remaining<=0)break;
 
-    const take=Math.min(group.amount,remaining);
+const take=
+ Math.min(group.amount,remaining);
 
-    group.amount-=take;
-    remaining-=take;
-  }
+group.amount-=take;
 
-  g.chickenGroups=g.chickenGroups.filter(x=>x.amount>0);
+remaining-=take;
 
-  g.totalDeaths+=dead;
+}
+
+g.chickenGroups=
+ g.chickenGroups.filter(
+  x=>x.amount>0
+ );
+
+g.totalDeaths+=dead;
+
 }
 
 function treatDisease(){
 
-  const active=getTotalChickens();
+if(!g.sick){
 
-  const cost=300*(active/100);
+alert("گله بیمار نیست.");
 
-  if(g.tokens<cost){
-    alert("توکن کافی برای دارو ندارید.");
-    return;
-  }
+return;
 
-  if(!g.sick){
-    alert("گله بیمار نیست.");
-    return;
-  }
+}
 
-  g.tokens-=cost;
+const cost=
+ 300*(getTotalChickens()/100);
 
-  g.sick=false;
-  g.sickDays=0;
+if(g.tokens<cost){
 
-  g.totalMedicine+=cost;
+alert("توکن کافی نیست.");
 
-  save();
-  render();
+return;
+
+}
+
+g.tokens-=cost;
+
+g.sick=false;
+
+g.sickDays=0;
+
+g.totalMedicine+=cost;
+
+save();
+
+render();
+
 }
 
 
-/* =========================
-   تولید تخم
-========================= */
-
-function calculateProduction(){
-
-  const active=getActiveChickens();
-
-  if(active<=0)return 0;
-
-  let efficiency=.80;
-
-  const temp=getTemperature(g.day);
-
-  efficiency*=temperatureEfficiency(temp);
-
-  if(!g.actions.morningFeed || !g.actions.eveningFeed){
-
-    if(g.feedShortageDays===0)
-      efficiency*=.70;
-
-    else if(g.feedShortageDays===1)
-      efficiency*=.40;
-
-    else
-      efficiency=0;
-  }
-
-  if(!g.actions.morningWater || !g.actions.eveningWater){
-
-    if(g.waterShortageDays===0)
-      efficiency*=.70;
-
-    else if(g.waterShortageDays===1)
-      efficiency*=.40;
-
-    else
-      efficiency=0;
-  }
-
-  if(g.sick)
-    efficiency*=.50;
-
-  if(efficiency<0)efficiency=0;
-
-  return Math.floor(active*efficiency);
-}
-
-
-/* =========================
-   افزایش سن مرغ‌ها
-========================= */
-
-function ageChickens(){
-
-  g.chickenGroups.forEach(x=>{
-    x.age++;
-  });
-}
-
-
-/* =========================
-   تخم‌ها
-========================= */
+/* =====================================================
+   EGGS
+===================================================== */
 
 function ageFreshEggs(){
 
-  let spoiled=0;
+let spoiled=0;
 
-  const next=[];
+const next=[];
 
-  g.freshBatches.forEach(batch=>{
+g.freshBatches.forEach(batch=>{
 
-    const age=batch.age+1;
+const age=batch.age+1;
 
-    if(age>=3){
+if(age>=3){
 
-      spoiled+=batch.amount;
+spoiled+=batch.amount;
 
-    }else{
+}else{
 
-      next.push({
-        amount:batch.amount,
-        age:age
-      });
-    }
-  });
+next.push({
+ amount:batch.amount,
+ age:age
+});
 
-  g.freshBatches=next;
+}
 
-  g.spoiledEggs+=spoiled;
+});
 
-  return spoiled;
+g.freshBatches=next;
+
+g.spoiledEggs+=spoiled;
+
 }
 
 function ageColdEggs(){
 
-  let spoiled=0;
+let spoiled=0;
 
-  const next=[];
+const next=[];
 
-  g.coldBatches.forEach(batch=>{
+g.coldBatches.forEach(batch=>{
 
-    const age=batch.age+1;
+const age=batch.age+1;
 
-    if(age>=30){
+if(age>=30){
 
-      spoiled+=batch.amount;
+spoiled+=batch.amount;
 
-    }else{
+}else{
 
-      next.push({
-        amount:batch.amount,
-        age:age
-      });
-    }
-  });
+next.push({
+ amount:batch.amount,
+ age:age
+});
 
-  g.coldBatches=next;
+}
 
-  g.spoiledEggs+=spoiled;
+});
 
-  return spoiled;
+g.coldBatches=next;
+
+g.spoiledEggs+=spoiled;
+
 }
 
 
-/* =========================
-   پایان روز
-========================= */
+/* =====================================================
+   CLOSE DAY
+===================================================== */
 
 function closeDay(silent=false){
 
-  /*
-    ابتدا تخم‌های قبلی یک روز پیر می‌شوند.
-    سپس تولید امروز با سن صفر وارد انبار می‌شود.
-  */
+/*
+ ابتدا تخم‌های قبلی پیر می‌شوند.
+*/
 
-  ageFreshEggs();
-  ageColdEggs();
+ageFreshEggs();
 
-  const temp=getTemperature(g.day);
+ageColdEggs();
 
-  g.lastTemperature=temp;
 
-  const active=getActiveChickens();
+/*
+ خوراک منقضی‌شده حذف می‌شود.
+*/
 
-  /* مصرف خوراک */
-  const requiredFeed=active*.10;
+processFeedExpiry();
 
-  if(
-    g.actions.morningFeed &&
-    g.actions.eveningFeed &&
-    g.feed>=requiredFeed
-  ){
 
-    g.feed-=requiredFeed;
+const active=
+ getActiveChickens();
 
-    g.feedShortageDays=0;
+const requiredFeed=
+ active*.10;
 
-  }else{
 
-    g.feedShortageDays++;
-  }
+/*
+ اگر هر دو نوبت خوراک انجام شده باشد،
+ مصرف واقعی از بچ‌های خوراک انجام می‌شود.
+*/
 
-  /* آب */
-  if(
-    g.actions.morningWater &&
-    g.actions.eveningWater
-  ){
+if(
+ g.actions.morningFeed&&
+ g.actions.eveningFeed
+){
 
-    g.waterShortageDays=0;
+const enough=
+ consumeFeed(requiredFeed);
 
-  }else{
+if(enough){
 
-    g.waterShortageDays++;
-  }
+g.feedShortageDays=0;
 
-  /* تولید */
-  const production=calculateProduction();
+}else{
 
-  g.lastProduction=production;
+g.feedShortageDays++;
 
-  g.totalProduced+=production;
+}
 
-  if(production>0){
+}else{
 
-    g.freshBatches.push({
-      amount:production,
-      age:0
-    });
-  }
+g.feedShortageDays++;
 
-  /* بیماری */
-  const severeHeat=temp>=38;
-  const severeCold=temp<=10;
-
-  if(severeHeat||severeCold){
-    g.sickDays++;
-  }else{
-    g.sickDays=0;
-  }
-
-  if(
-    g.feedShortageDays>=3 ||
-    g.waterShortageDays>=3 ||
-    g.sickDays>=2
-  ){
-    g.sick=true;
-  }
-
-  if(g.sick && g.sickDays>=3){
-    diseaseDeath();
-  }
-
-  /* نظافت هفتگی */
-  if(g.day-g.cleanFarmDay>=7){
-    g.sick=true;
-  }
-
-  /* سن مرغ */
-  ageChickens();
-
-  /* قیمت تخم */
-  changeEggPrice();
-
-  /* تاریخچه */
-  g.history.unshift({
-    day:g.day,
-    production:production,
-    active:getActiveChickens(),
-    temperature:temp,
-    fresh:freshTotal(),
-    cold:coldTotal(),
-    spoiled:g.spoiledEggs
-  });
-
-  g.history=g.history.slice(0,30);
-
-  g.priceHistory.unshift({
-    day:g.day,
-    price:g.eggPrice
-  });
-
-  g.priceHistory=g.priceHistory.slice(0,30);
-
-  /* روز بعد */
-  g.day++;
-
-  g.actions={
-    morningFeed:false,
-    morningWater:false,
-    eveningFeed:false,
-    eveningWater:false
-  };
-
-  g.lastTime=Date.now();
-
-  save();
-
-  if(!silent){
-
-    alert(
-      "روز تمام شد.\n\n"+
-      "تولید تخم: "+production+
-      "\nدمای امروز: "+temp+"°C"+
-      "\nتخم تازه: "+freshTotal()+
-      "\nتخم سردخانه: "+coldTotal()
-    );
-  }
-
-  render();
 }
 
 
-/* =========================
-   قیمت تخم
-========================= */
+/*
+ آب
+*/
+
+if(
+ g.actions.morningWater&&
+ g.actions.eveningWater
+){
+
+g.waterShortageDays=0;
+
+}else{
+
+g.waterShortageDays++;
+
+}
+
+
+/*
+ تولید
+*/
+
+const production=
+ calculateProduction();
+
+g.lastProduction=production;
+
+g.totalProduced+=production;
+
+if(production>0){
+
+g.freshBatches.push({
+
+amount:production,
+
+age:0
+
+});
+
+}
+
+
+/*
+ دما و بیماری
+*/
+
+const temp=
+ getTemperature(g.day);
+
+g.lastTemperature=temp;
+
+const severeHeat=temp>=38;
+
+const severeCold=temp<=10;
+
+if(severeHeat||severeCold)
+ g.sickDays++;
+else
+ g.sickDays=0;
+
+if(
+ g.feedShortageDays>=3||
+ g.waterShortageDays>=3||
+ g.sickDays>=2
+){
+
+g.sick=true;
+
+}
+
+if(
+ g.sick&&
+ g.sickDays>=3
+){
+
+diseaseDeath();
+
+}
+
+
+/*
+ نظافت مزرعه
+*/
+
+if(g.day-g.cleanFarmDay>=7)
+ g.sick=true;
+
+
+/*
+ سن مرغ
+*/
+
+ageChickens();
+
+
+/*
+ قیمت تخم
+*/
+
+changeEggPrice();
+
+
+/*
+ قیمت خوراک روز بعد
+*/
+
+g.feedMarketPrices={
+ normal:getFeedMarketPrice("normal"),
+ eco:getFeedMarketPrice("eco")
+};
+
+g.currentFeedPricesDay=g.day;
+
+
+/*
+ تاریخچه
+*/
+
+g.history.unshift({
+
+day:g.day,
+
+production:production,
+
+active:getActiveChickens(),
+
+temperature:temp,
+
+fresh:freshTotal(),
+
+cold:coldTotal(),
+
+feed:totalFeed(),
+
+spoiled:g.spoiledEggs
+
+});
+
+g.history=
+ g.history.slice(0,30);
+
+
+g.priceHistory.unshift({
+
+day:g.day,
+
+price:g.eggPrice
+
+});
+
+g.priceHistory=
+ g.priceHistory.slice(0,30);
+
+
+/*
+ عملیات روز بعد
+*/
+
+g.day++;
+
+g.actions={
+ morningFeed:false,
+ morningWater:false,
+ eveningFeed:false,
+ eveningWater:false
+};
+
+g.lastTime=Date.now();
+
+save();
+
+if(!silent){
+
+alert(
+ "روز تمام شد.\n\n"+
+ "تولید: "+production+
+ "\nخوراک باقی‌مانده: "+
+ money(totalFeed())+
+ " کیلو"+
+ "\nتخم تازه: "+freshTotal()+
+ "\nتخم سردخانه: "+coldTotal()+
+ "\nخوراک منقضی‌شده کل: "+
+ g.totalFeedExpired+
+ " کیلو"
+);
+
+}
+
+render();
+
+}
+
+
+/* =====================================================
+   EGG PRICE
+===================================================== */
 
 function changeEggPrice(){
 
-  const change=(Math.random()*.04)-.02;
+const change=
+ (Math.random()*.04)-.02;
 
-  g.eggPrice*=1+change;
+g.eggPrice*=1+change;
 
-  g.eggPrice=Math.max(
-    .90,
-    Math.min(1.10,g.eggPrice)
-  );
+g.eggPrice=Math.max(
+ .90,
+ Math.min(1.10,g.eggPrice)
+);
 
-  g.eggPrice=Math.round(g.eggPrice*100)/100;
+g.eggPrice=
+ Math.round(g.eggPrice*100)/100;
+
 }
 
 
-/* =========================
-   فروش FIFO
-========================= */
+/* =====================================================
+   SELL EGGS FIFO
+===================================================== */
 
 function takeEggs(amount){
 
-  amount=Math.floor(num(amount));
+amount=Math.floor(num(amount));
 
-  if(amount<=0)return 0;
+let remaining=amount;
 
-  let remaining=amount;
-  let sold=0;
+let sold=0;
 
-  /*
-    ابتدا تخم‌های قدیمی‌تر.
-    سن بالاتر = قدیمی‌تر.
-  */
 
-  const fresh=[...g.freshBatches].sort((a,b)=>b.age-a.age);
+/*
+ تازه و سردخانه،
+ هر دو از قدیمی‌ترین شروع می‌شوند.
+*/
 
-  g.freshBatches=[];
+let all=[];
 
-  fresh.forEach(batch=>{
+g.freshBatches.forEach(
+ x=>all.push({
+  source:"fresh",
+  amount:x.amount,
+  age:x.age
+ })
+);
 
-    if(remaining<=0){
-      g.freshBatches.push(batch);
-      return;
-    }
+g.coldBatches.forEach(
+ x=>all.push({
+  source:"cold",
+  amount:x.amount,
+  age:x.age
+ })
+);
 
-    const take=Math.min(batch.amount,remaining);
+all.sort(
+ (a,b)=>b.age-a.age
+);
 
-    batch.amount-=take;
-    remaining-=take;
-    sold+=take;
+g.freshBatches=[];
+g.coldBatches=[];
 
-    if(batch.amount>0)
-      g.freshBatches.push(batch);
+all.forEach(batch=>{
+
+if(remaining<=0){
+
+ if(batch.source==="fresh")
+  g.freshBatches.push({
+   amount:batch.amount,
+   age:batch.age
+  });
+ else
+  g.coldBatches.push({
+   amount:batch.amount,
+   age:batch.age
   });
 
-  const cold=[...g.coldBatches].sort((a,b)=>b.age-a.age);
+ return;
 
-  g.coldBatches=[];
-
-  cold.forEach(batch=>{
-
-    if(remaining<=0){
-      g.coldBatches.push(batch);
-      return;
-    }
-
-    const take=Math.min(batch.amount,remaining);
-
-    batch.amount-=take;
-    remaining-=take;
-    sold+=take;
-
-    if(batch.amount>0)
-      g.coldBatches.push(batch);
-  });
-
-  g.totalSold+=sold;
-
-  return sold;
 }
+
+const take=
+ Math.min(batch.amount,remaining);
+
+batch.amount-=take;
+
+remaining-=take;
+
+sold+=take;
+
+if(batch.amount>0){
+
+if(batch.source==="fresh")
+ g.freshBatches.push({
+  amount:batch.amount,
+  age:batch.age
+ });
+else
+ g.coldBatches.push({
+  amount:batch.amount,
+  age:batch.age
+ });
+
+}
+
+});
+
+g.totalSold+=sold;
+
+return sold;
+
+}
+
+
+/* =====================================================
+   SELL
+===================================================== */
 
 function sellEggs(){
 
-  const amount=Math.floor(
-    num(document.getElementById("sellEggAmount").value)
-  );
+const amount=Math.floor(
+ num(document.getElementById("sellEggAmount").value)
+);
 
-  if(amount<=0){
-    alert("تعداد معتبر وارد کنید.");
-    return;
-  }
+if(amount<=0){
 
-  if(amount>sellableEggs()){
-    alert("تخم کافی ندارید.");
-    return;
-  }
+alert("تعداد معتبر وارد کنید.");
 
-  if(amount>MARKET_TRUCK_CAPACITY){
-    alert("ظرفیت کامیون برای این نسخه ۵۰۰۰ تخم است.");
-    return;
-  }
+return;
 
-  const sold=takeEggs(amount);
+}
 
-  const income=sold*g.eggPrice;
+if(amount>freshTotal()+coldTotal()){
 
-  g.tokens+=income;
+alert("تخم کافی ندارید.");
 
-  save();
-  render();
+return;
 
-  alert(
-    "فروش انجام شد.\n"+
-    "تعداد: "+sold+
-    "\nدرآمد: "+money(income)+" توکن"
-  );
+}
+
+if(amount>MARKET_TRUCK_CAPACITY){
+
+alert("ظرفیت کامیون ۵۰۰۰ تخم است.");
+
+return;
+
+}
+
+const sold=
+ takeEggs(amount);
+
+const income=
+ sold*g.eggPrice;
+
+g.tokens+=income;
+
+save();
+
+render();
+
+alert(
+ "فروش انجام شد.\n"+
+ "تعداد: "+sold+
+ "\nدرآمد: "+money(income)+" توکن"
+);
+
 }
 
 function sellAllEggs(){
 
-  const amount=Math.min(
-    sellableEggs(),
-    MARKET_TRUCK_CAPACITY
-  );
+const amount=
+ Math.min(
+  freshTotal()+coldTotal(),
+  MARKET_TRUCK_CAPACITY
+ );
 
-  if(amount<=0){
-    alert("تخم قابل فروش ندارید.");
-    return;
-  }
+if(amount<=0){
 
-  const sold=takeEggs(amount);
+alert("تخم قابل فروش ندارید.");
 
-  const income=sold*g.eggPrice;
+return;
 
-  g.tokens+=income;
+}
 
-  save();
-  render();
+const sold=
+ takeEggs(amount);
 
-  alert(
-    "فروش انجام شد.\n"+
-    "تعداد: "+sold+
-    "\nدرآمد: "+money(income)+" توکن"
-  );
+const income=
+ sold*g.eggPrice;
+
+g.tokens+=income;
+
+save();
+
+render();
+
+alert(
+ "تعداد فروش: "+sold+
+ "\nدرآمد: "+money(income)
+);
+
 }
 
 function sellDirect(){
 
-  const amount=sellableEggs();
+const amount=
+ freshTotal()+coldTotal();
 
-  if(amount<=0){
-    alert("تخم قابل فروش ندارید.");
-    return;
-  }
+if(amount<=0){
 
-  const sold=takeEggs(amount);
+alert("تخم ندارید.");
 
-  const income=sold;
+return;
 
-  g.tokens+=income;
+}
 
-  save();
-  render();
+const sold=
+ takeEggs(amount);
 
-  alert(
-    "فروش مستقیم انجام شد.\n"+
-    "تعداد: "+sold+
-    "\nدرآمد: "+money(income)+" توکن"
-  );
+g.tokens+=sold;
+
+save();
+
+render();
+
+alert(
+ "فروش مستقیم انجام شد.\n"+
+ "تعداد: "+sold+
+ "\nدرآمد: "+sold+" توکن"
+);
+
 }
 
 
-/* =========================
-   انتقال به سردخانه
-========================= */
+/* =====================================================
+   COLD STORAGE
+===================================================== */
 
 function moveToCold(){
 
-  let amount=Math.floor(
-    num(document.getElementById("coldAmount").value)
-  );
+let amount=Math.floor(
+ num(document.getElementById("coldAmount").value)
+);
 
-  if(amount<=0){
-    alert("تعداد معتبر وارد کنید.");
-    return;
-  }
+if(amount<=0){
 
-  const capacity=COLD_LEVELS[g.coldLevel].capacity;
+alert("تعداد معتبر وارد کنید.");
 
-  const free=capacity-coldTotal();
+return;
 
-  if(amount>free){
-    alert("ظرفیت خالی سردخانه کافی نیست.");
-    return;
-  }
+}
 
-  if(amount>freshTotal()){
-    alert("تخم تازه کافی ندارید.");
-    return;
-  }
+const capacity=
+ COLD_LEVELS[g.coldLevel].capacity;
 
-  let remaining=amount;
+if(
+ coldTotal()+amount>
+ capacity
+){
 
-  /*
-    تخم‌های قدیمی‌تر را اول وارد سردخانه می‌کنیم.
-    سن تازه حفظ می‌شود.
-  */
+alert("ظرفیت سردخانه کافی نیست.");
 
-  const batches=[...g.freshBatches]
-    .sort((a,b)=>b.age-a.age);
+return;
 
-  g.freshBatches=[];
+}
 
-  batches.forEach(batch=>{
+if(amount>freshTotal()){
 
-    if(remaining<=0){
-      g.freshBatches.push(batch);
-      return;
-    }
+alert("تخم تازه کافی نیست.");
 
-    const take=Math.min(batch.amount,remaining);
+return;
 
-    batch.amount-=take;
-    remaining-=take;
+}
 
-    g.coldBatches.push({
-      amount:take,
-      age:batch.age
-    });
+let remaining=amount;
 
-    if(batch.amount>0)
-      g.freshBatches.push(batch);
-  });
+const batches=
+ [...g.freshBatches]
+ .sort((a,b)=>b.age-a.age);
 
-  save();
-  render();
+g.freshBatches=[];
 
-  alert("تخم‌ها به سردخانه منتقل شدند.");
+batches.forEach(batch=>{
+
+if(remaining<=0){
+
+g.freshBatches.push(batch);
+
+return;
+
+}
+
+const take=
+ Math.min(batch.amount,remaining);
+
+batch.amount-=take;
+
+remaining-=take;
+
+g.coldBatches.push({
+
+amount:take,
+
+/*
+ سن واقعی تخم حفظ می‌شود.
+*/
+
+age:batch.age
+
+});
+
+if(batch.amount>0)
+ g.freshBatches.push(batch);
+
+});
+
+save();
+
+render();
+
+alert("تخم‌ها به سردخانه منتقل شدند.");
+
 }
 
 
-/* =========================
-   ضایعات
-========================= */
+/* =====================================================
+   DISCARD
+===================================================== */
 
 function discardSpoiled(){
 
-  if(g.spoiledEggs<=0){
-    alert("تخم فاسدی وجود ندارد.");
-    return;
-  }
+if(g.spoiledEggs<=0){
 
-  const n=g.spoiledEggs;
+alert("تخم فاسد ندارید.");
 
-  g.spoiledEggs=0;
+return;
 
-  save();
-  render();
+}
 
-  alert(n+" تخم فاسد دور ریخته شد.");
+g.spoiledEggs=0;
+
+save();
+
+render();
+
 }
 
 
-/* =========================
-   نظافت
-========================= */
+/* =====================================================
+   CLEANING
+===================================================== */
 
 function cleanFarm(){
 
-  g.cleanFarmDay=g.day;
+g.cleanFarmDay=g.day;
 
-  if(g.sickDays>0){
-    g.sickDays=0;
-  }
+g.sickDays=0;
 
-  save();
-  render();
+save();
 
-  alert("مزرعه تمیز شد.");
+render();
+
+alert("مزرعه تمیز شد.");
+
 }
 
 function cleanColdStorage(){
 
-  g.cleanColdDay=g.day;
+g.cleanColdDay=g.day;
 
-  save();
-  render();
+save();
 
-  alert("سردخانه تمیز شد.");
+render();
+
+alert("سردخانه تمیز شد.");
+
+}
+
+function cleanFeedStorage(){
+
+g.feedStorageCleanDay=g.day;
+
+g.feedBatches.forEach(
+ x=>x.quality=100
+);
+
+save();
+
+render();
+
+alert("انبار خوراک تمیز شد.");
+
 }
 
 
-/* =========================
-   خوراک
-========================= */
-
-function buyFeed(type){
-
-  const price=type==="normal"?30:20;
-
-  const capacity=FARM_LEVELS[g.farmLevel].feedStorage;
-
-  if(g.feed+100>capacity){
-    alert("ظرفیت انبار خوراک کافی نیست.");
-    return;
-  }
-
-  if(g.tokens<price){
-    alert("توکن کافی ندارید.");
-    return;
-  }
-
-  g.tokens-=price;
-  g.feed+=100;
-  g.totalBoughtFeed+=100;
-
-  save();
-  render();
-
-  alert("۱۰۰ کیلو خوراک خریداری شد.");
-}
-
-
-/* =========================
-   ارتقای مزرعه
-========================= */
+/* =====================================================
+   FARM UPGRADE
+===================================================== */
 
 function upgradeFarm(){
 
-  if(g.farmLevel>=5){
-    alert("مزرعه در بالاترین سطح است.");
-    return;
-  }
+if(g.farmLevel>=5){
 
-  const next=g.farmLevel+1;
-  const cost=FARM_LEVELS[next].upgrade;
+alert("مزرعه در بالاترین سطح است.");
 
-  if(g.tokens<cost){
-    alert(
-      "توکن کافی نیست.\n"+
-      "هزینه ارتقا: "+cost
-    );
-    return;
-  }
+return;
 
-  g.tokens-=cost;
-  g.farmLevel=next;
+}
 
-  save();
-  render();
+const next=
+ g.farmLevel+1;
 
-  alert("مزرعه به سطح "+next+" ارتقا یافت.");
+const cost=
+ FARM_LEVELS[next].upgrade;
+
+if(g.tokens<cost){
+
+alert(
+ "هزینه ارتقا: "+
+ cost+
+ " توکن"
+);
+
+return;
+
+}
+
+g.tokens-=cost;
+
+g.farmLevel=next;
+
+save();
+
+render();
+
+alert(
+ "مزرعه به سطح "+
+ next+
+ " ارتقا یافت."
+);
+
 }
 
 
-/* =========================
-   خرید مرغ
-========================= */
+/* =====================================================
+   BUY CHICKENS
+===================================================== */
 
 function buyChickens(){
 
-  const amount=Math.floor(
-    num(document.getElementById("buyChickenAmount").value)
-  );
+const amount=Math.floor(
+ num(document.getElementById("buyChickenAmount").value)
+);
 
-  if(amount<=0){
-    alert("تعداد معتبر وارد کنید.");
-    return;
-  }
+if(amount<=0){
 
-  const capacity=FARM_LEVELS[g.farmLevel].capacity;
-  const total=getTotalChickens();
+alert("تعداد معتبر وارد کنید.");
 
-  if(total+amount>capacity){
-    alert(
-      "ظرفیت کافی نیست.\n"+
-      "ظرفیت فعلی: "+capacity
-    );
-    return;
-  }
+return;
 
-  const cost=amount*200;
+}
 
-  if(g.tokens<cost){
-    alert("توکن کافی ندارید.");
-    return;
-  }
+const capacity=
+ FARM_LEVELS[g.farmLevel].capacity;
 
-  g.tokens-=cost;
+if(
+ getTotalChickens()+amount>
+ capacity
+){
 
-  g.chickenGroups.push({
-    amount:amount,
-    age:0
-  });
+alert("ظرفیت مزرعه کافی نیست.");
 
-  g.totalBoughtChickens+=amount;
+return;
 
-  save();
-  render();
+}
 
-  alert(
-    amount+
-    " مرغ خریداری شد.\n"+
-    "مرغ‌های جدید از روز بعد شروع به تولید می‌کنند."
-  );
+const cost=
+ amount*200;
+
+if(g.tokens<cost){
+
+alert("توکن کافی نیست.");
+
+return;
+
+}
+
+g.tokens-=cost;
+
+g.chickenGroups.push({
+
+amount:amount,
+
+age:0
+
+});
+
+g.totalBoughtChickens+=amount;
+
+save();
+
+render();
+
+alert(
+ amount+
+ " مرغ خریداری شد.\n"+
+ "تولید از روز بعد آغاز می‌شود."
+);
+
 }
 
 
-/* =========================
-   فروش مرغ پیر
-========================= */
+/* =====================================================
+   SELL OLD CHICKENS
+===================================================== */
 
 function sellOldChickens(){
 
-  let amount=Math.floor(
-    num(document.getElementById("sellOldAmount").value)
-  );
+const amount=Math.floor(
+ num(document.getElementById("sellOldAmount").value)
+);
 
-  if(amount<=0){
-    alert("تعداد معتبر وارد کنید.");
-    return;
-  }
+if(amount<=0){
 
-  const old=getOldChickens();
+alert("تعداد معتبر وارد کنید.");
 
-  if(amount>old){
-    alert("مرغ پیر کافی ندارید.");
-    return;
-  }
+return;
 
-  let remaining=amount;
-  let income=0;
+}
 
-  g.chickenGroups.sort((a,b)=>b.age-a.age);
+if(amount>getOldChickens()){
 
-  for(const group of g.chickenGroups){
+alert("مرغ پیر کافی ندارید.");
 
-    if(remaining<=0)break;
+return;
 
-    if(group.age<500)continue;
+}
 
-    const take=Math.min(group.amount,remaining);
+let remaining=amount;
 
-    for(let i=0;i<take;i++){
-      income+=35+Math.random()*30;
-    }
+let income=0;
 
-    group.amount-=take;
-    remaining-=take;
-  }
+g.chickenGroups.sort(
+ (a,b)=>b.age-a.age
+);
 
-  g.chickenGroups=
-    g.chickenGroups.filter(x=>x.amount>0);
+for(const group of g.chickenGroups){
 
-  g.tokens+=income;
+if(remaining<=0)break;
 
-  save();
-  render();
+if(group.age<500)continue;
 
-  alert(
-    "فروش مرغ پیر انجام شد.\n"+
-    "تعداد: "+amount+
-    "\nدریافت: "+money(income)+" توکن"
-  );
+const take=
+ Math.min(group.amount,remaining);
+
+for(let i=0;i<take;i++){
+
+income+=
+ 35+
+ Math.random()*30;
+
+}
+
+group.amount-=take;
+
+remaining-=take;
+
+}
+
+g.chickenGroups=
+ g.chickenGroups.filter(
+  x=>x.amount>0
+ );
+
+g.tokens+=income;
+
+save();
+
+render();
+
+alert(
+ "فروش مرغ پیر انجام شد.\n"+
+ "تعداد: "+amount+
+ "\nدرآمد: "+money(income)
+);
+
 }
 
 
-/* =========================
-   ارتقای سردخانه
-========================= */
+/* =====================================================
+   COLD UPGRADE
+===================================================== */
 
 function upgradeColdStorage(){
 
-  if(g.coldLevel>=3){
-    alert("سردخانه در بالاترین سطح این نسخه است.");
-    return;
-  }
+if(g.coldLevel>=3){
 
-  const next=g.coldLevel+1;
-  const cost=COLD_LEVELS[next].upgrade;
+alert(
+ "سردخانه در بالاترین سطح این نسخه است."
+);
 
-  if(g.tokens<cost){
-    alert("توکن کافی نیست.");
-    return;
-  }
+return;
 
-  g.tokens-=cost;
-  g.coldLevel=next;
+}
 
-  save();
-  render();
+const next=
+ g.coldLevel+1;
 
-  alert(
-    "سردخانه به سطح "+next+
-    " ارتقا یافت."
-  );
+const cost=
+ COLD_LEVELS[next].upgrade;
+
+if(g.tokens<cost){
+
+alert("توکن کافی نیست.");
+
+return;
+
+}
+
+g.tokens-=cost;
+
+g.coldLevel=next;
+
+save();
+
+render();
+
+alert(
+ "سردخانه به سطح "+
+ next+
+ " ارتقا یافت."
+);
+
 }
 
 
-/* =========================
-   تب‌ها
-========================= */
+/* =====================================================
+   TAB
+===================================================== */
 
 function showTab(tab){
 
-  document.querySelectorAll(".tab")
-    .forEach(x=>x.classList.remove("active"));
+document.querySelectorAll(".tab")
+.forEach(
+ x=>x.classList.remove("active")
+);
 
-  document.querySelectorAll(".nav button")
-    .forEach(x=>x.classList.remove("active"));
+document.querySelectorAll(".nav button")
+.forEach(
+ x=>x.classList.remove("active")
+);
 
-  document.getElementById(tab+"Tab")
-    .classList.add("active");
+document.getElementById(
+ tab+"Tab"
+).classList.add("active");
 
-  document.getElementById("nav"+tab.charAt(0).toUpperCase()+tab.slice(1))
-    .classList.add("active");
+document.getElementById(
+ "nav"+
+ tab.charAt(0).toUpperCase()+
+ tab.slice(1)
+).classList.add("active");
+
 }
 
 
-/* =========================
-   رندر
-========================= */
+/* =====================================================
+   RENDER
+===================================================== */
 
 function render(){
 
-  const active=getActiveChickens();
-  const old=getOldChickens();
-  const total=getTotalChickens();
-  const fresh=freshTotal();
-  const cold=coldTotal();
+const active=
+ getActiveChickens();
 
-  document.getElementById("tokens").textContent=
-    money(g.tokens);
+const old=
+ getOldChickens();
 
-  document.getElementById("dayInfo").textContent=
-    "روز "+g.day+
-    " | فصل: "+getSeason(g.day);
+const total=
+ getTotalChickens();
 
-  document.getElementById("activeChickens").textContent=active;
-  document.getElementById("oldChickens").textContent=old;
+const feed=
+ totalFeed();
 
-  document.getElementById("freshEggs").textContent=fresh;
-  document.getElementById("coldEggs").textContent=cold;
+document.getElementById("tokens").textContent=
+ money(g.tokens);
 
-  document.getElementById("feed").textContent=
-    money(g.feed);
+document.getElementById("dayInfo").textContent=
+ "روز "+g.day+
+ " | "+getSeason(g.day);
 
-  document.getElementById("temperature").textContent=
-    g.lastTemperature+"°C";
+document.getElementById("activeChickens").textContent=
+ active;
 
-  document.getElementById("eggPrice").textContent=
-    money(g.eggPrice);
+document.getElementById("oldChickens").textContent=
+ old;
 
-  document.getElementById("coldCapacity").textContent=
-    COLD_LEVELS[g.coldLevel].capacity;
+document.getElementById("freshEggs").textContent=
+ freshTotal();
 
-  document.getElementById("coldStored").textContent=cold;
+document.getElementById("coldEggs").textContent=
+ coldTotal();
 
-  const cp=
-    COLD_LEVELS[g.coldLevel].capacity;
+document.getElementById("feed").textContent=
+ money(feed);
 
-  document.getElementById("coldProgress").style.width=
-    Math.min(100,(cold/cp)*100)+"%";
+document.getElementById("temperature").textContent=
+ g.lastTemperature+"°C";
 
-  document.getElementById("spoiledEggs").textContent=
-    g.spoiledEggs;
+document.getElementById("eggPrice").textContent=
+ money(g.eggPrice);
 
-  document.getElementById("totalSold").textContent=
-    g.totalSold;
+document.getElementById("coldCapacity").textContent=
+ COLD_LEVELS[g.coldLevel].capacity;
 
-  document.getElementById("profileLevel").textContent=
-    g.farmLevel;
+document.getElementById("coldStored").textContent=
+ coldTotal();
 
-  document.getElementById("profileChickens").textContent=
-    total;
+document.getElementById("coldProgress").style.width=
+ Math.min(
+  100,
+  coldTotal()/
+  COLD_LEVELS[g.coldLevel].capacity*
+  100
+ )+"%";
 
-  document.getElementById("profileProduction").textContent=
-    g.lastProduction;
+document.getElementById("spoiledEggs").textContent=
+ g.spoiledEggs;
 
-  document.getElementById("profileTokens").textContent=
-    money(g.tokens);
+document.getElementById("totalSold").textContent=
+ g.totalSold;
 
-  renderWeather();
-  renderActions();
-  renderAge();
-  renderToday();
-  renderCleaning();
-  renderFresh();
-  renderCold();
-  renderHistory();
-  renderPriceHistory();
-  renderFarmUpgrade();
-  renderColdUpgrade();
-  renderFeed();
-  renderStats();
+document.getElementById("profileLevel").textContent=
+ g.farmLevel;
+
+document.getElementById("profileChickens").textContent=
+ total;
+
+document.getElementById("profileProduction").textContent=
+ g.lastProduction;
+
+document.getElementById("profileTokens").textContent=
+ money(g.tokens);
+
+document.getElementById("normalFeedPrice").textContent=
+ money(currentFeedPrice("normal"));
+
+document.getElementById("ecoFeedPrice").textContent=
+ money(currentFeedPrice("eco"));
+
+renderActions();
+
+renderWeather();
+
+renderAge();
+
+renderToday();
+
+renderCleaning();
+
+renderFresh();
+
+renderCold();
+
+renderHistory();
+
+renderPriceHistory();
+
+renderFarmUpgrade();
+
+renderColdUpgrade();
+
+renderFeed();
+
+renderFeedStats();
+
+renderGlobalStats();
+
 }
 
 
-/* =========================
-   دما
-========================= */
-
-function renderWeather(){
-
-  const t=g.lastTemperature;
-
-  let text="شرایط مناسب";
-
-  if(t>=38){
-    text="⚠️ گرمای شدید — خطر بیماری";
-  }else if(t<=10){
-    text="⚠️ سرمای شدید — خطر بیماری";
-  }else if(t<24){
-    text="هوا سردتر از دمای ایده‌آل است.";
-  }else if(t>24){
-    text="هوا گرم‌تر از دمای ایده‌آل است.";
-  }
-
-  document.getElementById("weatherBox").innerHTML=
-    "<b>"+text+"</b>"+
-    "<br><span class='small'>"+
-    "دمای ایده‌آل: 24°C | فصل: "+
-    esc(getSeason(g.day))+
-    "</span>";
-
-}
-
-
-/* =========================
-   عملیات
-========================= */
+/* =====================================================
+   ACTIONS
+===================================================== */
 
 function renderActions(){
 
-  const a=g.actions;
+const a=g.actions;
 
-  const done=
-    a.morningFeed&&
-    a.morningWater&&
-    a.eveningFeed&&
-    a.eveningWater;
+const done=
+ a.morningFeed&&
+ a.morningWater&&
+ a.eveningFeed&&
+ a.eveningWater;
 
-  if(done){
+if(done){
 
-    document.getElementById("actionStatus").innerHTML=
-      '<div class="ok">✅ هر چهار عملیات امروز انجام شده است.</div>';
+document.getElementById(
+ "actionStatus"
+).innerHTML=
+ '<div class="ok">✅ هر چهار عملیات انجام شده است.</div>';
 
-  }else{
+}else{
 
-    let list=[];
+let list=[];
 
-    if(!a.morningFeed)list.push("خوراک ۷");
-    if(!a.morningWater)list.push("آب ۷");
-    if(!a.eveningFeed)list.push("خوراک ۱۸");
-    if(!a.eveningWater)list.push("آب ۱۸");
+if(!a.morningFeed)
+ list.push("خوراک ۷");
 
-    document.getElementById("actionStatus").innerHTML=
-      '<div class="notice">انجام نشده: '+
-      list.join("، ")+
-      "</div>";
-  }
+if(!a.morningWater)
+ list.push("آب ۷");
+
+if(!a.eveningFeed)
+ list.push("خوراک ۱۸");
+
+if(!a.eveningWater)
+ list.push("آب ۱۸");
+
+document.getElementById(
+ "actionStatus"
+).innerHTML=
+ '<div class="notice">انجام نشده: '+
+ list.join("، ")+
+ "</div>";
+
+}
 
 }
 
 
-/* =========================
-   سن گله
-========================= */
+/* =====================================================
+   WEATHER
+===================================================== */
+
+function renderWeather(){
+
+const t=g.lastTemperature;
+
+let text="شرایط مناسب";
+
+if(t>=38)
+ text="⚠️ گرمای شدید — خطر بیماری";
+
+else if(t<=10)
+ text="⚠️ سرمای شدید — خطر بیماری";
+
+else if(t<24)
+ text="هوا سردتر از ایده‌آل است.";
+
+else if(t>24)
+ text="هوا گرم‌تر از ایده‌آل است.";
+
+document.getElementById(
+ "weatherBox"
+).innerHTML=
+ "<b>"+text+"</b>"+
+ "<br>"+
+ "<span class='small'>"+
+ "دمای ایده‌آل: 24°C"+
+ "</span>";
+
+}
+
+
+/* =====================================================
+   AGE
+===================================================== */
 
 function renderAge(){
 
-  const oldest=getOldestAge();
+const oldest=
+ getOldestAge();
 
-  const days=Math.max(0,500-oldest);
+const days=
+ Math.max(0,500-oldest);
 
-  let html=
-    "<div class='grid'>"+
-    "<div class='stat'>"+
-    "قدیمی‌ترین مرغ"+
-    "<b>"+oldest+" روز</b>"+
-    "</div>"+
-    "<div class='stat'>"+
-    "تا پایان تولید"+
-    "<b>"+days+" روز</b>"+
-    "</div>"+
-    "</div>";
+let html=
+ "<div class='grid'>"+
+ "<div class='stat'>قدیمی‌ترین مرغ"+
+ "<b>"+oldest+" روز</b>"+
+ "</div>"+
+ "<div class='stat'>تا پایان تولید"+
+ "<b>"+days+" روز</b>"+
+ "</div>"+
+ "</div>";
 
-  g.chickenGroups
-    .slice()
-    .sort((a,b)=>b.age-a.age)
-    .forEach((x,i)=>{
+g.chickenGroups
+.slice()
+.sort((a,b)=>b.age-a.age)
+.forEach((x,i)=>{
 
-      const status=
-        x.age>=500
-        ?"مرغ پیر — بدون تولید"
-        :x.age===0
-        ?"مرغ جدید — شروع تولید فردا"
-        :"در حال تولید";
+const status=
+ x.age>=500
+ ?"مرغ پیر — بدون تولید"
+ :x.age===0
+ ?"مرغ جدید — شروع تولید فردا"
+ :"در حال تولید";
 
-      html+=
-        "<div class='batch'>"+
-        "<b>گروه "+(i+1)+"</b>"+
-        "<br>"+
-        x.amount+" قطعه"+
-        " | سن: "+x.age+" روز"+
-        "<br>"+
-        "<span class='badge'>"+status+"</span>"+
-        "</div>";
-    });
+html+=
+ "<div class='batch'>"+
+ "<b>گروه "+(i+1)+"</b>"+
+ "<br>"+
+ x.amount+" قطعه | سن "+
+ x.age+" روز"+
+ "<br>"+
+ "<span class='badge'>"+
+ status+
+ "</span>"+
+ "</div>";
 
-  document.getElementById("ageSummary").innerHTML=html;
+});
+
+document.getElementById(
+ "ageSummary"
+).innerHTML=html;
+
 }
 
 
-/* =========================
-   تولید امروز
-========================= */
+/* =====================================================
+   TODAY
+===================================================== */
 
 function renderToday(){
 
-  const active=getActiveChickens();
+const active=
+ getActiveChickens();
 
-  let efficiency=
-    active>0
-    ?(g.lastProduction/active*100)
-    :0;
+const efficiency=
+ active>0
+ ?g.lastProduction/active*100
+ :0;
 
-  document.getElementById("todayProduction").innerHTML=
-    "<div class='grid'>"+
-    "<div class='stat'>"+
-    "مرغ فعال"+
-    "<b>"+active+"</b>"+
-    "</div>"+
-    "<div class='stat'>"+
-    "تولید"+
-    "<b>"+g.lastProduction+"</b>"+
-    "</div>"+
-    "</div>"+
-    "<p class='small'>"+
-    "بازده واقعی امروز: "+
-    money(efficiency)+"% از تعداد مرغ فعال"+
-    "</p>";
+document.getElementById(
+ "todayProduction"
+).innerHTML=
+ "<div class='grid'>"+
+ "<div class='stat'>مرغ فعال"+
+ "<b>"+active+"</b>"+
+ "</div>"+
+ "<div class='stat'>تولید"+
+ "<b>"+g.lastProduction+"</b>"+
+ "</div>"+
+ "</div>"+
+ "<p class='small'>"+
+ "بازده: "+money(efficiency)+"%"+
+ "</p>";
 
 }
 
 
-/* =========================
-   نظافت
-========================= */
+/* =====================================================
+   CLEAN
+===================================================== */
 
 function renderCleaning(){
 
-  const farmDays=g.day-g.cleanFarmDay;
-  const coldDays=g.day-g.cleanColdDay;
+const farmDays=
+ g.day-g.cleanFarmDay;
 
-  document.getElementById("cleanStatus").innerHTML=
-    "نظافت مزرعه: "+
-    farmDays+
-    " روز قبل"+
-    "<br>"+
-    "نظافت سردخانه: "+
-    coldDays+
-    " روز قبل"+
-    (farmDays>=7
-      ?"<div class='bad'>⚠️ نظافت هفتگی عقب افتاده است.</div>"
-      :"");
+const coldDays=
+ g.day-g.cleanColdDay;
+
+const feedDays=
+ g.day-g.feedStorageCleanDay;
+
+document.getElementById(
+ "cleanStatus"
+).innerHTML=
+ "نظافت مزرعه: "+
+ farmDays+
+ " روز قبل"+
+ "<br>"+
+ "نظافت سردخانه: "+
+ coldDays+
+ " روز قبل"+
+ "<br>"+
+ "نظافت انبار خوراک: "+
+ feedDays+
+ " روز قبل"+
+ (
+  feedDays>=30
+  ?"<div class='bad'>⚠️ نظافت ماهانه انبار عقب افتاده است.</div>"
+  :""
+ );
+
 }
 
 
-/* =========================
-   بچ‌های تازه
-========================= */
+/* =====================================================
+   FRESH EGGS
+===================================================== */
 
 function renderFresh(){
 
-  if(!g.freshBatches.length){
+if(!g.freshBatches.length){
 
-    document.getElementById("freshBatches").innerHTML=
-      "<p class='small'>تخم تازه‌ای وجود ندارد.</p>";
+document.getElementById(
+ "freshBatches"
+).innerHTML=
+ "<p class='small'>تخم تازه‌ای وجود ندارد.</p>";
 
-    return;
-  }
+return;
 
-  let html="";
+}
 
-  g.freshBatches
-    .slice()
-    .sort((a,b)=>b.age-a.age)
-    .forEach((x,i)=>{
+let html="";
 
-      const remaining=Math.max(0,3-x.age);
+g.freshBatches
+.slice()
+.sort((a,b)=>b.age-a.age)
+.forEach((x,i)=>{
 
-      html+=
-        "<div class='batch "+
-        (remaining<=1?"old":"good")+
-        "'>"+
-        "<b>بچ "+(i+1)+"</b>"+
-        "<br>"+
-        "تعداد: "+x.amount+
-        "<br>"+
-        "سن: "+x.age+" روز"+
-        "<br>"+
-        "زمان باقی‌مانده: "+
-        remaining+
-        " روز"+
-        "</div>";
-    });
+const remaining=
+ Math.max(0,3-x.age);
 
-  document.getElementById("freshBatches").innerHTML=html;
+let cls="good";
+
+if(remaining<=1)
+ cls="old";
+
+else if(remaining===2)
+ cls="warn";
+
+html+=
+ "<div class='batch "+cls+"'>"+
+ "<b>بچ "+(i+1)+"</b>"+
+ "<br>"+
+ "تعداد: "+x.amount+
+ "<br>"+
+ "سن: "+x.age+" روز"+
+ "<br>"+
+ "باقی‌مانده: "+remaining+" روز"+
+ "</div>";
+
+});
+
+document.getElementById(
+ "freshBatches"
+).innerHTML=html;
+
 }
 
 
-/* =========================
-   بچ‌های سردخانه
-========================= */
+/* =====================================================
+   COLD
+===================================================== */
 
 function renderCold(){
 
-  if(!g.coldBatches.length){
+if(!g.coldBatches.length){
 
-    document.getElementById("coldBatches").innerHTML=
-      "<p class='small'>سردخانه خالی است.</p>";
+document.getElementById(
+ "coldBatches"
+).innerHTML=
+ "<p class='small'>سردخانه خالی است.</p>";
 
-    return;
-  }
+return;
 
-  let html="";
+}
 
-  g.coldBatches
-    .slice()
-    .sort((a,b)=>b.age-a.age)
-    .forEach((x,i)=>{
+let html="";
 
-      const remaining=Math.max(0,30-x.age);
+g.coldBatches
+.slice()
+.sort((a,b)=>b.age-a.age)
+.forEach((x,i)=>{
 
-      html+=
-        "<div class='batch "+
-        (remaining<=5?"old":"good")+
-        "'>"+
-        "<b>بچ سردخانه "+(i+1)+"</b>"+
-        "<br>"+
-        "تعداد: "+x.amount+
-        "<br>"+
-        "سن ذخیره: "+x.age+" روز"+
-        "<br>"+
-        "زمان باقی‌مانده: "+
-        remaining+
-        " روز"+
-        "</div>";
-    });
+const remaining=
+ Math.max(0,30-x.age);
 
-  document.getElementById("coldBatches").innerHTML=html;
+let cls="good";
+
+if(remaining<=5)
+ cls="old";
+
+else if(remaining<=10)
+ cls="warn";
+
+html+=
+ "<div class='batch "+cls+"'>"+
+ "<b>بچ سردخانه "+(i+1)+"</b>"+
+ "<br>"+
+ "تعداد: "+x.amount+
+ "<br>"+
+ "سن: "+x.age+" روز"+
+ "<br>"+
+ "باقی‌مانده: "+remaining+" روز"+
+ "</div>";
+
+});
+
+document.getElementById(
+ "coldBatches"
+).innerHTML=html;
+
 }
 
 
-/* =========================
-   تاریخچه
-========================= */
+/* =====================================================
+   HISTORY
+===================================================== */
 
 function renderHistory(){
 
-  if(!g.history.length){
+if(!g.history.length){
 
-    document.getElementById("history").innerHTML=
-      "<p class='small'>هنوز تاریخچه‌ای ثبت نشده است.</p>";
+document.getElementById(
+ "history"
+).innerHTML=
+ "<p class='small'>هنوز تاریخچه‌ای وجود ندارد.</p>";
 
-    return;
-  }
+return;
 
-  let html=
-    "<table>"+
-    "<tr>"+
-    "<th>روز</th>"+
-    "<th>تولید</th>"+
-    "<th>مرغ</th>"+
-    "<th>دما</th>"+
-    "</tr>";
+}
 
-  g.history.slice(0,15).forEach(x=>{
+let html=
+ "<table>"+
+ "<tr>"+
+ "<th>روز</th>"+
+ "<th>تولید</th>"+
+ "<th>مرغ</th>"+
+ "<th>دما</th>"+
+ "<th>خوراک</th>"+
+ "</tr>";
 
-    html+=
-      "<tr>"+
-      "<td>"+x.day+"</td>"+
-      "<td>"+x.production+"</td>"+
-      "<td>"+x.active+"</td>"+
-      "<td>"+x.temperature+"°</td>"+
-      "</tr>";
-  });
+g.history
+.slice(0,15)
+.forEach(x=>{
 
-  html+="</table>";
+html+=
+ "<tr>"+
+ "<td>"+x.day+"</td>"+
+ "<td>"+x.production+"</td>"+
+ "<td>"+x.active+"</td>"+
+ "<td>"+x.temperature+"°</td>"+
+ "<td>"+money(x.feed)+"</td>"+
+ "</tr>";
 
-  document.getElementById("history").innerHTML=html;
+});
+
+html+="</table>";
+
+document.getElementById(
+ "history"
+).innerHTML=html;
+
 }
 
 
-/* =========================
-   قیمت‌ها
-========================= */
+/* =====================================================
+   PRICE HISTORY
+===================================================== */
 
 function renderPriceHistory(){
 
-  if(!g.priceHistory.length){
+if(!g.priceHistory.length){
 
-    document.getElementById("priceHistory").innerHTML=
-      "<p class='small'>هنوز سابقه قیمت وجود ندارد.</p>";
+document.getElementById(
+ "priceHistory"
+).innerHTML=
+ "<p class='small'>هنوز سابقه‌ای وجود ندارد.</p>";
 
-    return;
-  }
+return;
 
-  let html=
-    "<table>"+
-    "<tr><th>روز</th><th>قیمت</th></tr>";
+}
 
-  g.priceHistory.slice(0,15).forEach(x=>{
+let html=
+ "<table>"+
+ "<tr><th>روز</th><th>قیمت تخم</th></tr>";
 
-    html+=
-      "<tr>"+
-      "<td>"+x.day+"</td>"+
-      "<td>"+money(x.price)+"</td>"+
-      "</tr>";
-  });
+g.priceHistory
+.slice(0,15)
+.forEach(x=>{
 
-  html+="</table>";
+html+=
+ "<tr>"+
+ "<td>"+x.day+"</td>"+
+ "<td>"+money(x.price)+"</td>"+
+ "</tr>";
 
-  document.getElementById("priceHistory").innerHTML=html;
+});
+
+html+="</table>";
+
+document.getElementById(
+ "priceHistory"
+).innerHTML=html;
+
 }
 
 
-/* =========================
-   ارتقای مزرعه
-========================= */
+/* =====================================================
+   FARM UPGRADE
+===================================================== */
 
 function renderFarmUpgrade(){
 
-  const current=FARM_LEVELS[g.farmLevel];
+const current=
+ FARM_LEVELS[g.farmLevel];
 
-  let html=
-    "<div class='grid'>"+
-    "<div class='stat'>سطح<b>"+g.farmLevel+"</b></div>"+
-    "<div class='stat'>ظرفیت<b>"+current.capacity+"</b></div>"+
-    "</div>";
+let html=
+ "<div class='grid'>"+
+ "<div class='stat'>سطح"+
+ "<b>"+g.farmLevel+"</b>"+
+ "</div>"+
+ "<div class='stat'>ظرفیت"+
+ "<b>"+current.capacity+"</b>"+
+ "</div>"+
+ "</div>";
 
-  if(g.farmLevel<5){
+if(g.farmLevel<5){
 
-    const next=g.farmLevel+1;
+const next=
+ g.farmLevel+1;
 
-    html+=
-      "<p class='small'>"+
-      "سطح بعد: "+next+
-      " | ظرفیت: "+FARM_LEVELS[next].capacity+
-      " | هزینه: "+FARM_LEVELS[next].upgrade+
-      " توکن"+
-      "</p>";
+html+=
+ "<p class='small'>"+
+ "سطح بعد: "+next+
+ " | ظرفیت: "+
+ FARM_LEVELS[next].capacity+
+ " | هزینه: "+
+ FARM_LEVELS[next].upgrade+
+ " توکن"+
+ "</p>";
 
-  }else{
+}else{
 
-    html+="<p class='ok'>مزرعه در بالاترین سطح است.</p>";
-  }
+html+=
+ "<p class='ok'>بالاترین سطح مزرعه.</p>";
 
-  document.getElementById("farmLevelInfo").innerHTML=html;
+}
+
+document.getElementById(
+ "farmLevelInfo"
+).innerHTML=html;
+
 }
 
 
-/* =========================
-   سردخانه
-========================= */
+/* =====================================================
+   COLD UPGRADE
+===================================================== */
 
 function renderColdUpgrade(){
 
-  const c=COLD_LEVELS[g.coldLevel];
+const current=
+ COLD_LEVELS[g.coldLevel];
 
-  let html=
-    "<div class='grid'>"+
-    "<div class='stat'>سطح<b>"+g.coldLevel+"</b></div>"+
-    "<div class='stat'>ظرفیت<b>"+c.capacity+"</b></div>"+
-    "</div>";
+let html=
+ "<div class='grid'>"+
+ "<div class='stat'>سطح"+
+ "<b>"+g.coldLevel+"</b>"+
+ "</div>"+
+ "<div class='stat'>ظرفیت"+
+ "<b>"+current.capacity+"</b>"+
+ "</div>"+
+ "</div>";
 
-  if(g.coldLevel<3){
+if(g.coldLevel<3){
 
-    const next=g.coldLevel+1;
+const next=
+ g.coldLevel+1;
 
-    html+=
-      "<p class='small'>"+
-      "سطح بعد: "+next+
-      " | ظرفیت: "+COLD_LEVELS[next].capacity+
-      " | هزینه: "+COLD_LEVELS[next].upgrade+
-      " توکن"+
-      "</p>";
+html+=
+ "<p class='small'>"+
+ "سطح بعد: "+next+
+ " | ظرفیت: "+
+ COLD_LEVELS[next].capacity+
+ " | هزینه: "+
+ COLD_LEVELS[next].upgrade+
+ " توکن"+
+ "</p>";
 
-  }else{
+}else{
 
-    html+="<p class='ok'>بالاترین سطح سردخانه.</p>";
-  }
+html+=
+ "<p class='ok'>بالاترین سطح.</p>";
 
-  document.getElementById("coldUpgradeInfo").innerHTML=html;
+}
+
+document.getElementById(
+ "coldUpgradeInfo"
+).innerHTML=html;
+
 }
 
 
-/* =========================
-   خوراک
-========================= */
+/* =====================================================
+   FEED STORAGE
+===================================================== */
 
 function renderFeed(){
 
-  const cap=FARM_LEVELS[g.farmLevel].feedStorage;
+const capacity=
+ FARM_LEVELS[g.farmLevel].feedStorage;
 
-  document.getElementById("feedStorageInfo").innerHTML=
-    "<p class='small'>"+
-    "موجودی: "+money(g.feed)+
-    " کیلوگرم از "+cap+
-    " کیلوگرم"+
-    "</p>";
+let html=
+ "<div class='notice'>"+
+ "موجودی خوراک: "+
+ money(totalFeed())+
+ " از "+
+ capacity+
+ " کیلوگرم"+
+ "</div>";
 
-  document.getElementById("normalFeedPrice").textContent="30";
-  document.getElementById("ecoFeedPrice").textContent="20";
+if(
+ g.day-g.feedStorageCleanDay>=30
+){
+
+html+=
+ "<div class='bad'>"+
+ "⚠️ نظافت ماهانه انبار خوراک انجام نشده است."
+ +"</div>";
+
+}
+
+html+=
+ "<button onclick='cleanFeedStorage()'>"+
+ "🧹 نظافت انبار خوراک"+
+ "</button>";
+
+html+=
+ "<h3 style='font-size:14px'>بچ‌های خوراک</h3>";
+
+if(!g.feedBatches.length){
+
+html+=
+ "<p class='small'>انبار خوراک خالی است.</p>";
+
+}else{
+
+g.feedBatches
+.slice()
+.sort((a,b)=>a.purchaseDay-b.purchaseDay)
+.forEach((batch,i)=>{
+
+const age=
+ g.day-batch.purchaseDay;
+
+const remaining=
+ Math.max(
+  0,
+  FEED_SHELF_LIFE-age
+ );
+
+const quality=
+ feedQuality(batch);
+
+let cls="good";
+
+if(remaining<=15)
+ cls="old";
+
+else if(remaining<=30)
+ cls="warn";
+
+html+=
+ "<div class='batch "+cls+"'>"+
+ "<b>بچ خوراک "+(i+1)+"</b>"+
+ "<br>"+
+ "نوع: "+
+ (
+  batch.type==="normal"
+  ?"عادی"
+  :"اقتصادی"
+ )+
+ "<br>"+
+ "مقدار: "+
+ money(batch.amount)+
+ " کیلوگرم"+
+ "<br>"+
+ "قیمت خرید: "+
+ money(batch.price)+
+ " توکن / ۱۰۰ کیلو"+
+ "<br>"+
+ "سن: "+
+ age+
+ " روز"+
+ "<br>"+
+ "اعتبار باقی‌مانده: "+
+ remaining+
+ " روز"+
+ "<br>"+
+ "کیفیت: "+
+ money(quality)+
+ "%"+
+ "</div>";
+
+});
+
+}
+
+document.getElementById(
+ "feedStorageInfo"
+).innerHTML=html;
+
 }
 
 
-/* =========================
-   آمار کلی
-========================= */
+/* =====================================================
+   FEED STATS
+===================================================== */
 
-function renderStats(){
+function renderFeedStats(){
 
-  const total=getTotalChickens();
+const avg=
+ g.totalFeedPurchased>0
+ ?g.totalFeedCost/
+  (g.totalFeedPurchased/100)
+ :0;
 
-  document.getElementById("globalStats").innerHTML=
-    "<table>"+
-    "<tr><td>کل تولید تخم</td><td>"+g.totalProduced+"</td></tr>"+
-    "<tr><td>کل فروش تخم</td><td>"+g.totalSold+"</td></tr>"+
-    "<tr><td>کل خرید مرغ</td><td>"+g.totalBoughtChickens+"</td></tr>"+
-    "<tr><td>کل تلفات</td><td>"+g.totalDeaths+"</td></tr>"+
-    "<tr><td>داروی مصرف‌شده</td><td>"+money(g.totalMedicine)+"</td></tr>"+
-    "<tr><td>تعداد فعلی مرغ</td><td>"+total+"</td></tr>"+
-    "<tr><td>تخم فاسدشده</td><td>"+g.spoiledEggs+"</td></tr>"+
-    "</table>";
+const current=
+ totalFeed();
+
+const expired=
+ g.totalFeedExpired;
+
+const cleaningAge=
+ g.day-g.feedStorageCleanDay;
+
+document.getElementById(
+ "feedStats"
+).innerHTML=
+ "<table>"+
+ "<tr>"+
+ "<td>خوراک خریداری‌شده</td>"+
+ "<td>"+money(g.totalFeedPurchased)+" کیلو</td>"+
+ "</tr>"+
+ "<tr>"+
+ "<td>خوراک مصرف‌شده</td>"+
+ "<td>"+money(g.totalFeedConsumed)+" کیلو</td>"+
+ "</tr>"+
+ "<tr>"+
+ "<td>خوراک فعلی</td>"+
+ "<td>"+money(current)+" کیلو</td>"+
+ "</tr>"+
+ "<tr>"+
+ "<td>هزینه کل خرید</td>"+
+ "<td>"+money(g.totalFeedCost)+" توکن</td>"+
+ "</tr>"+
+ "<tr>"+
+ "<td>میانگین قیمت خرید</td>"+
+ "<td>"+money(avg)+" توکن / ۱۰۰ کیلو</td>"+
+ "</tr>"+
+ "<tr>"+
+ "<td>خوراک منقضی‌شده</td>"+
+ "<td>"+money(expired)+" کیلو</td>"+
+ "</tr>"+
+ "<tr>"+
+ "<td>روز از آخرین نظافت</td>"+
+ "<td>"+cleaningAge+"</td>"+
+ "</tr>"+
+ "</table>";
+
 }
 
 
-/* =========================
-   ریست
-========================= */
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+function renderGlobalStats(){
+
+document.getElementById(
+ "globalStats"
+).innerHTML=
+ "<table>"+
+ "<tr><td>کل تولید تخم</td><td>"+
+ g.totalProduced+
+ "</td></tr>"+
+ "<tr><td>کل فروش تخم</td><td>"+
+ g.totalSold+
+ "</td></tr>"+
+ "<tr><td>مرغ خریداری‌شده</td><td>"+
+ g.totalBoughtChickens+
+ "</td></tr>"+
+ "<tr><td>تلفات</td><td>"+
+ g.totalDeaths+
+ "</td></tr>"+
+ "<tr><td>تخم فاسد</td><td>"+
+ g.spoiledEggs+
+ "</td></tr>"+
+ "<tr><td>داروی مصرف‌شده</td><td>"+
+ money(g.totalMedicine)+
+ "</td></tr>"+
+ "</table>";
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
 
 function resetGame(){
 
-  const ok=confirm(
-    "تمام اطلاعات بازی پاک می‌شود.\n"+
-    "آیا مطمئن هستید؟"
-  );
+const ok=
+ confirm(
+  "تمام اطلاعات بازی پاک می‌شود.\n"+
+  "آیا مطمئن هستید؟"
+ );
 
-  if(!ok)return;
+if(!ok)return;
 
-  localStorage.removeItem(KEY);
-  localStorage.removeItem(OLD_KEY);
+localStorage.removeItem(KEY);
+localStorage.removeItem(OLD_KEY);
 
-  g=newGame();
+g=newGame();
 
-  save();
+save();
 
-  location.reload();
+location.reload();
+
 }
 
 
-/* =========================
-   شروع
-========================= */
+/* =====================================================
+   START
+===================================================== */
 
 loadGame();
-processTime();
+
 render();
 
 setInterval(()=>{
-  processTime();
-  render();
+
+render();
+
 },60000);
 
 </script>
