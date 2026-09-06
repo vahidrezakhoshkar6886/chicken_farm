@@ -1,869 +1,1841 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#173b24">
-<title>مرغداری وحید</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>مرغداری وحید</title>
 
-<style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Tahoma,Arial,sans-serif;background:#8bcf68}
-button,input{font-family:inherit}
-button{cursor:pointer;border:0}
-#app{position:relative;width:100%;height:100%;overflow:hidden;background:#8bcf68}
-canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
+  <style>
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-#top{
- position:absolute;top:0;left:0;right:0;height:64px;
- display:flex;align-items:center;justify-content:space-between;
- padding:8px 10px;z-index:20;
- pointer-events:none
-}
-#top>*{pointer-events:auto}
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Tahoma, Arial, sans-serif;
+      background: #eef5e9;
+    }
 
-#menuBtn{
- width:48px;height:48px;border-radius:14px;background:#173b24;
- color:#fff;font-size:27px;box-shadow:0 4px 12px #0004
-}
+    button, input {
+      font: inherit;
+    }
 
-#stats{
- display:flex;gap:5px;max-width:calc(100% - 60px);
- overflow-x:auto;direction:rtl
-}
-.stat{
- background:#ffffffdf;border-radius:12px;padding:7px 9px;
- font-size:11px;font-weight:bold;white-space:nowrap;
- box-shadow:0 3px 10px #0002
-}
+    button {
+      cursor: pointer;
+    }
 
-#menu{
- position:absolute;top:64px;right:10px;width:235px;
- background:#fff;border-radius:18px;padding:8px;
- box-shadow:0 10px 35px #0005;z-index:30;
- display:none
-}
-#menu.open{display:block}
-.menuItem{
- width:100%;padding:13px 12px;margin:2px 0;
- background:#f4f6f4;border-radius:12px;text-align:right;
- font-size:14px
-}
-.menuItem:active{background:#dcebdc}
+    #app {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+    }
 
-#panel{
- position:absolute;left:10px;right:10px;bottom:10px;
- max-height:72%;overflow:auto;background:#fffffff2;
- border-radius:20px;padding:16px;z-index:40;
- box-shadow:0 10px 40px #0005;display:none
-}
-#panel.show{display:block}
-#panel h2{margin:0 0 12px;font-size:19px}
-.close{
- position:absolute;left:12px;top:10px;width:34px;height:34px;
- border-radius:10px;background:#eee;font-size:18px
-}
-.card{
- background:#f5f7f5;border-radius:14px;padding:12px;margin:8px 0
-}
-.row{display:flex;justify-content:space-between;gap:10px;margin:7px 0}
-.action{
- width:100%;padding:12px;border-radius:12px;background:#173b24;
- color:white;margin-top:7px;font-weight:bold
-}
-.action.secondary{background:#607d68}
-.action.danger{background:#a52d2d}
-input{
- width:100%;padding:12px;border:1px solid #ccc;border-radius:11px;
- margin:5px 0;background:white
-}
-.small{font-size:11px;color:#666;line-height:1.8}
-.good{color:#18752c;font-weight:bold}
-.bad{color:#a52d2d;font-weight:bold}
+    /* ---------- AUTH ---------- */
 
-#notice{
- position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
- background:#173b24;color:#fff;padding:10px 16px;border-radius:12px;
- z-index:50;display:none;font-size:12px;white-space:nowrap
-}
-</style>
+    #authScreen {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background:
+        linear-gradient(rgba(238,245,233,.9), rgba(238,245,233,.96)),
+        radial-gradient(circle at 30% 20%, #fff 0, transparent 35%);
+      z-index: 50;
+    }
+
+    .auth-card {
+      width: min(430px, 100%);
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.12);
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 52px;
+      margin-bottom: 5px;
+    }
+
+    .auth-title {
+      text-align: center;
+      margin: 0;
+      color: #26352a;
+    }
+
+    .auth-subtitle {
+      text-align: center;
+      color: #718074;
+      font-size: 13px;
+      margin: 8px 0 22px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .tabs button {
+      flex: 1;
+      border: 0;
+      border-radius: 12px;
+      padding: 11px;
+      background: #edf1ed;
+      color: #536157;
+    }
+
+    .tabs button.active {
+      background: #2f7d46;
+      color: white;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      color: #59665c;
+      margin-bottom: 5px;
+    }
+
+    .field input {
+      width: 100%;
+      border: 1px solid #d6ded6;
+      border-radius: 12px;
+      padding: 12px;
+      outline: none;
+      background: #fafcf9;
+    }
+
+    .field input:focus {
+      border-color: #2f7d46;
+    }
+
+    .primary {
+      width: 100%;
+      border: 0;
+      border-radius: 13px;
+      padding: 13px;
+      background: #2f7d46;
+      color: white;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .message {
+      min-height: 20px;
+      font-size: 12px;
+      color: #b23a3a;
+      margin: 8px 0;
+      text-align: center;
+    }
+
+    /* ---------- GAME ---------- */
+
+    #gameScreen {
+      display: none;
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    #farmCanvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      touch-action: none;
+    }
+
+    #topbar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+
+    .topbox {
+      pointer-events: auto;
+      background: rgba(255,255,255,.94);
+      border-radius: 16px;
+      padding: 8px 12px;
+      box-shadow: 0 5px 18px rgba(0,0,0,.12);
+      font-size: 12px;
+    }
+
+    #menuButton {
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 14px;
+      background: white;
+      box-shadow: 0 5px 18px rgba(0,0,0,.12);
+      font-size: 24px;
+      pointer-events: auto;
+    }
+
+    #farmInfo {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .coin {
+      color: #b78300;
+      font-weight: bold;
+    }
+
+    #sideMenu {
+      position: absolute;
+      top: 62px;
+      right: 10px;
+      width: min(290px, calc(100% - 20px));
+      max-height: calc(100% - 74px);
+      overflow-y: auto;
+      background: rgba(255,255,255,.98);
+      border-radius: 20px;
+      padding: 10px;
+      box-shadow: 0 10px 35px rgba(0,0,0,.18);
+      z-index: 20;
+      display: none;
+    }
+
+    .menu-title {
+      padding: 10px;
+      font-weight: bold;
+      color: #2f4935;
+    }
+
+    .menu-item {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      text-align: right;
+      padding: 13px;
+      border-radius: 12px;
+      color: #36433a;
+    }
+
+    .menu-item:hover {
+      background: #eef5e9;
+    }
+
+    #bottomPanel {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      z-index: 10;
+      background: rgba(255,255,255,.94);
+      border-radius: 18px;
+      padding: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.12);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .stat {
+      background: #f2f6f1;
+      border-radius: 12px;
+      padding: 8px 4px;
+      text-align: center;
+      font-size: 11px;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 15px;
+      margin-top: 3px;
+    }
+
+    #actions {
+      display: flex;
+      gap: 7px;
+      margin-top: 8px;
+    }
+
+    #actions button {
+      flex: 1;
+      border: 0;
+      border-radius: 11px;
+      padding: 10px 5px;
+      background: #2f7d46;
+      color: white;
+      font-size: 11px;
+    }
+
+    /* ---------- MODAL ---------- */
+
+    #modal {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,.4);
+      z-index: 40;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-card {
+      width: min(600px, 100%);
+      max-height: 85%;
+      overflow-y: auto;
+      background: white;
+      border-radius: 24px 24px 0 0;
+      padding: 20px;
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .modal-head button {
+      border: 0;
+      background: #f0f2f0;
+      border-radius: 10px;
+      width: 38px;
+      height: 38px;
+    }
+
+    .card {
+      background: #f5f8f4;
+      border-radius: 15px;
+      padding: 12px;
+      margin-bottom: 9px;
+    }
+
+    .danger {
+      background: #b43d3d !important;
+    }
+
+    .success {
+      color: #28723c;
+    }
+
+    .muted {
+      color: #7a847c;
+      font-size: 12px;
+    }
+
+    @media (min-width: 700px) {
+      #bottomPanel {
+        left: 20px;
+        right: 20px;
+      }
+    }
+  </style>
 </head>
 
 <body>
+
 <div id="app">
 
-<canvas id="game"></canvas>
+  <!-- AUTH -->
+  <section id="authScreen">
 
-<div id="top">
- <button id="menuBtn">☰</button>
+    <div class="auth-card">
 
- <div id="stats">
-  <div class="stat">🐔 <span id="sChickens">0</span></div>
-  <div class="stat">🌾 <span id="sFeed">0</span>kg</div>
-  <div class="stat">🥚 <span id="sEggs">0</span></div>
-  <div class="stat">🪙 <span id="sCoins">0</span></div>
-  <div class="stat">📅 روز <span id="sDay">1</span></div>
- </div>
+      <div class="logo">🐔</div>
+
+      <h1 class="auth-title">مرغداری وحید</h1>
+
+      <div class="auth-subtitle">
+        ورود به مزرعه آنلاین
+      </div>
+
+      <div class="tabs">
+        <button id="loginTab" class="active">ورود</button>
+        <button id="registerTab">ثبت‌نام</button>
+      </div>
+
+      <div id="loginForm">
+
+        <div class="field">
+          <label>ایمیل، موبایل یا نام کاربری</label>
+          <input id="loginIdentifier" autocomplete="username">
+        </div>
+
+        <div class="field">
+          <label>رمز عبور</label>
+          <input id="loginPassword" type="password" autocomplete="current-password">
+        </div>
+
+        <button class="primary" id="loginButton">
+          ورود به بازی
+        </button>
+
+      </div>
+
+      <div id="registerForm" style="display:none">
+
+        <div class="field">
+          <label>ایمیل</label>
+          <input id="registerEmail" type="email">
+        </div>
+
+        <div class="field">
+          <label>شماره موبایل</label>
+          <input id="registerMobile" type="tel">
+        </div>
+
+        <div class="field">
+          <label>نام کاربری</label>
+          <input id="registerUsername">
+        </div>
+
+        <div class="field">
+          <label>نام مزرعه</label>
+          <input id="registerFarmName">
+        </div>
+
+        <div class="field">
+          <label>رمز عبور حداقل ۸ کاراکتر</label>
+          <input id="registerPassword" type="password">
+        </div>
+
+        <button class="primary" id="registerButton">
+          ساخت حساب
+        </button>
+
+      </div>
+
+      <div id="authMessage" class="message"></div>
+
+    </div>
+
+  </section>
+
+
+  <!-- GAME -->
+  <section id="gameScreen">
+
+    <canvas id="farmCanvas"></canvas>
+
+    <div id="topbar">
+
+      <div id="farmInfo" class="topbox">
+        <span id="playerName">بازیکن</span>
+        <span class="coin">🪙 <span id="coins">0</span></span>
+      </div>
+
+      <button id="menuButton">☰</button>
+
+    </div>
+
+
+    <div id="sideMenu">
+
+      <div class="menu-title">
+        منوی مرغداری
+      </div>
+
+      <button class="menu-item" data-action="farm">
+        🏡 مزرعه
+      </button>
+
+      <button class="menu-item" data-action="profile">
+        👤 پروفایل
+      </button>
+
+      <button class="menu-item" data-action="social">
+        👥 بازیکنان
+      </button>
+
+      <button class="menu-item" data-action="ranking">
+        🏆 رتبه‌بندی
+      </button>
+
+      <button class="menu-item" data-action="market">
+        🛒 بازار
+      </button>
+
+      <button class="menu-item" data-action="wallet">
+        🪙 کیف پول
+      </button>
+
+      <button class="menu-item" data-action="notifications">
+        🔔 اعلان‌ها
+      </button>
+
+      <button class="menu-item" data-action="referral">
+        🎁 دعوت دوستان
+      </button>
+
+      <button class="menu-item" data-action="settings">
+        ⚙️ تنظیمات
+      </button>
+
+      <button class="menu-item danger" data-action="logout">
+        خروج
+      </button>
+
+    </div>
+
+
+    <div id="bottomPanel">
+
+      <div class="stats">
+
+        <div class="stat">
+          🐔 مرغ
+          <strong id="chickens">0</strong>
+        </div>
+
+        <div class="stat">
+          🥚 تخم‌مرغ
+          <strong id="eggs">0</strong>
+        </div>
+
+        <div class="stat">
+          🌾 خوراک
+          <strong id="feed">0</strong>
+        </div>
+
+        <div class="stat">
+          💧 آب
+          <strong id="water">0</strong>
+        </div>
+
+      </div>
+
+      <div id="actions">
+
+        <button id="feedMorning">
+          🌅 خوراک صبح
+        </button>
+
+        <button id="feedEvening">
+          🌙 خوراک عصر
+        </button>
+
+        <button id="collectEggs">
+          🥚 جمع‌آوری
+        </button>
+
+        <button id="endDay">
+          📅 پایان روز
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div id="modal">
+
+      <div class="modal-card">
+
+        <div class="modal-head">
+          <strong id="modalTitle">اطلاعات</strong>
+          <button id="closeModal">✕</button>
+        </div>
+
+        <div id="modalBody"></div>
+
+      </div>
+
+    </div>
+
+  </section>
+
 </div>
 
-<div id="menu">
-
- <button class="menuItem" data-page="farm">🏡 مزرعه</button>
- <button class="menuItem" data-page="profile">👤 پروفایل من</button>
- <button class="menuItem" data-page="social">👥 اجتماعی</button>
- <button class="menuItem" data-page="ranking">🏆 رتبه‌بندی</button>
- <button class="menuItem" data-page="market">🛒 بازار</button>
- <button class="menuItem" data-page="wallet">💰 کیف پول</button>
- <button class="menuItem" data-page="notifications">🔔 اعلان‌ها</button>
- <button class="menuItem" data-page="referral">🎁 دعوت دوستان</button>
- <button class="menuItem" data-page="settings">⚙️ تنظیمات</button>
- <button class="menuItem" data-page="logout">🚪 خروج</button>
-
-</div>
-
-<div id="panel">
- <button class="close" id="closePanel">×</button>
- <div id="panelContent"></div>
-</div>
-
-<div id="notice"></div>
-
-</div>
 
 <script>
-/*
-========================================================
-مرغداری وحید - CLIENT
-این فایل عمداً بازیکن یا موجودی فیک تولید نمی‌کند.
-تمام اطلاعات اصلی باید از سرور دریافت شود.
-========================================================
-*/
 
-const API_BASE =
- localStorage.getItem("chicken_api") ||
- "https://YOUR-SERVER-DOMAIN";
+  /*
+    اتصال به سرور واقعی Render
+  */
 
-let token = localStorage.getItem("chicken_token") || "";
-let state = {
- chickens:0,
- feed:0,
- water:0,
- eggs:0,
- coins:0,
- day:1,
- health:100,
- farmName:"",
- username:"",
- eggPrice:1
-};
+  const API_BASE =
+    localStorage.getItem("chicken_api") ||
+    "https://vahid-chicken-farm-server.onrender.com";
 
-const canvas=document.getElementById("game");
-const ctx=canvas.getContext("2d");
 
-let W=0,H=0;
-let player={x:.5,y:.62};
-let chickens=[];
+  let token =
+    localStorage.getItem("chicken_token") || "";
 
-function resize(){
- W=canvas.width=innerWidth*devicePixelRatio;
- H=canvas.height=innerHeight*devicePixelRatio;
- canvas.style.width=innerWidth+"px";
- canvas.style.height=innerHeight+"px";
- ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-}
-addEventListener("resize",resize);
-resize();
 
-function notice(text){
- const n=document.getElementById("notice");
- n.textContent=text;
- n.style.display="block";
- clearTimeout(notice.t);
- notice.t=setTimeout(()=>n.style.display="none",2500);
-}
+  let player = null;
+  let farm = null;
 
-function esc(v){
- return String(v??"")
- .replaceAll("&","&amp;")
- .replaceAll("<","&lt;")
- .replaceAll(">","&gt;")
- .replaceAll('"',"&quot;");
-}
 
-function setStats(){
- sChickens.textContent=Math.floor(state.chickens);
- sFeed.textContent=Math.floor(state.feed);
- sEggs.textContent=Math.floor(state.eggs);
- sCoins.textContent=Math.floor(state.coins);
- sDay.textContent=state.day;
-}
+  const $ = id => document.getElementById(id);
 
-async function api(path,options={}){
- if(!token){
-  showLogin();
-  throw new Error("AUTH");
- }
 
- const headers={
-  "Content-Type":"application/json",
-  ...(options.headers||{}),
-  "Authorization":"Bearer "+token
- };
+  async function api(path, options = {}) {
 
- const r=await fetch(API_BASE+path,{
-  ...options,
-  headers
- });
+    const headers = {
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    };
 
- let data=null;
- try{data=await r.json()}catch{}
+    if (token) {
+      headers.Authorization = "Bearer " + token;
+    }
 
- if(!r.ok){
-  throw new Error(data?.error||"خطا در ارتباط با سرور");
- }
+    const response = await fetch(API_BASE + path, {
+      ...options,
+      headers
+    });
 
- return data;
-}
+    let data = {};
 
-async function loadMe(){
- try{
-  const d=await api("/api/me");
-  if(d?.player) state={...state,...d.player};
-  if(d?.farm) state={...state,...d.farm};
-  setStats();
- }catch(e){
-  if(e.message==="AUTH")return;
-  notice("سرور هنوز متصل نیست");
- }
-}
+    try {
+      data = await response.json();
+    } catch (_) {
+      data = {};
+    }
 
-function showLogin(){
- openPanel(`
- <h2>ورود به مرغداری وحید</h2>
+    if (!response.ok) {
+      throw new Error(data.error || "خطای سرور");
+    }
 
- <div class="card">
-  <input id="loginUser" placeholder="ایمیل یا شماره موبایل">
-  <input id="loginPass" type="password" placeholder="رمز عبور">
-  <button class="action" onclick="login()">ورود</button>
- </div>
-
- <div class="card">
-  <b>حساب جدید</b>
-  <input id="regUser" placeholder="ایمیل">
-  <input id="regMobile" placeholder="شماره موبایل">
-  <input id="regName" placeholder="نام کاربری">
-  <input id="regFarm" placeholder="نام مزرعه">
-  <input id="regPass" type="password" placeholder="رمز عبور">
-  <button class="action" onclick="register()">ثبت‌نام</button>
- </div>
-
- <div class="small">
- حساب‌ها مستقیماً روی سرور واقعی ثبت می‌شوند.
- </div>
- `);
-}
-
-async function login(){
- try{
-  const username=document.getElementById("loginUser").value.trim();
-  const password=document.getElementById("loginPass").value;
-
-  const d=await fetch(API_BASE+"/api/auth/login",{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({username,password})
-  }).then(r=>r.json());
-
-  if(!d.token)throw new Error(d.error||"ورود ناموفق بود");
-
-  token=d.token;
-  localStorage.setItem("chicken_token",token);
-
-  closePanel();
-  await loadMe();
-  notice("با موفقیت وارد شدید");
- }catch(e){
-  notice(e.message);
- }
-}
-
-async function register(){
- try{
-  const email=document.getElementById("regUser").value.trim();
-  const mobile=document.getElementById("regMobile").value.trim();
-  const username=document.getElementById("regName").value.trim();
-  const farmName=document.getElementById("regFarm").value.trim();
-  const password=document.getElementById("regPass").value;
-
-  if(!email||!mobile||!username||!farmName||!password){
-   throw new Error("همه اطلاعات را وارد کنید");
+    return data;
   }
 
-  const d=await fetch(API_BASE+"/api/auth/register",{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({
-    email,mobile,username,farmName,password
-   })
-  }).then(r=>r.json());
 
-  if(!d.token)throw new Error(d.error||"ثبت‌نام ناموفق بود");
+  function showAuthMessage(text, success = false) {
 
-  token=d.token;
-  localStorage.setItem("chicken_token",token);
-
-  closePanel();
-  await loadMe();
-  notice("حساب ساخته شد");
- }catch(e){
-  notice(e.message);
- }
-}
-
-function openPanel(html){
- panel.classList.add("show");
- panelContent.innerHTML=html;
-}
-
-function closePanel(){
- panel.classList.remove("show");
-}
-
-menuBtn.onclick=()=>{
- menu.classList.toggle("open");
-};
-
-closePanel.onclick=closePanel;
-
-document.querySelectorAll(".menuItem").forEach(b=>{
- b.onclick=()=>{
-  menu.classList.remove("open");
-  openPage(b.dataset.page);
- };
-});
-
-function openPage(page){
-
- if(page==="farm"){
-  openPanel(`
-   <h2>🏡 مزرعه</h2>
-   <div class="card">
-    <div class="row"><span>مرغ</span><b>${state.chickens}</b></div>
-    <div class="row"><span>خوراک</span><b>${Math.floor(state.feed)} kg</b></div>
-    <div class="row"><span>آب</span><b>${Math.floor(state.water)} L</b></div>
-    <div class="row"><span>تخم‌مرغ</span><b>${Math.floor(state.eggs)}</b></div>
-    <div class="row"><span>سلامت</span><b>${state.health}%</b></div>
-   </div>
-
-   <button class="action" onclick="feedMorning()">🌾 خوراک صبح</button>
-   <button class="action" onclick="feedEvening()">🌾 خوراک عصر</button>
-   <button class="action" onclick="giveWater()">💧 آب</button>
-   <button class="action" onclick="collectEggs()">🥚 جمع‌آوری تخم‌مرغ</button>
-   <button class="action" onclick="finishDay()">🌙 پایان روز</button>
-  `);
- }
-
- if(page==="profile"){
-  openPanel(`
-   <h2>👤 پروفایل من</h2>
-   <div class="card">
-    <div class="row"><span>نام کاربری</span><b>${esc(state.username)}</b></div>
-    <div class="row"><span>نام مزرعه</span><b>${esc(state.farmName)}</b></div>
-    <div class="row"><span>تعداد مرغ</span><b>${state.chickens}</b></div>
-    <div class="row"><span>روز بازی</span><b>${state.day}</b></div>
-   </div>
-  `);
- }
-
- if(page==="social"){
-  openPanel(`
-   <h2>👥 اجتماعی</h2>
-   <div class="card">
-    <input id="socialSearch" placeholder="جستجوی بازیکن یا مزرعه">
-    <button class="action" onclick="searchPlayers()">جستجو</button>
-   </div>
-   <div id="socialResults"></div>
-  `);
- }
-
- if(page==="ranking"){
-  openPanel(`
-   <h2>🏆 رتبه‌بندی</h2>
-   <div id="rankingBox" class="card">در حال دریافت...</div>
-  `);
-  loadRanking();
- }
-
- if(page==="market"){
-  openPanel(`
-   <h2>🛒 بازار</h2>
-
-   <div class="card">
-    <div class="row"><span>قیمت فعلی تخم‌مرغ</span><b>${state.eggPrice||1}</b></div>
-    <div class="row"><span>تخم‌مرغ قابل فروش</span><b>${state.eggs}</b></div>
-   </div>
-
-   <input id="sellAmount" type="number" min="1" placeholder="تعداد تخم‌مرغ">
-   <button class="action" onclick="sellEggs()">فروش</button>
-
-   <div class="card">
-    <b>بازار بازیکنان</b>
-    <div id="marketListings">در حال دریافت...</div>
-   </div>
-  `);
-  loadMarket();
- }
-
- if(page==="wallet"){
-  openPanel(`
-   <h2>💰 کیف پول</h2>
-   <div class="card">
-    <div class="row"><span>موجودی</span><b>${state.coins}</b></div>
-   </div>
-   <button class="action" onclick="walletHistory()">تاریخچه تراکنش‌ها</button>
-  `);
- }
-
- if(page==="notifications"){
-  openPanel(`
-   <h2>🔔 اعلان‌ها</h2>
-   <div id="notificationsBox">در حال دریافت...</div>
-  `);
-  loadNotifications();
- }
-
- if(page==="referral"){
-  openPanel(`
-   <h2>🎁 دعوت دوستان</h2>
-   <div class="card">
-    <p>کد دعوت اختصاصی شما:</p>
-    <h2 id="refCode">در حال دریافت...</h2>
-   </div>
-   <div id="refStats"></div>
-  `);
-  loadReferral();
- }
-
- if(page==="settings"){
-  openPanel(`
-   <h2>⚙️ تنظیمات</h2>
-   <button class="action" onclick="logout()">🚪 خروج از حساب</button>
-   <button class="action danger" onclick="logoutAll()">خروج از همه دستگاه‌ها</button>
-  `);
- }
-
- if(page==="logout")logout();
-}
-
-async function feedMorning(){
- try{
-  await api("/api/game/feed",{
-   method:"POST",
-   body:JSON.stringify({meal:"morning"})
-  });
-  await loadMe();
-  notice("خوراک صبح ثبت شد");
- }catch(e){notice(e.message)}
-}
-
-async function feedEvening(){
- try{
-  await api("/api/game/feed",{
-   method:"POST",
-   body:JSON.stringify({meal:"evening"})
-  });
-  await loadMe();
-  notice("خوراک عصر ثبت شد");
- }catch(e){notice(e.message)}
-}
-
-async function giveWater(){
- try{
-  await api("/api/game/water",{method:"POST"});
-  await loadMe();
-  notice("آب‌رسانی ثبت شد");
- }catch(e){notice(e.message)}
-}
-
-async function collectEggs(){
- try{
-  const d=await api("/api/game/collect-eggs",{method:"POST"});
-  await loadMe();
-  notice("تخم‌مرغ‌ها جمع‌آوری شدند");
- }catch(e){notice(e.message)}
-}
-
-async function finishDay(){
- if(!confirm("روز جاری تمام شود؟"))return;
-
- try{
-  await api("/api/game/end-day",{method:"POST"});
-  await loadMe();
-  notice("روز جدید شروع شد");
- }catch(e){notice(e.message)}
-}
-
-async function sellEggs(){
- try{
-  const amount=Number(document.getElementById("sellAmount").value);
-
-  if(!amount||amount<1)throw new Error("تعداد را وارد کنید");
-
-  await api("/api/market/sell-eggs",{
-   method:"POST",
-   body:JSON.stringify({amount})
-  });
-
-  await loadMe();
-  notice("فروش ثبت شد");
- }catch(e){notice(e.message)}
-}
-
-async function searchPlayers(){
- try{
-  const q=document.getElementById("socialSearch").value.trim();
-  const d=await api("/api/social/search?q="+encodeURIComponent(q));
-
-  const box=document.getElementById("socialResults");
-
-  if(!d.players?.length){
-   box.innerHTML='<div class="card">بازیکنی پیدا نشد.</div>';
-   return;
+    $("authMessage").textContent = text;
+    $("authMessage").style.color =
+      success ? "#28723c" : "#b23a3a";
   }
 
-  box.innerHTML=d.players.map(p=>`
-   <div class="card">
-    <b>${esc(p.username)}</b>
-    <div class="small">${esc(p.farmName||"")}</div>
-    <div class="row">
-     <span>مرغ</span><b>${p.chickens}</b>
-    </div>
-    <button class="action" onclick="followPlayer('${esc(p.id)}')">
-     دنبال کردن
-    </button>
-   </div>
-  `).join("");
- }catch(e){notice(e.message)}
-}
 
-async function followPlayer(id){
- try{
-  await api("/api/social/follow",{
-   method:"POST",
-   body:JSON.stringify({playerId:id})
-  });
-  notice("انجام شد");
- }catch(e){notice(e.message)}
-}
+  function openModal(title, html) {
 
-async function loadRanking(){
- try{
-  const d=await api("/api/ranking");
+    $("modalTitle").textContent = title;
+    $("modalBody").innerHTML = html;
+    $("modal").style.display = "flex";
 
-  const box=document.getElementById("rankingBox");
-
-  if(!d.players?.length){
-   box.innerHTML="هنوز بازیکن واقعی ثبت نشده است.";
-   return;
   }
 
-  box.innerHTML=d.players.map((p,i)=>`
-   <div class="row">
-    <span>#${i+1} ${esc(p.username)}</span>
-    <b>${p.chickens} 🐔</b>
-   </div>
-  `).join("");
- }catch(e){
-  document.getElementById("rankingBox").textContent=e.message;
- }
-}
 
-async function loadMarket(){
- try{
-  const d=await api("/api/market");
+  function closeModal() {
 
-  const box=document.getElementById("marketListings");
+    $("modal").style.display = "none";
 
-  if(!d.listings?.length){
-   box.innerHTML="فعلاً آگهی فعالی وجود ندارد.";
-   return;
   }
 
-  box.innerHTML=d.listings.map(x=>`
-   <div class="card">
-    <div>${esc(x.username)}</div>
-    <div class="row">
-     <span>${x.type}</span>
-     <b>${x.amount}</b>
-    </div>
-    <div class="row">
-     <span>قیمت</span>
-     <b>${x.price}</b>
-    </div>
-   </div>
-  `).join("");
- }catch(e){
-  document.getElementById("marketListings").textContent=e.message;
- }
-}
 
-async function loadNotifications(){
- try{
-  const d=await api("/api/notifications");
+  $("closeModal").onclick = closeModal;
 
-  const box=document.getElementById("notificationsBox");
 
-  if(!d.notifications?.length){
-   box.innerHTML='<div class="card">اعلانی ندارید.</div>';
-   return;
+  $("modal").onclick = e => {
+
+    if (e.target === $("modal")) {
+      closeModal();
+    }
+
+  };
+
+
+  $("loginTab").onclick = () => {
+
+    $("loginTab").classList.add("active");
+    $("registerTab").classList.remove("active");
+
+    $("loginForm").style.display = "block";
+    $("registerForm").style.display = "none";
+
+    showAuthMessage("");
+
+  };
+
+
+  $("registerTab").onclick = () => {
+
+    $("registerTab").classList.add("active");
+    $("loginTab").classList.remove("active");
+
+    $("loginForm").style.display = "none";
+    $("registerForm").style.display = "block";
+
+    showAuthMessage("");
+
+  };
+
+
+  $("loginButton").onclick = async () => {
+
+    const identifier =
+      $("loginIdentifier").value.trim();
+
+    const password =
+      $("loginPassword").value;
+
+    if (!identifier || !password) {
+      showAuthMessage("اطلاعات ورود را کامل کن.");
+      return;
+    }
+
+    try {
+
+      $("loginButton").disabled = true;
+
+      const result = await api("/api/auth/login", {
+
+        method: "POST",
+
+        body: JSON.stringify({
+          identifier,
+          password
+        })
+
+      });
+
+      token = result.token;
+
+      localStorage.setItem(
+        "chicken_token",
+        token
+      );
+
+      await loadGame();
+
+      showAuthMessage("");
+
+    } catch (error) {
+
+      showAuthMessage(error.message);
+
+    } finally {
+
+      $("loginButton").disabled = false;
+
+    }
+
+  };
+
+
+  $("registerButton").onclick = async () => {
+
+    const email =
+      $("registerEmail").value.trim();
+
+    const mobile =
+      $("registerMobile").value.trim();
+
+    const username =
+      $("registerUsername").value.trim();
+
+    const farmName =
+      $("registerFarmName").value.trim();
+
+    const password =
+      $("registerPassword").value;
+
+    if (
+      !email ||
+      !mobile ||
+      !username ||
+      !farmName ||
+      !password
+    ) {
+
+      showAuthMessage(
+        "همه اطلاعات را کامل وارد کن."
+      );
+
+      return;
+
+    }
+
+
+    if (password.length < 8) {
+
+      showAuthMessage(
+        "رمز عبور باید حداقل ۸ کاراکتر باشد."
+      );
+
+      return;
+
+    }
+
+
+    try {
+
+      $("registerButton").disabled = true;
+
+      const result = await api(
+        "/api/auth/register",
+        {
+
+          method: "POST",
+
+          body: JSON.stringify({
+            email,
+            mobile,
+            username,
+            farmName,
+            password
+          })
+
+        }
+      );
+
+
+      token = result.token;
+
+      localStorage.setItem(
+        "chicken_token",
+        token
+      );
+
+
+      await loadGame();
+
+
+    } catch (error) {
+
+      showAuthMessage(error.message);
+
+    } finally {
+
+      $("registerButton").disabled = false;
+
+    }
+
+  };
+
+
+  async function loadGame() {
+
+    try {
+
+      const result =
+        await api("/api/game/state");
+
+      player = result.player;
+      farm = result.farm;
+
+      showGame();
+
+    } catch (error) {
+
+      token = "";
+
+      localStorage.removeItem(
+        "chicken_token"
+      );
+
+      showAuthMessage(
+        "نشست شما معتبر نیست. دوباره وارد شوید."
+      );
+
+    }
+
   }
 
-  box.innerHTML=d.notifications.map(n=>`
-   <div class="card">
-    <b>${esc(n.title)}</b>
-    <div class="small">${esc(n.text)}</div>
-   </div>
-  `).join("");
- }catch(e){
-  document.getElementById("notificationsBox").textContent=e.message;
- }
-}
 
-async function loadReferral(){
- try{
-  const d=await api("/api/referral");
+  function showGame() {
 
-  refCode.textContent=d.code||"—";
+    $("authScreen").style.display = "none";
+    $("gameScreen").style.display = "block";
 
-  refStats.innerHTML=`
-   <div class="card">
-    دعوت موفق: <b>${d.successful||0}</b> از 10
-   </div>
-  `;
- }catch(e){notice(e.message)}
-}
+    updateUI();
+    drawFarm();
 
-async function walletHistory(){
- try{
-  const d=await api("/api/wallet/history");
-
-  openPanel(`
-   <h2>💰 تاریخچه کیف پول</h2>
-   <div id="walletHistory"></div>
-  `);
-
-  walletHistory.innerHTML=(d.transactions||[]).map(x=>`
-   <div class="card">
-    <div class="row">
-     <span>${esc(x.type)}</span>
-     <b>${x.amount}</b>
-    </div>
-    <div class="small">${esc(x.createdAt||"")}</div>
-   </div>
-  `).join("") || "تراکنشی وجود ندارد.";
-
- }catch(e){notice(e.message)}
-}
-
-async function logout(){
- try{
-  if(token){
-   await api("/api/auth/logout",{method:"POST"});
   }
- }catch{}
-
- token="";
- localStorage.removeItem("chicken_token");
- showLogin();
- notice("از حساب خارج شدید");
-}
-
-async function logoutAll(){
- try{
-  await api("/api/auth/logout-all",{method:"POST"});
-  token="";
-  localStorage.removeItem("chicken_token");
-  showLogin();
- }catch(e){notice(e.message)}
-}
 
 
-/* =========================
-   موتور تصویری مزرعه
-========================= */
+  function updateUI() {
 
-function initChickens(){
- chickens=[];
- for(let i=0;i<Math.min(60,Math.max(10,state.chickens));i++){
-  chickens.push({
-   x:.20+Math.random()*.60,
-   y:.42+Math.random()*.30,
-   dx:(Math.random()-.5)*.0005,
-   dy:(Math.random()-.5)*.0005
-  });
- }
-}
+    if (!player || !farm) return;
 
-function draw(){
 
- ctx.clearRect(0,0,innerWidth,innerHeight);
+    $("playerName").textContent =
+      farm.name || player.username;
 
- // زمین
- ctx.fillStyle="#8bcf68";
- ctx.fillRect(0,0,innerWidth,innerHeight);
 
- // جاده
- ctx.fillStyle="#d8c28b";
- ctx.fillRect(0,innerHeight*.72,innerWidth,innerHeight*.16);
+    $("coins").textContent =
+      Number(player.tokens || 0).toLocaleString();
 
- // مزرعه
- ctx.fillStyle="#bfe3a1";
- ctx.fillRect(
-  innerWidth*.06,
-  innerHeight*.17,
-  innerWidth*.88,
-  innerHeight*.55
- );
 
- // مرغداری
- drawBuilding(
-  innerWidth*.12,
-  innerHeight*.23,
-  innerWidth*.34,
-  innerHeight*.20,
-  "🐔 مرغداری"
- );
+    $("chickens").textContent =
+      Number(farm.chickens || 0).toLocaleString();
 
- // انبار
- drawBuilding(
-  innerWidth*.57,
-  innerHeight*.23,
-  innerWidth*.30,
-  innerHeight*.15,
-  "🌾 انبار"
- );
 
- // سردخانه
- drawBuilding(
-  innerWidth*.57,
-  innerHeight*.43,
-  innerWidth*.30,
-  innerHeight*.15,
-  "❄️ سردخانه"
- );
+    $("eggs").textContent =
+      Number(farm.eggs || 0).toLocaleString();
 
- // دفتر
- drawBuilding(
-  innerWidth*.12,
-  innerHeight*.47,
-  innerWidth*.23,
-  innerHeight*.13,
-  "🏢 دفتر"
- );
 
- // حصار
- ctx.strokeStyle="#527f3d";
- ctx.lineWidth=5;
- ctx.strokeRect(
-  innerWidth*.06,
-  innerHeight*.17,
-  innerWidth*.88,
-  innerHeight*.55
- );
+    $("feed").textContent =
+      Number(farm.feed || 0).toLocaleString();
 
- // مرغ‌ها
- chickens.forEach(c=>{
-  c.x+=c.dx;
-  c.y+=c.dy;
 
-  if(c.x<.10||c.x>.88)c.dx*=-1;
-  if(c.y<.38||c.y>.69)c.dy*=-1;
+    $("water").textContent =
+      Number(farm.water || 0).toLocaleString();
 
-  drawChicken(c.x*innerWidth,c.y*innerHeight);
- });
+  }
 
- // کاراکتر
- drawPlayer(player.x*innerWidth,player.y*innerHeight);
 
- requestAnimationFrame(draw);
-}
+  $("menuButton").onclick = () => {
 
-function drawBuilding(x,y,w,h,label){
- ctx.fillStyle="#fff";
- ctx.fillRect(x,y,w,h);
+    const menu = $("sideMenu");
 
- ctx.fillStyle="#8b4d2c";
- ctx.beginPath();
- ctx.moveTo(x-8,y);
- ctx.lineTo(x+w/2,y-h*.45);
- ctx.lineTo(x+w+8,y);
- ctx.closePath();
- ctx.fill();
+    menu.style.display =
+      menu.style.display === "block"
+        ? "none"
+        : "block";
 
- ctx.fillStyle="#173b24";
- ctx.font="bold 13px Tahoma";
- ctx.textAlign="center";
- ctx.fillText(label,x+w/2,y+h*.65);
-}
+  };
 
-function drawChicken(x,y){
- ctx.font="25px Arial";
- ctx.textAlign="center";
- ctx.fillText("🐔",x,y);
-}
 
-function drawPlayer(x,y){
- ctx.beginPath();
- ctx.fillStyle="#173b24";
- ctx.arc(x,y-15,11,0,Math.PI*2);
- ctx.fill();
+  document.querySelectorAll(".menu-item")
+    .forEach(button => {
 
- ctx.fillStyle="#4d79a8";
- ctx.fillRect(x-9,y-5,18,27);
+      button.onclick = async () => {
 
- ctx.fillStyle="#222";
- ctx.fillRect(x-10,y+22,7,13);
- ctx.fillRect(x+3,y+22,7,13);
-}
+        $("sideMenu").style.display = "none";
 
-/* حرکت مستقیم با کشیدن انگشت */
-let dragging=false;
+        await menuAction(
+          button.dataset.action
+        );
 
-canvas.addEventListener("pointerdown",e=>{
- dragging=true;
- moveToPointer(e);
-});
+      };
 
-canvas.addEventListener("pointermove",e=>{
- if(dragging)moveToPointer(e);
-});
+    });
 
-canvas.addEventListener("pointerup",()=>dragging=false);
-canvas.addEventListener("pointercancel",()=>dragging=false);
 
-function moveToPointer(e){
- const r=canvas.getBoundingClientRect();
+  async function menuAction(action) {
 
- player.x=Math.max(
-  .08,
-  Math.min(.92,(e.clientX-r.left)/r.width)
- );
+    try {
 
- player.y=Math.max(
-  .30,
-  Math.min(.75,(e.clientY-r.top)/r.height)
- );
-}
+      if (action === "farm") {
 
-initChickens();
-draw();
+        openModal(
+          "مزرعه",
+          `
+            <div class="card">
+              <b>${escapeHtml(farm.name)}</b>
+              <div class="muted">
+                سطح مزرعه: ${farm.level}
+              </div>
+            </div>
 
-if(token){
- loadMe();
-}else{
- setTimeout(showLogin,300);
-}
+            <div class="card">
+              تعداد مرغ:
+              <b>${Number(farm.chickens).toLocaleString()}</b>
+            </div>
+
+            <div class="card">
+              خوراک:
+              <b>${Number(farm.feed).toLocaleString()} kg</b>
+            </div>
+
+            <div class="card">
+              آب:
+              <b>${Number(farm.water).toLocaleString()} L</b>
+            </div>
+          `
+        );
+
+        return;
+
+      }
+
+
+      if (action === "profile") {
+
+        openModal(
+          "پروفایل",
+          `
+            <div class="card">
+              نام کاربری:
+              <b>${escapeHtml(player.username)}</b>
+            </div>
+
+            <div class="card">
+              مزرعه:
+              <b>${escapeHtml(farm.name)}</b>
+            </div>
+
+            <div class="card">
+              سطح:
+              <b>${farm.level}</b>
+            </div>
+
+            <div class="card">
+              تعداد مرغ:
+              <b>${Number(farm.chickens).toLocaleString()}</b>
+            </div>
+          `
+        );
+
+        return;
+
+      }
+
+
+      if (action === "social") {
+
+        const result =
+          await api(
+            "/api/social/search?q="
+            + encodeURIComponent(
+              prompt("نام بازیکن را وارد کن:")
+              || ""
+            )
+          );
+
+
+        let html = "";
+
+        if (!result.players.length) {
+
+          html =
+            `<div class="card">بازیکن واقعی پیدا نشد.</div>`;
+
+        } else {
+
+          result.players.forEach(p => {
+
+            html += `
+              <div class="card">
+                <b>${escapeHtml(p.username)}</b>
+                <div class="muted">
+                  ${escapeHtml(p.farm_name)}
+                </div>
+              </div>
+            `;
+
+          });
+
+        }
+
+        openModal("بازیکنان", html);
+
+        return;
+
+      }
+
+
+      if (action === "ranking") {
+
+        const result =
+          await api("/api/social/ranking");
+
+
+        if (!result.players.length) {
+
+          openModal(
+            "رتبه‌بندی",
+            `<div class="card">
+              هنوز بازیکن واقعی ثبت نشده.
+            </div>`
+          );
+
+          return;
+
+        }
+
+
+        let html = "";
+
+        result.players.forEach((p, index) => {
+
+          html += `
+            <div class="card">
+              #${index + 1}
+              <b>${escapeHtml(p.username)}</b>
+              <div class="muted">
+                مرغ: ${Number(p.chickens).toLocaleString()}
+                |
+                سطح: ${p.level}
+              </div>
+            </div>
+          `;
+
+        });
+
+        openModal("رتبه‌بندی واقعی", html);
+
+        return;
+
+      }
+
+
+      if (action === "market") {
+
+        const result =
+          await api("/api/market");
+
+        let html = "";
+
+        if (!result.listings.length) {
+
+          html =
+            `<div class="card">
+              در حال حاضر آگهی فعالی وجود ندارد.
+            </div>`;
+
+        } else {
+
+          result.listings.forEach(item => {
+
+            html += `
+              <div class="card">
+                <b>${escapeHtml(item.type)}</b>
+                <div>
+                  مقدار: ${Number(item.amount).toLocaleString()}
+                </div>
+                <div>
+                  قیمت واحد:
+                  ${Number(item.price).toLocaleString()}
+                </div>
+              </div>
+            `;
+
+          });
+
+        }
+
+        openModal("بازار", html);
+
+        return;
+
+      }
+
+
+      if (action === "wallet") {
+
+        const result =
+          await api("/api/wallet");
+
+
+        let html = `
+          <div class="card">
+            موجودی:
+            <b class="coin">
+              ${Number(result.balance).toLocaleString()}
+            </b>
+          </div>
+        `;
+
+
+        result.transactions.forEach(t => {
+
+          html += `
+            <div class="card">
+              ${escapeHtml(t.description || "")}
+              <div class="muted">
+                ${Number(t.amount).toLocaleString()}
+              </div>
+            </div>
+          `;
+
+        });
+
+
+        openModal("کیف پول", html);
+
+        return;
+
+      }
+
+
+      if (action === "notifications") {
+
+        const result =
+          await api("/api/notifications");
+
+
+        let html = "";
+
+        if (!result.notifications.length) {
+
+          html =
+            `<div class="card">
+              اعلان جدیدی وجود ندارد.
+            </div>`;
+
+        } else {
+
+          result.notifications.forEach(n => {
+
+            html += `
+              <div class="card">
+                <b>${escapeHtml(n.title)}</b>
+                <div>
+                  ${escapeHtml(n.body)}
+                </div>
+              </div>
+            `;
+
+          });
+
+        }
+
+        openModal("اعلان‌ها", html);
+
+        return;
+
+      }
+
+
+      if (action === "referral") {
+
+        const result =
+          await api("/api/referral");
+
+        openModal(
+          "دعوت دوستان",
+          `
+            <div class="card">
+              کد دعوت شما:
+              <b>${escapeHtml(result.code)}</b>
+            </div>
+
+            <div class="card">
+              دعوت موفق:
+              <b>${result.successful}</b>
+              از حداکثر ۱۰ نفر
+            </div>
+          `
+        );
+
+        return;
+
+      }
+
+
+      if (action === "settings") {
+
+        openModal(
+          "تنظیمات",
+          `
+            <div class="card">
+              سرور:
+              <div class="muted">
+                ${escapeHtml(API_BASE)}
+              </div>
+            </div>
+
+            <button
+              class="primary"
+              onclick="logoutAll()"
+            >
+              خروج از همه دستگاه‌ها
+            </button>
+          `
+        );
+
+        return;
+
+      }
+
+
+      if (action === "logout") {
+
+        await api(
+          "/api/auth/logout",
+          {
+            method: "POST"
+          }
+        );
+
+        token = "";
+
+        localStorage.removeItem(
+          "chicken_token"
+        );
+
+        location.reload();
+
+      }
+
+    } catch (error) {
+
+      openModal(
+        "خطا",
+        `<div class="card">${escapeHtml(error.message)}</div>`
+      );
+
+    }
+
+  }
+
+
+  async function logoutAll() {
+
+    try {
+
+      await api(
+        "/api/auth/logout-all",
+        {
+          method: "POST"
+        }
+      );
+
+    } catch (_) {}
+
+    token = "";
+
+    localStorage.removeItem(
+      "chicken_token"
+    );
+
+    location.reload();
+
+  }
+
+
+  $("feedMorning").onclick =
+    () => performAction(
+      "/api/game/feed",
+      "خوراک صبح"
+    );
+
+
+  $("feedEvening").onclick =
+    () => performAction(
+      "/api/game/feed",
+      "خوراک عصر"
+    );
+
+
+  $("collectEggs").onclick =
+    () => performAction(
+      "/api/game/collect-eggs",
+      "جمع‌آوری تخم‌مرغ"
+    );
+
+
+  $("endDay").onclick =
+    () => performAction(
+      "/api/game/end-day",
+      "پایان روز"
+    );
+
+
+  async function performAction(
+    path,
+    title
+  ) {
+
+    try {
+
+      const result =
+        await api(
+          path,
+          {
+            method: "POST"
+          }
+        );
+
+
+      if (result.farm) {
+        farm = result.farm;
+      }
+
+      if (result.player) {
+        player = result.player;
+      }
+
+      updateUI();
+
+      openModal(
+        title,
+        `
+          <div class="card success">
+            عملیات با موفقیت انجام شد.
+          </div>
+
+          <div class="card">
+            ${escapeHtml(
+              result.message || ""
+            )}
+          </div>
+        `
+      );
+
+      drawFarm();
+
+    } catch (error) {
+
+      openModal(
+        "خطا",
+        `<div class="card">${escapeHtml(error.message)}</div>`
+      );
+
+    }
+
+  }
+
+
+  function escapeHtml(value) {
+
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+
+  /* ---------- FARM CANVAS ---------- */
+
+  const canvas =
+    $("farmCanvas");
+
+  const ctx =
+    canvas.getContext("2d");
+
+
+  let playerX = 0.5;
+  let playerY = 0.5;
+
+  let dragging = false;
+
+
+  function resizeCanvas() {
+
+    const dpr =
+      Math.max(
+        1,
+        Math.min(
+          2,
+          window.devicePixelRatio || 1
+        )
+      );
+
+    canvas.width =
+      innerWidth * dpr;
+
+    canvas.height =
+      innerHeight * dpr;
+
+    canvas.style.width =
+      innerWidth + "px";
+
+    canvas.style.height =
+      innerHeight + "px";
+
+    ctx.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+    drawFarm();
+
+  }
+
+
+  window.addEventListener(
+    "resize",
+    resizeCanvas
+  );
+
+
+  function drawFarm() {
+
+    const w = innerWidth;
+    const h = innerHeight;
+
+    ctx.clearRect(
+      0,
+      0,
+      w,
+      h
+    );
+
+
+    /* زمین */
+
+    ctx.fillStyle =
+      "#b9d995";
+
+    ctx.fillRect(
+      0,
+      0,
+      w,
+      h
+    );
+
+
+    /* مسیر */
+
+    ctx.fillStyle =
+      "#d7c39a";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      w * .42,
+      0
+    );
+
+    ctx.lineTo(
+      w * .63,
+      0
+    );
+
+    ctx.lineTo(
+      w * .57,
+      h
+    );
+
+    ctx.lineTo(
+      w * .37,
+      h
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* مرغداری */
+
+    const bx = w * .08;
+    const by = h * .25;
+    const bw = w * .34;
+    const bh = h * .25;
+
+    ctx.fillStyle =
+      "#eee8d8";
+
+    ctx.fillRect(
+      bx,
+      by,
+      bw,
+      bh
+    );
+
+    ctx.fillStyle =
+      "#9e573e";
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      bx - 15,
+      by
+    );
+
+    ctx.lineTo(
+      bx + bw / 2,
+      by - 55
+    );
+
+    ctx.lineTo(
+      bx + bw + 15,
+      by
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+      "#65402f";
+
+    ctx.fillRect(
+      bx + bw * .4,
+      by + bh * .48,
+      bw * .2,
+      bh * .52
+    );
+
+
+    /* انبار خوراک */
+
+    ctx.fillStyle =
+      "#d8b56b";
+
+    ctx.fillRect(
+      w * .70,
+      h * .24,
+      w * .22,
+      h * .18
+    );
+
+
+    /* حوض آب */
+
+    ctx.fillStyle =
+      "#6db8d6";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+      w * .78,
+      h * .62,
+      w * .12,
+      h * .07,
+      0,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    /* مرغ‌ها */
+
+    const chickens =
+      Math.min(
+        25,
+        Math.max(
+          4,
+          Number(farm?.chickens || 4) / 8
+        )
+      );
+
+
+    for (
+      let i = 0;
+      i < chickens;
+      i++
+    ) {
+
+      const cx =
+        w * .10 +
+        (i * 47) % (w * .78);
+
+      const cy =
+        h * .52 +
+        ((i * 71) % Math.max(100, h * .30));
+
+      drawChicken(
+        cx,
+        cy
+      );
+
+    }
+
+
+    /* بازیکن */
+
+    const px =
+      w * playerX;
+
+    const py =
+      h * playerY;
+
+    ctx.beginPath();
+
+    ctx.fillStyle =
+      "#365fbd";
+
+    ctx.arc(
+      px,
+      py,
+      16,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle =
+      "white";
+
+    ctx.font =
+      "12px Tahoma";
+
+    ctx.textAlign =
+      "center";
+
+    ctx.fillText(
+      "من",
+      px,
+      py - 24
+    );
+
+  }
+
+
+  function drawChicken(x, y) {
+
+    ctx.save();
+
+    ctx.fillStyle =
+      "#fffdf5";
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+      x,
+      y,
+      15,
+      11,
+      0,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+      "#e9b34f";
+
+    ctx.beginPath();
+
+    ctx.arc(
+      x + 12,
+      y - 7,
+      7,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+      "#c94d43";
+
+    ctx.beginPath();
+
+    ctx.arc(
+      x + 13,
+      y - 13,
+      3,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.fillStyle =
+      "#222";
+
+    ctx.beginPath();
+
+    ctx.arc(
+      x + 14,
+      y - 8,
+      1.5,
+      0,
+      Math.PI * 2
+    );
+
+    ctx.fill();
+
+
+    ctx.restore();
+
+  }
+
+
+  canvas.addEventListener(
+    "pointerdown",
+    e => {
+
+      dragging = true;
+
+      movePlayer(
+        e.clientX,
+        e.clientY
+      );
+
+    }
+  );
+
+
+  canvas.addEventListener(
+    "pointermove",
+    e => {
+
+      if (!dragging) return;
+
+      movePlayer(
+        e.clientX,
+        e.clientY
+      );
+
+    }
+  );
+
+
+  window.addEventListener(
+    "pointerup",
+    () => {
+
+      dragging = false;
+
+    }
+  );
+
+
+  function movePlayer(
+    x,
+    y
+  ) {
+
+    playerX =
+      Math.max(
+        .03,
+        Math.min(
+          .97,
+          x / innerWidth
+        )
+      );
+
+    playerY =
+      Math.max(
+        .10,
+        Math.min(
+          .90,
+          y / innerHeight
+        )
+      );
+
+    drawFarm();
+
+  }
+
+
+  /* ---------- START ---------- */
+
+  resizeCanvas();
+
+
+  if (token) {
+
+    loadGame();
+
+  } else {
+
+    $("authScreen").style.display =
+      "flex";
+
+  }
 
 </script>
+
 </body>
 </html>
