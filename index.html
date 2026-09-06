@@ -2,961 +2,1423 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>مرغداری وحید - V21</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>مرغداری وحید V22</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
+*{box-sizing:border-box}
+body{
+    margin:0;
+    background:#111827;
+    color:#fff;
+    font-family:Tahoma,Arial,sans-serif;
+    overflow:hidden;
 }
-
-html,body{
-  margin:0;
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  background:#17251b;
-  font-family:Tahoma,Arial,sans-serif;
-  touch-action:none;
+button{
+    border:0;
+    border-radius:12px;
+    padding:11px 14px;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
 }
-
-#game{
-  position:fixed;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-  background:#73b85d;
+#app{
+    width:100vw;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
 }
-
-#topbar{
-  position:fixed;
-  top:8px;
-  left:8px;
-  right:8px;
-  z-index:10;
-  display:flex;
-  gap:6px;
-  justify-content:center;
-  flex-wrap:wrap;
+#top{
+    min-height:72px;
+    background:#172033;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:7px;
+    overflow-x:auto;
+    z-index:10;
 }
-
 .stat{
-  background:rgba(20,35,24,.88);
-  color:#fff;
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:12px;
-  padding:7px 10px;
-  font-size:12px;
-  box-shadow:0 3px 10px #0005;
-}
-
-#message{
-  position:fixed;
-  left:50%;
-  top:72px;
-  transform:translateX(-50%);
-  z-index:20;
-  background:rgba(20,35,24,.94);
-  color:#fff;
-  padding:9px 16px;
-  border-radius:14px;
-  font-size:13px;
-  opacity:0;
-  transition:.25s;
-  pointer-events:none;
-}
-
-#actions{
-  position:fixed;
-  bottom:15px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:15;
-  display:flex;
-  gap:8px;
-}
-
-.action{
-  border:0;
-  color:#fff;
-  background:rgba(24,42,29,.92);
-  border-radius:14px;
-  padding:11px 13px;
-  font-weight:bold;
-  font-size:12px;
-  box-shadow:0 4px 12px #0006;
-}
-
-.action:active{
-  transform:scale(.94);
-}
-
-#joystick{
-  position:fixed;
-  left:20px;
-  bottom:20px;
-  width:125px;
-  height:125px;
-  border-radius:50%;
-  background:rgba(20,35,24,.25);
-  border:2px solid rgba(255,255,255,.25);
-  z-index:20;
-}
-
-#stick{
-  position:absolute;
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  background:rgba(255,255,255,.75);
-  left:35px;
-  top:35px;
-  box-shadow:0 3px 12px #0006;
-}
-
-#help{
-  position:fixed;
-  right:10px;
-  bottom:12px;
-  z-index:10;
-  color:#fff;
-  background:#0006;
-  border-radius:10px;
-  padding:7px 9px;
-  font-size:10px;
-  max-width:160px;
-}
-
-@media(min-width:800px){
-  #joystick{
-    display:none;
-  }
-
-  #help{
+    background:#243047;
+    border-radius:10px;
+    padding:7px 10px;
+    white-space:nowrap;
     font-size:12px;
-  }
+}
+#content{
+    flex:1;
+    position:relative;
+    overflow:hidden;
+}
+canvas{
+    width:100%;
+    height:100%;
+    display:block;
+    touch-action:none;
+}
+#bottom{
+    min-height:64px;
+    background:#172033;
+    display:flex;
+    gap:6px;
+    padding:6px;
+    overflow-x:auto;
+    z-index:20;
+}
+.nav{
+    min-width:76px;
+    background:#26344e;
+    color:white;
+}
+.nav.active{
+    background:#16a34a;
+}
+#panel{
+    position:absolute;
+    inset:10px;
+    background:rgba(15,23,42,.97);
+    border:1px solid #475569;
+    border-radius:18px;
+    padding:15px;
+    overflow:auto;
+    z-index:30;
+    display:none;
+}
+#panel h2{
+    margin-top:0;
+}
+.close{
+    float:left;
+    background:#dc2626;
+    color:#fff;
+}
+.card{
+    background:#1e293b;
+    padding:13px;
+    border-radius:13px;
+    margin:8px 0;
+}
+.row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:8px;
+    padding:7px 0;
+    border-bottom:1px solid #334155;
+}
+.green{color:#4ade80}
+.yellow{color:#facc15}
+.red{color:#f87171}
+.blue{color:#60a5fa}
+.small{font-size:12px;color:#cbd5e1}
+.action{
+    background:#2563eb;
+    color:white;
+}
+.danger{
+    background:#dc2626;
+    color:white;
+}
+.success{
+    background:#16a34a;
+    color:white;
+}
+.dark{
+    background:#334155;
+    color:white;
+}
+input{
+    width:100%;
+    background:#0f172a;
+    color:white;
+    border:1px solid #475569;
+    border-radius:10px;
+    padding:10px;
+    margin:5px 0;
+}
+#joystick{
+    position:absolute;
+    left:20px;
+    bottom:20px;
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    background:rgba(255,255,255,.12);
+    border:2px solid rgba(255,255,255,.25);
+    z-index:15;
+}
+#stick{
+    position:absolute;
+    width:48px;
+    height:48px;
+    left:29px;
+    top:29px;
+    border-radius:50%;
+    background:rgba(255,255,255,.35);
 }
 </style>
 </head>
 
 <body>
+<div id="app">
+
+<div id="top">
+    <div class="stat">🐔 مرغ: <b id="sChickens">100</b></div>
+    <div class="stat">🌾 خوراک: <b id="sFeed">100</b> kg</div>
+    <div class="stat">💧 آب: <b id="sWater">100</b></div>
+    <div class="stat">🥚 تخم‌مرغ: <b id="sEggs">0</b></div>
+    <div class="stat">🪙 توکن: <b id="sCoins">300</b></div>
+    <div class="stat">📅 روز: <b id="sDay">1</b></div>
+</div>
+
+<div id="content">
 
 <canvas id="game"></canvas>
 
-<div id="topbar">
-  <div class="stat">🐔 <span id="chickens">100</span></div>
-  <div class="stat">🌾 <span id="feed">100</span> kg</div>
-  <div class="stat">💧 <span id="water">100</span></div>
-  <div class="stat">🥚 <span id="eggs">0</span></div>
-  <div class="stat">🪙 <span id="coins">300</span></div>
-  <div class="stat">📅 روز <span id="day">1</span></div>
-</div>
-
-<div id="message"></div>
-
-<div id="actions">
-  <button class="action" onclick="feedMorning()">🌾 خوراک</button>
-  <button class="action" onclick="giveWater()">💧 آب</button>
-  <button class="action" onclick="collectEggs()">🥚 جمع‌آوری</button>
-  <button class="action" onclick="nextDay()">🌙 پایان روز</button>
-</div>
-
 <div id="joystick">
-  <div id="stick"></div>
+    <div id="stick"></div>
 </div>
 
-<div id="help">
-  📱 جوی‌استیک = حرکت<br>
-  روی ساختمان‌ها نزدیک شو و دکمه‌های پایین را بزن
+<div id="panel"></div>
+
+</div>
+
+<div id="bottom">
+    <button class="nav active" onclick="showFarm()">🏡<br>مزرعه</button>
+    <button class="nav" onclick="showProfile()">👤<br>پروفایل</button>
+    <button class="nav" onclick="showSocial()">👥<br>اجتماعی</button>
+    <button class="nav" onclick="showRank()">🏆<br>رتبه‌بندی</button>
+    <button class="nav" onclick="showMarket()">🛒<br>بازار</button>
+    <button class="nav" onclick="showWallet()">💰<br>کیف پول</button>
+    <button class="nav" onclick="showNotifications()">🔔<br>اعلان‌ها</button>
+    <button class="nav" onclick="showReferral()">🎁<br>دعوت</button>
+    <button class="nav" onclick="showSettings()">⚙️<br>تنظیمات</button>
+</div>
+
 </div>
 
 <script>
-/* =========================================================
-   مرغداری وحید - V21
-   نسخه تصویری موبایل
-   ========================================================= */
+/* =========================
+   STATE
+========================= */
 
-const canvas = document.getElementById("game");
-const ctx = canvas.getContext("2d");
+const SAVE_KEY="vahid_chicken_v22";
 
-let W = innerWidth;
-let H = innerHeight;
+let state=JSON.parse(localStorage.getItem(SAVE_KEY)||"null")||{
+    day:1,
+    chickens:100,
+    feed:100,
+    water:100,
+    eggs:0,
+    coins:300,
 
-function resize(){
-  W = innerWidth;
-  H = innerHeight;
-  canvas.width = W * devicePixelRatio;
-  canvas.height = H * devicePixelRatio;
-  canvas.style.width = W+"px";
-  canvas.style.height = H+"px";
-  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-}
+    level:1,
+    username:"vahid",
+    farmName:"مزرعه وحید",
 
-addEventListener("resize",resize);
-resize();
+    followers:0,
+    following:0,
 
-/* -------------------------
-   وضعیت بازی
-------------------------- */
+    totalEggs:0,
+    totalDays:0,
+    health:100,
 
-let state = JSON.parse(localStorage.getItem("vahid_v21")) || {
-  day:1,
-  chickens:100,
-  feed:100,
-  water:100,
-  eggs:0,
-  coins:300,
-  fedToday:false,
-  wateredToday:false,
-  collectedToday:false,
-  totalEggs:0,
-  health:100
+    fedMorning:false,
+    fedEvening:false,
+    wateredMorning:false,
+    wateredEvening:false,
+
+    feedShortageDays:0,
+    waterShortageDays:0,
+
+    feedStorage:1000,
+    coldStorage:1500,
+
+    notifications:[
+        "🎉 به مزرعه مرغداری وحید خوش آمدی."
+    ],
+
+    adsWatched:0,
+
+    referralCode:"VAHID100",
+
+    farmClean:true,
+    feedStoreClean:true,
+    coldStoreClean:true
 };
 
 function save(){
-  localStorage.setItem("vahid_v21",JSON.stringify(state));
-  updateUI();
+    localStorage.setItem(SAVE_KEY,JSON.stringify(state));
+    updateStats();
 }
 
-function updateUI(){
-  document.getElementById("chickens").textContent=state.chickens;
-  document.getElementById("feed").textContent=Math.floor(state.feed);
-  document.getElementById("water").textContent=Math.floor(state.water);
-  document.getElementById("eggs").textContent=state.eggs;
-  document.getElementById("coins").textContent=Math.floor(state.coins);
-  document.getElementById("day").textContent=state.day;
+function updateStats(){
+    sChickens.textContent=state.chickens;
+    sFeed.textContent=Math.floor(state.feed);
+    sWater.textContent=Math.floor(state.water);
+    sEggs.textContent=Math.floor(state.eggs);
+    sCoins.textContent=Math.floor(state.coins);
+    sDay.textContent=state.day;
 }
 
-/* -------------------------
-   پیام
-------------------------- */
+/* =========================
+   CANVAS
+========================= */
 
-let msgTimer;
+const canvas=document.getElementById("game");
+const ctx=canvas.getContext("2d");
 
-function msg(text){
-  const el=document.getElementById("message");
-  el.textContent=text;
-  el.style.opacity=1;
-
-  clearTimeout(msgTimer);
-
-  msgTimer=setTimeout(()=>{
-    el.style.opacity=0;
-  },1800);
-}
-
-/* -------------------------
-   جهان بازی
-------------------------- */
+let W=0,H=0;
 
 const world={
-  w:2200,
-  h:1500
+    w:2200,
+    h:1500
 };
 
 const player={
-  x:1100,
-  y:760,
-  speed:4,
-  r:18
+    x:1100,
+    y:780,
+    speed:5,
+    r:22
 };
+
+let chickens=[];
+
+for(let i=0;i<100;i++){
+    chickens.push({
+        x:760+Math.random()*420,
+        y:520+Math.random()*170,
+        dx:(Math.random()-.5),
+        dy:(Math.random()-.5)
+    });
+}
 
 let camera={
-  x:0,
-  y:0
+    x:0,
+    y:0
 };
 
-/* -------------------------
-   مرغ‌ها
-------------------------- */
+/* =========================
+   RESIZE
+========================= */
 
-const chickens=[];
+function resize(){
+    W=canvas.width=window.innerWidth;
+    H=canvas.height=window.innerHeight-136;
+}
+window.addEventListener("resize",resize);
+resize();
 
-function createChickens(){
-  chickens.length=0;
+/* =========================
+   DRAW
+========================= */
 
-  for(let i=0;i<state.chickens;i++){
+function drawBackground(){
 
-    chickens.push({
-      x:700+Math.random()*800,
-      y:420+Math.random()*650,
-      vx:0,
-      vy:0,
-      timer:Math.random()*100,
-      phase:Math.random()*6.28
+    ctx.fillStyle="#75b84a";
+    ctx.fillRect(0,0,world.w,world.h);
+
+    // زمین
+    ctx.fillStyle="#69a83f";
+    for(let x=0;x<world.w;x+=120){
+        for(let y=0;y<world.h;y+=120){
+            ctx.fillRect(x+5,y+5,100,100);
+        }
+    }
+
+    // جاده
+    ctx.fillStyle="#b99b70";
+    ctx.fillRect(0,690,world.w,110);
+    ctx.fillRect(1020,0,110,world.h);
+
+    // رودخانه
+    ctx.fillStyle="#4aa3df";
+    ctx.fillRect(0,1180,world.w,180);
+
+    drawBuilding(720,250,520,230,"🏠","مرغداری");
+    drawBuilding(1450,300,350,220,"🌾","انبار خوراک");
+    drawBuilding(1450,600,350,200,"❄️","سردخانه");
+    drawBuilding(350,350,300,200,"🏢","دفتر");
+
+    // تابلو
+    ctx.fillStyle="#4b2e1f";
+    ctx.fillRect(850,1050,500,100);
+
+    ctx.fillStyle="#fff";
+    ctx.font="bold 38px Tahoma";
+    ctx.textAlign="center";
+    ctx.fillText(state.farmName,1100,1115);
+}
+
+function drawBuilding(x,y,w,h,icon,name){
+
+    ctx.fillStyle="#8b5a2b";
+    ctx.fillRect(x,y,w,h);
+
+    ctx.fillStyle="#6d3e1d";
+    ctx.fillRect(x+20,y+20,w-40,55);
+
+    ctx.fillStyle="#fff";
+    ctx.font="50px Arial";
+    ctx.textAlign="center";
+    ctx.fillText(icon,x+w/2,y+135);
+
+    ctx.font="bold 24px Tahoma";
+    ctx.fillText(name,x+w/2,y+180);
+}
+
+function drawChickens(){
+
+    chickens.forEach(c=>{
+
+        c.x+=c.dx;
+        c.y+=c.dy;
+
+        if(c.x<720||c.x>1240)c.dx*=-1;
+        if(c.y<480||c.y>700)c.dy*=-1;
+
+        ctx.font="26px Arial";
+        ctx.textAlign="center";
+        ctx.fillText("🐔",c.x,c.y);
     });
-  }
 }
-
-createChickens();
-
-/* -------------------------
-   ساختمان‌ها
-------------------------- */
-
-const buildings=[
-  {
-    type:"barn",
-    x:720,
-    y:250,
-    w:520,
-    h:230,
-    name:"🏠 سالن مرغداری"
-  },
-  {
-    type:"storage",
-    x:1450,
-    y:300,
-    w:350,
-    h:220,
-    name:"🌾 انبار خوراک"
-  },
-  {
-    type:"cold",
-    x:1450,
-    y:600,
-    w:350,
-    h:200,
-    name:"❄️ سردخانه"
-  },
-  {
-    type:"office",
-    x:350,
-    y:350,
-    w:300,
-    h:200,
-    name:"🏢 دفتر مزرعه"
-  }
-];
-
-/* -------------------------
-   کنترل کیبورد
-------------------------- */
-
-const keys={};
-
-addEventListener("keydown",e=>{
-  keys[e.key.toLowerCase()]=true;
-});
-
-addEventListener("keyup",e=>{
-  keys[e.key.toLowerCase()]=false;
-});
-
-/* -------------------------
-   جوی‌استیک
-------------------------- */
-
-const joystick=document.getElementById("joystick");
-const stick=document.getElementById("stick");
-
-let joy={
-  active:false,
-  x:0,
-  y:0
-};
-
-function joyMove(clientX,clientY){
-
-  const r=joystick.getBoundingClientRect();
-
-  const cx=r.left+r.width/2;
-  const cy=r.top+r.height/2;
-
-  let dx=clientX-cx;
-  let dy=clientY-cy;
-
-  const max=45;
-  const d=Math.sqrt(dx*dx+dy*dy);
-
-  if(d>max){
-    dx=dx/d*max;
-    dy=dy/d*max;
-  }
-
-  joy.x=dx/max;
-  joy.y=dy/max;
-
-  stick.style.left=(35+dx)+"px";
-  stick.style.top=(35+dy)+"px";
-}
-
-function joyReset(){
-  joy.active=false;
-  joy.x=0;
-  joy.y=0;
-  stick.style.left="35px";
-  stick.style.top="35px";
-}
-
-joystick.addEventListener("touchstart",e=>{
-  joy.active=true;
-  const t=e.touches[0];
-  joyMove(t.clientX,t.clientY);
-},{passive:false});
-
-joystick.addEventListener("touchmove",e=>{
-  if(!joy.active)return;
-  const t=e.touches[0];
-  joyMove(t.clientX,t.clientY);
-},{passive:false});
-
-joystick.addEventListener("touchend",joyReset);
-joystick.addEventListener("touchcancel",joyReset);
-
-/* -------------------------
-   حرکت بازیکن
-------------------------- */
-
-function movePlayer(){
-
-  let dx=0;
-  let dy=0;
-
-  if(keys["w"]||keys["arrowup"])dy-=1;
-  if(keys["s"]||keys["arrowdown"])dy+=1;
-  if(keys["a"]||keys["arrowleft"])dx-=1;
-  if(keys["d"]||keys["arrowright"])dx+=1;
-
-  if(joy.active){
-    dx=joy.x;
-    dy=joy.y;
-  }
-
-  const len=Math.sqrt(dx*dx+dy*dy);
-
-  if(len>0){
-    dx/=len;
-    dy/=len;
-
-    const speed=keys["shift"]?7:player.speed;
-
-    player.x+=dx*speed;
-    player.y+=dy*speed;
-  }
-
-  player.x=Math.max(30,Math.min(world.w-30,player.x));
-  player.y=Math.max(30,Math.min(world.h-30,player.y));
-}
-
-/* -------------------------
-   دوربین
-------------------------- */
-
-function updateCamera(){
-
-  camera.x=player.x-W/2;
-  camera.y=player.y-H/2;
-
-  camera.x=Math.max(0,Math.min(world.w-W,camera.x));
-  camera.y=Math.max(0,Math.min(world.h-H,camera.y));
-}
-
-/* -------------------------
-   رسم زمین
-------------------------- */
-
-function drawGround(){
-
-  ctx.fillStyle="#73b85d";
-  ctx.fillRect(0,0,W,H);
-
-  const grid=80;
-
-  ctx.strokeStyle="rgba(255,255,255,.08)";
-  ctx.lineWidth=1;
-
-  for(let x=-camera.x%grid;x<W;x+=grid){
-    ctx.beginPath();
-    ctx.moveTo(x,0);
-    ctx.lineTo(x,H);
-    ctx.stroke();
-  }
-
-  for(let y=-camera.y%grid;y<H;y+=grid){
-    ctx.beginPath();
-    ctx.moveTo(0,y);
-    ctx.lineTo(W,y);
-    ctx.stroke();
-  }
-
-  /* جاده */
-
-  ctx.fillStyle="#b99462";
-
-  const roadX=1050-camera.x;
-
-  ctx.fillRect(roadX,0,180,H);
-}
-
-/* -------------------------
-   ساختمان
-------------------------- */
-
-function drawBuilding(b){
-
-  const x=b.x-camera.x;
-  const y=b.y-camera.y;
-
-  ctx.fillStyle="#0003";
-  ctx.fillRect(x+8,y+12,b.w,b.h);
-
-  if(b.type==="barn"){
-    ctx.fillStyle="#c96f45";
-  }else if(b.type==="storage"){
-    ctx.fillStyle="#d49b42";
-  }else if(b.type==="cold"){
-    ctx.fillStyle="#6da9cf";
-  }else{
-    ctx.fillStyle="#777";
-  }
-
-  ctx.fillRect(x,y,b.w,b.h);
-
-  /* سقف */
-
-  ctx.fillStyle="rgba(70,45,30,.75)";
-  ctx.beginPath();
-  ctx.moveTo(x-20,y);
-  ctx.lineTo(x+b.w/2,y-70);
-  ctx.lineTo(x+b.w+20,y);
-  ctx.closePath();
-  ctx.fill();
-
-  ctx.fillStyle="#fff";
-  ctx.font="bold 17px Tahoma";
-  ctx.textAlign="center";
-  ctx.fillText(b.name,x+b.w/2,y+b.h/2);
-
-  /* در */
-
-  ctx.fillStyle="#573b29";
-  ctx.fillRect(x+b.w/2-35,y+b.h-85,70,85);
-}
-
-/* -------------------------
-   مرغ
-------------------------- */
-
-function drawChicken(c){
-
-  const x=c.x-camera.x;
-  const y=c.y-camera.y;
-
-  if(x<-50||x>W+50||y<-50||y>H+50)return;
-
-  ctx.save();
-  ctx.translate(x,y);
-
-  /* سایه */
-
-  ctx.fillStyle="#0003";
-  ctx.beginPath();
-  ctx.ellipse(0,10,18,7,0,0,Math.PI*2);
-  ctx.fill();
-
-  /* بدن */
-
-  ctx.fillStyle="#fff";
-  ctx.beginPath();
-  ctx.ellipse(0,0,17,13,0,0,Math.PI*2);
-  ctx.fill();
-
-  /* بال */
-
-  ctx.fillStyle="#ddd";
-  ctx.beginPath();
-  ctx.ellipse(-4,2,9,7,0,0,Math.PI*2);
-  ctx.fill();
-
-  /* سر */
-
-  ctx.fillStyle="#fff";
-  ctx.beginPath();
-  ctx.arc(14,-9,9,0,Math.PI*2);
-  ctx.fill();
-
-  /* تاج */
-
-  ctx.fillStyle="#d83d32";
-  ctx.beginPath();
-  ctx.arc(14,-17,4,0,Math.PI*2);
-  ctx.fill();
-
-  ctx.fillRect(11,-20,3,5);
-  ctx.fillRect(15,-20,3,5);
-
-  /* چشم */
-
-  ctx.fillStyle="#111";
-  ctx.beginPath();
-  ctx.arc(17,-11,2,0,Math.PI*2);
-  ctx.fill();
-
-  /* نوک */
-
-  ctx.fillStyle="#e6a63d";
-  ctx.beginPath();
-  ctx.moveTo(23,-9);
-  ctx.lineTo(31,-5);
-  ctx.lineTo(23,-3);
-  ctx.closePath();
-  ctx.fill();
-
-  /* پا */
-
-  ctx.strokeStyle="#d99a38";
-  ctx.lineWidth=3;
-
-  ctx.beginPath();
-  ctx.moveTo(-6,10);
-  ctx.lineTo(-6,18);
-  ctx.moveTo(5,10);
-  ctx.lineTo(5,18);
-  ctx.stroke();
-
-  ctx.restore();
-}
-
-/* -------------------------
-   کاراکتر
-------------------------- */
 
 function drawPlayer(){
 
-  const x=player.x-camera.x;
-  const y=player.y-camera.y;
-
-  ctx.save();
-  ctx.translate(x,y);
-
-  /* سایه */
-
-  ctx.fillStyle="#0004";
-  ctx.beginPath();
-  ctx.ellipse(0,22,18,8,0,0,Math.PI*2);
-  ctx.fill();
-
-  /* بدن */
-
-  ctx.fillStyle="#315e9e";
-  ctx.fillRect(-13,-5,26,30);
-
-  /* سر */
-
-  ctx.fillStyle="#f0bd91";
-  ctx.beginPath();
-  ctx.arc(0,-18,14,0,Math.PI*2);
-  ctx.fill();
-
-  /* کلاه */
-
-  ctx.fillStyle="#e2a42d";
-  ctx.fillRect(-15,-31,30,7);
-
-  ctx.fillRect(-8,-40,16,10);
-
-  /* پاها */
-
-  ctx.strokeStyle="#333";
-  ctx.lineWidth=6;
-
-  ctx.beginPath();
-  ctx.moveTo(-7,25);
-  ctx.lineTo(-9,38);
-  ctx.moveTo(7,25);
-  ctx.lineTo(9,38);
-  ctx.stroke();
-
-  /* نام */
-
-  ctx.fillStyle="#fff";
-  ctx.font="bold 12px Tahoma";
-  ctx.textAlign="center";
-  ctx.fillText("وحید",0,-50);
-
-  ctx.restore();
-}
-
-/* -------------------------
-   درخت
-------------------------- */
-
-function drawTree(x,y){
-
-  x-=camera.x;
-  y-=camera.y;
-
-  ctx.fillStyle="#79512e";
-  ctx.fillRect(x-7,y,14,45);
-
-  ctx.fillStyle="#2d843d";
-
-  for(let i=0;i<4;i++){
+    ctx.save();
 
     ctx.beginPath();
-
-    ctx.arc(
-      x+(i%2)*25-12,
-      y-10-Math.floor(i/2)*22,
-      28,
-      0,
-      Math.PI*2
-    );
-
+    ctx.arc(player.x,player.y,player.r+7,0,Math.PI*2);
+    ctx.fillStyle="rgba(37,99,235,.25)";
     ctx.fill();
-  }
+
+    ctx.font="38px Arial";
+    ctx.textAlign="center";
+    ctx.fillText("🧑",player.x,player.y+10);
+
+    ctx.font="bold 16px Tahoma";
+    ctx.fillStyle="#fff";
+    ctx.fillText(state.username,player.x,player.y-32);
+
+    ctx.restore();
 }
-
-/* -------------------------
-   انیمیشن مرغ‌ها
-------------------------- */
-
-function updateChickens(){
-
-  for(const c of chickens){
-
-    c.timer-=1;
-
-    if(c.timer<=0){
-
-      c.timer=60+Math.random()*180;
-
-      const a=Math.random()*Math.PI*2;
-
-      c.vx=Math.cos(a)*.5;
-      c.vy=Math.sin(a)*.5;
-    }
-
-    c.x+=c.vx;
-    c.y+=c.vy;
-
-    c.x=Math.max(600,Math.min(1450,c.x));
-    c.y=Math.max(480,Math.min(1200,c.y));
-  }
-}
-
-/* -------------------------
-   رندر
-------------------------- */
 
 function render(){
 
-  movePlayer();
-  updateCamera();
-  updateChickens();
+    ctx.clearRect(0,0,W,H);
 
-  drawGround();
+    camera.x=player.x-W/2;
+    camera.y=player.y-H/2;
 
-  /* درخت‌ها */
+    camera.x=Math.max(0,Math.min(world.w-W,camera.x));
+    camera.y=Math.max(0,Math.min(world.h-H,camera.y));
 
-  const trees=[
-    [180,200],[300,850],[500,1200],
-    [1850,200],[1900,950],[160,1250],
-    [2000,1250],[500,650]
-  ];
+    ctx.save();
+    ctx.translate(-camera.x,-camera.y);
 
-  for(const t of trees)drawTree(t[0],t[1]);
+    drawBackground();
+    drawChickens();
+    drawPlayer();
 
-  for(const b of buildings)drawBuilding(b);
+    ctx.restore();
 
-  for(const c of chickens)drawChicken(c);
-
-  drawPlayer();
-
-  requestAnimationFrame(render);
+    requestAnimationFrame(render);
 }
 
 render();
 
-/* -------------------------
-   بررسی وضعیت
-------------------------- */
+/* =========================
+   MOVEMENT
+========================= */
 
-function nearby(type){
+let keys={};
 
-  const b=buildings.find(x=>x.type===type);
+document.addEventListener("keydown",e=>{
+    keys[e.key.toLowerCase()]=true;
+});
 
-  if(!b)return false;
+document.addEventListener("keyup",e=>{
+    keys[e.key.toLowerCase()]=false;
+});
 
-  const cx=b.x+b.w/2;
-  const cy=b.y+b.h/2;
+let joy={
+    x:0,
+    y:0,
+    active:false
+};
 
-  return Math.hypot(player.x-cx,player.y-cy)<380;
+const joystick=document.getElementById("joystick");
+const stick=document.getElementById("stick");
+
+joystick.addEventListener("pointerdown",e=>{
+    joy.active=true;
+    joystick.setPointerCapture(e.pointerId);
+    updateJoystick(e);
+});
+
+joystick.addEventListener("pointermove",e=>{
+    if(joy.active)updateJoystick(e);
+});
+
+joystick.addEventListener("pointerup",()=>{
+    joy.active=false;
+    joy.x=0;
+    joy.y=0;
+    stick.style.left="29px";
+    stick.style.top="29px";
+});
+
+function updateJoystick(e){
+
+    const r=joystick.getBoundingClientRect();
+
+    let x=e.clientX-(r.left+r.width/2);
+    let y=e.clientY-(r.top+r.height/2);
+
+    const max=35;
+    const d=Math.sqrt(x*x+y*y);
+
+    if(d>max){
+        x=x/d*max;
+        y=y/d*max;
+    }
+
+    joy.x=x/max;
+    joy.y=y/max;
+
+    stick.style.left=(29+x)+"px";
+    stick.style.top=(29+y)+"px";
 }
 
-/* -------------------------
-   خوراک
-------------------------- */
+/* =========================
+   DIRECT CHARACTER DRAG
+========================= */
 
-function feedMorning(){
+let dragging=false;
+let dragPointer=null;
+let dragTarget=null;
 
-  if(state.fedToday){
-    msg("امروز خوراک داده شده است");
-    return;
-  }
+canvas.addEventListener("pointerdown",e=>{
 
-  const need=state.chickens*.05;
+    const rect=canvas.getBoundingClientRect();
 
-  if(state.feed<need){
-    msg("❌ خوراک کافی نداری");
-    return;
-  }
+    const sx=e.clientX-rect.left;
+    const sy=e.clientY-rect.top;
 
-  state.feed-=need;
-  state.fedToday=true;
+    const wx=sx+camera.x;
+    const wy=sy+camera.y;
 
-  msg("🌾 خوراک مرغ‌ها داده شد");
-  save();
+    const dx=wx-player.x;
+    const dy=wy-player.y;
+
+    if(Math.sqrt(dx*dx+dy*dy)<65){
+
+        dragging=true;
+        dragPointer=e.pointerId;
+
+        dragTarget={
+            x:wx,
+            y:wy
+        };
+
+        canvas.setPointerCapture(e.pointerId);
+    }
+});
+
+canvas.addEventListener("pointermove",e=>{
+
+    if(!dragging || e.pointerId!==dragPointer)return;
+
+    const rect=canvas.getBoundingClientRect();
+
+    dragTarget={
+        x:e.clientX-rect.left+camera.x,
+        y:e.clientY-rect.top+camera.y
+    };
+});
+
+canvas.addEventListener("pointerup",stopDrag);
+canvas.addEventListener("pointercancel",stopDrag);
+
+function stopDrag(e){
+
+    if(e.pointerId===dragPointer){
+
+        dragging=false;
+        dragPointer=null;
+        dragTarget=null;
+    }
 }
 
-/* -------------------------
-   آب
-------------------------- */
+/* حرکت بازیکن */
 
-function giveWater(){
+function movePlayer(){
 
-  if(state.wateredToday){
-    msg("امروز آب داده شده است");
-    return;
-  }
+    let dx=0;
+    let dy=0;
 
-  const need=state.chickens*.08;
+    if(keys["w"]||keys["arrowup"])dy-=1;
+    if(keys["s"]||keys["arrowdown"])dy+=1;
+    if(keys["a"]||keys["arrowleft"])dx-=1;
+    if(keys["d"]||keys["arrowright"])dx+=1;
 
-  if(state.water<need){
-    msg("❌ آب کافی نیست");
-    return;
-  }
+    if(joy.active){
+        dx+=joy.x;
+        dy+=joy.y;
+    }
 
-  state.water-=need;
-  state.wateredToday=true;
+    if(dragging && dragTarget){
 
-  msg("💧 آب مرغ‌ها تأمین شد");
-  save();
+        const tx=dragTarget.x-player.x;
+        const ty=dragTarget.y-player.y;
+
+        const d=Math.sqrt(tx*tx+ty*ty);
+
+        if(d>8){
+            dx+=tx/d;
+            dy+=ty/d;
+        }
+    }
+
+    const len=Math.sqrt(dx*dx+dy*dy);
+
+    if(len>0){
+
+        dx/=len;
+        dy/=len;
+
+        player.x+=dx*player.speed;
+        player.y+=dy*player.speed;
+    }
+
+    player.x=Math.max(30,Math.min(world.w-30,player.x));
+    player.y=Math.max(30,Math.min(world.h-30,player.y));
 }
 
-/* -------------------------
-   تخم‌مرغ
-------------------------- */
+setInterval(movePlayer,16);
+
+/* =========================
+   PANELS
+========================= */
+
+const panel=document.getElementById("panel");
+
+function openPanel(html){
+
+    panel.innerHTML=`
+        <button class="close" onclick="closePanel()">✕</button>
+        ${html}
+    `;
+
+    panel.style.display="block";
+}
+
+function closePanel(){
+    panel.style.display="none";
+}
+
+/* =========================
+   FARM
+========================= */
+
+function showFarm(){
+
+    closePanel();
+
+    alert(
+        "🏡 مزرعه فعال است.\n\n"+
+        "🐔 مرغ‌ها: "+state.chickens+
+        "\n🌾 خوراک: "+Math.floor(state.feed)+" کیلو"+
+        "\n💧 آب: "+Math.floor(state.water)+
+        "\n🥚 تخم‌مرغ: "+Math.floor(state.eggs)
+    );
+}
+
+/* =========================
+   FEED / WATER
+========================= */
+
+function feed(){
+
+    if(state.feed<state.chickens*0.05){
+
+        state.notifications.unshift("⚠️ خوراک کافی نیست.");
+        save();
+
+        alert("خوراک کافی نیست.");
+        return;
+    }
+
+    state.feed-=state.chickens*0.05;
+    state.fedMorning=true;
+
+    state.notifications.unshift("🌾 خوراک‌دهی انجام شد.");
+
+    save();
+}
+
+function water(){
+
+    if(state.water<state.chickens*0.08){
+
+        state.notifications.unshift("⚠️ آب کافی نیست.");
+        save();
+
+        alert("آب کافی نیست.");
+        return;
+    }
+
+    state.water-=state.chickens*0.08;
+    state.wateredMorning=true;
+
+    state.notifications.unshift("💧 آب‌دهی انجام شد.");
+
+    save();
+}
 
 function collectEggs(){
 
-  if(!state.fedToday){
-    msg("⚠️ اول به مرغ‌ها خوراک بده");
-    return;
-  }
+    state.eggs+=state.totalEggs||0;
 
-  if(!state.wateredToday){
-    msg("⚠️ اول آب مرغ‌ها را تأمین کن");
-    return;
-  }
+    state.notifications.unshift(
+        "🥚 تخم‌مرغ‌ها جمع‌آوری شدند."
+    );
 
-  if(state.collectedToday){
-    msg("🥚 تخم‌مرغ امروز قبلاً جمع شده");
-    return;
-  }
-
-  let production=Math.floor(state.chickens*.8);
-
-  if(state.health<100){
-    production=Math.floor(production*(state.health/100));
-  }
-
-  state.eggs+=production;
-  state.totalEggs+=production;
-  state.collectedToday=true;
-
-  msg("🥚 "+production+" تخم‌مرغ جمع شد");
-  save();
+    save();
 }
 
-/* -------------------------
-   فروش تخم‌مرغ
-------------------------- */
+function produceEggs(){
+
+    let production=state.chickens*.8;
+
+    if(!state.fedMorning || !state.fedEvening)
+        production*=.7;
+
+    if(!state.wateredMorning || !state.wateredEvening)
+        production*=.7;
+
+    if(state.health<100)
+        production*=state.health/100;
+
+    state.eggs+=production;
+    state.totalEggs+=production;
+}
+
+/* =========================
+   END DAY
+========================= */
+
+function endDay(){
+
+    state.fedEvening=true;
+    state.wateredEvening=true;
+
+    produceEggs();
+
+    state.day++;
+    state.totalDays++;
+
+    state.fedMorning=false;
+    state.fedEvening=false;
+    state.wateredMorning=false;
+    state.wateredEvening=false;
+
+    state.notifications.unshift(
+        "🌅 روز جدید شروع شد. روز "+state.day
+    );
+
+    save();
+
+    alert(
+        "روز جدید شروع شد!\n\n"+
+        "🥚 تخم‌مرغ فعلی: "+Math.floor(state.eggs)
+    );
+}
+
+/* =========================
+   SELL EGGS
+========================= */
 
 function sellEggs(){
 
-  if(state.eggs<=0){
-    msg("تخم‌مرغی برای فروش نداری");
-    return;
-  }
+    if(state.eggs<=0){
 
-  const price=1;
-  const money=state.eggs*price;
+        alert("تخم‌مرغی برای فروش نداری.");
+        return;
+    }
 
-  state.coins+=money;
+    const price=.9+Math.random()*.2;
+    const amount=Math.floor(state.eggs);
+    const revenue=amount*price;
 
-  msg("💰 "+state.eggs+" تخم‌مرغ فروخته شد");
+    state.eggs-=amount;
+    state.coins+=revenue;
 
-  state.eggs=0;
+    state.notifications.unshift(
+        "💰 فروش "+amount+" تخم‌مرغ با قیمت "+
+        price.toFixed(2)+" توکن انجام شد."
+    );
 
-  save();
+    save();
+
+    alert(
+        "فروش انجام شد.\n\n"+
+        "🥚 تعداد: "+amount+
+        "\n💰 درآمد: "+revenue.toFixed(1)+" توکن"
+    );
 }
 
-/* -------------------------
-   پایان روز
-------------------------- */
+/* =========================
+   PROFILE
+========================= */
 
-function nextDay(){
+function showProfile(){
 
-  if(!state.fedToday){
+    openPanel(`
+        <h2>👤 پروفایل من</h2>
 
-    state.health=Math.max(0,state.health-30);
+        <div class="card">
+            <div class="row">
+                <span>نام کاربری</span>
+                <b>${state.username}</b>
+            </div>
 
-    msg("⚠️ خوراک امروز کامل انجام نشد");
-  }
+            <div class="row">
+                <span>نام مزرعه</span>
+                <b>${state.farmName}</b>
+            </div>
 
-  if(!state.wateredToday){
+            <div class="row">
+                <span>سطح مزرعه</span>
+                <b>${state.level}</b>
+            </div>
 
-    state.health=Math.max(0,state.health-30);
+            <div class="row">
+                <span>مرغ</span>
+                <b>${state.chickens}</b>
+            </div>
 
-    msg("⚠️ آب امروز کامل انجام نشد");
-  }
+            <div class="row">
+                <span>تولید کل تخم‌مرغ</span>
+                <b>${Math.floor(state.totalEggs)}</b>
+            </div>
 
-  if(state.fedToday && state.wateredToday){
+            <div class="row">
+                <span>روزهای فعالیت</span>
+                <b>${state.totalDays}</b>
+            </div>
 
-    state.health=Math.min(100,state.health+2);
-  }
+            <div class="row">
+                <span>دنبال‌کنندگان</span>
+                <b>${state.followers}</b>
+            </div>
 
-  state.day++;
+            <div class="row">
+                <span>دنبال‌شونده‌ها</span>
+                <b>${state.following}</b>
+            </div>
+        </div>
 
-  state.fedToday=false;
-  state.wateredToday=false;
-  state.collectedToday=false;
-
-  save();
-
-  setTimeout(()=>{
-    msg("🌅 روز "+state.day+" شروع شد");
-  },500);
+        <button class="action" onclick="editProfile()">
+            ✏️ ویرایش پروفایل
+        </button>
+    `);
 }
 
-/* -------------------------
-   دکمه فروش با نگه داشتن
-------------------------- */
+function editProfile(){
 
-document.getElementById("actions")
-  .insertAdjacentHTML(
-    "beforeend",
-    '<button class="action" onclick="sellEggs()">💰 فروش</button>'
-  );
+    openPanel(`
+        <h2>✏️ ویرایش پروفایل</h2>
 
-/* -------------------------
-   ذخیره اولیه
-------------------------- */
+        <label>نام کاربری</label>
+        <input id="usernameInput" value="${state.username}">
 
-updateUI();
+        <label>نام مزرعه</label>
+        <input id="farmInput" value="${state.farmName}">
 
-/* -------------------------
-   ذخیره خودکار
-------------------------- */
+        <button class="success" onclick="saveProfile()">
+            💾 ذخیره
+        </button>
+    `);
+}
 
-setInterval(save,10000);
+function saveProfile(){
+
+    state.username=document.getElementById("usernameInput").value||"vahid";
+    state.farmName=document.getElementById("farmInput").value||"مزرعه وحید";
+
+    save();
+    showProfile();
+}
+
+/* =========================
+   SOCIAL
+========================= */
+
+const demoPlayers=[
+    {
+        name:"رضا",
+        farm:"مرغداری سبز",
+        chickens:500,
+        level:2
+    },
+    {
+        name:"علی",
+        farm:"مرغ طلایی",
+        chickens:1000,
+        level:3
+    },
+    {
+        name:"محمد",
+        farm:"مزرعه شمال",
+        chickens:2000,
+        level:4
+    }
+];
+
+function showSocial(){
+
+    openPanel(`
+        <h2>👥 اجتماعی</h2>
+
+        <div class="card">
+            <input id="searchPlayer"
+                   placeholder="جستجوی بازیکن..."
+                   oninput="searchPlayers()">
+        </div>
+
+        <div id="playerList">
+            ${renderPlayers(demoPlayers)}
+        </div>
+
+        <div class="card">
+            <h3>💬 چت عمومی</h3>
+
+            <div id="chatMessages">
+                <p>رضا: سلام 👋</p>
+                <p>علی: بازار امروز خوبه.</p>
+                <p>محمد: کسی تخم‌مرغ می‌فروشه؟</p>
+            </div>
+
+            <input id="chatInput" placeholder="پیام...">
+
+            <button class="action" onclick="sendChat()">
+                ارسال
+            </button>
+        </div>
+    `);
+}
+
+function renderPlayers(players){
+
+    return players.map(p=>`
+        <div class="card">
+            <b>👤 ${p.name}</b>
+            <div class="small">${p.farm}</div>
+
+            <div class="row">
+                <span>🐔 مرغ</span>
+                <span>${p.chickens}</span>
+            </div>
+
+            <div class="row">
+                <span>⭐ سطح</span>
+                <span>${p.level}</span>
+            </div>
+
+            <button class="success"
+                    onclick="followPlayer('${p.name}')">
+                ➕ دنبال کردن
+            </button>
+
+            <button class="dark"
+                    onclick="viewPlayer('${p.name}')">
+                👁️ پروفایل
+            </button>
+        </div>
+    `).join("");
+}
+
+function searchPlayers(){
+
+    const q=document.getElementById("searchPlayer").value.trim();
+
+    const result=demoPlayers.filter(p=>
+        p.name.includes(q)||p.farm.includes(q)
+    );
+
+    document.getElementById("playerList").innerHTML=
+        renderPlayers(result);
+}
+
+function followPlayer(name){
+
+    state.following++;
+    state.notifications.unshift(
+        "👥 "+name+" را دنبال کردی."
+    );
+
+    save();
+
+    alert("دنبال کردن انجام شد.");
+}
+
+function viewPlayer(name){
+
+    const p=demoPlayers.find(x=>x.name===name);
+
+    openPanel(`
+        <h2>👤 پروفایل ${p.name}</h2>
+
+        <div class="card">
+            <h3>${p.farm}</h3>
+
+            <div class="row">
+                <span>🐔 مرغ</span>
+                <b>${p.chickens}</b>
+            </div>
+
+            <div class="row">
+                <span>⭐ سطح</span>
+                <b>${p.level}</b>
+            </div>
+
+            <div class="row">
+                <span>🥚 تولید روزانه تقریبی</span>
+                <b>${Math.floor(p.chickens*.8)}</b>
+            </div>
+        </div>
+    `);
+}
+
+function sendChat(){
+
+    const input=document.getElementById("chatInput");
+
+    if(!input||!input.value.trim())return;
+
+    const box=document.getElementById("chatMessages");
+
+    box.innerHTML+=
+        `<p><b>${state.username}:</b> ${input.value}</p>`;
+
+    input.value="";
+}
+
+/* =========================
+   RANK
+========================= */
+
+function showRank(){
+
+    const ranking=[
+        {
+            name:"رضا",
+            value:85000
+        },
+        {
+            name:"علی",
+            value:62000
+        },
+        {
+            name:"محمد",
+            value:41000
+        },
+        {
+            name:state.username,
+            value:Math.floor(state.coins)
+        }
+    ].sort((a,b)=>b.value-a.value);
+
+    openPanel(`
+        <h2>🏆 رتبه‌بندی</h2>
+
+        <div class="card">
+
+        ${ranking.map((p,i)=>`
+            <div class="row">
+                <span>
+                    ${i===0?"🥇":i===1?"🥈":i===2?"🥉":"🏅"}
+                    ${p.name}
+                </span>
+
+                <b>${p.value.toLocaleString()} 🪙</b>
+            </div>
+        `).join("")}
+
+        </div>
+
+        <div class="small">
+        در نسخه آنلاین، این بخش با بازیکنان واقعی و
+        سرور اصلی بازی متصل خواهد شد.
+        </div>
+    `);
+}
+
+/* =========================
+   MARKET
+========================= */
+
+function showMarket(){
+
+    openPanel(`
+        <h2>🛒 بازار</h2>
+
+        <div class="card">
+            <h3>🥚 فروش تخم‌مرغ</h3>
+
+            <p>
+                موجودی:
+                <b>${Math.floor(state.eggs)}</b>
+            </p>
+
+            <button class="success"
+                    onclick="sellEggs()">
+                💰 فروش به بازار
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>🌾 خرید خوراک</h3>
+
+            <p>قیمت پایه: 30 توکن / 100 کیلو</p>
+
+            <button class="action"
+                    onclick="buyFeed()">
+                خرید 100 کیلو
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>🤝 بازار بازیکنان</h3>
+
+            <p>🥚 تخم‌مرغ — 1.02 توکن</p>
+            <button class="success"
+                    onclick="buyPlayerEggs()">
+                خرید
+            </button>
+
+            <p>🌾 خوراک — 31 توکن / 100kg</p>
+            <button class="success"
+                    onclick="buyPlayerFeed()">
+                خرید
+            </button>
+        </div>
+    `);
+}
+
+function buyFeed(){
+
+    if(state.coins<30){
+
+        alert("توکن کافی نیست.");
+        return;
+    }
+
+    if(state.feed+100>state.feedStorage){
+
+        alert("ظرفیت انبار کافی نیست.");
+        return;
+    }
+
+    state.coins-=30;
+    state.feed+=100;
+
+    state.notifications.unshift(
+        "🌾 100 کیلو خوراک خریداری شد."
+    );
+
+    save();
+    showMarket();
+}
+
+function buyPlayerEggs(){
+
+    if(state.coins<102){
+
+        alert("توکن کافی نیست.");
+        return;
+    }
+
+    state.coins-=102;
+    state.eggs+=100;
+
+    save();
+    showMarket();
+}
+
+function buyPlayerFeed(){
+
+    if(state.coins<31){
+
+        alert("توکن کافی نیست.");
+        return;
+    }
+
+    if(state.feed+100>state.feedStorage){
+
+        alert("انبار جا ندارد.");
+        return;
+    }
+
+    state.coins-=31;
+    state.feed+=100;
+
+    save();
+    showMarket();
+}
+
+/* =========================
+   WALLET
+========================= */
+
+function showWallet(){
+
+    openPanel(`
+        <h2>💰 کیف پول</h2>
+
+        <div class="card">
+            <h3>موجودی</h3>
+            <div style="font-size:32px">
+                ${Math.floor(state.coins)} 🪙
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>خرید توکن</h3>
+
+            <button class="action"
+                    onclick="buyTokens(100)">
+                100 توکن
+            </button>
+
+            <button class="action"
+                    onclick="buyTokens(500)">
+                500 توکن
+            </button>
+
+            <button class="action"
+                    onclick="buyTokens(1000)">
+                1000 توکن
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>برداشت</h3>
+
+            <p class="small">
+                حداقل برداشت در نسخه اصلی:
+                50,000 توکن
+            </p>
+
+            <button class="dark"
+                    onclick="alert('در نسخه آنلاین برداشت به کیف پول/صرافی متصل می‌شود.')">
+                درخواست برداشت
+            </button>
+        </div>
+    `);
+}
+
+function buyTokens(amount){
+
+    state.coins+=amount;
+
+    state.notifications.unshift(
+        "💰 "+amount+" توکن به‌صورت آزمایشی اضافه شد."
+    );
+
+    save();
+
+    alert(
+        amount+
+        " توکن به‌صورت آزمایشی اضافه شد."
+    );
+
+    showWallet();
+}
+
+/* =========================
+   NOTIFICATIONS
+========================= */
+
+function showNotifications(){
+
+    openPanel(`
+        <h2>🔔 اعلان‌ها</h2>
+
+        <button class="danger"
+                onclick="clearNotifications()">
+            پاک کردن اعلان‌ها
+        </button>
+
+        <div class="card">
+
+        ${
+            state.notifications.length
+            ?
+            state.notifications.slice(0,90).map(n=>
+                `<div class="row">${n}</div>`
+            ).join("")
+            :
+            "<p>اعلانی وجود ندارد.</p>"
+        }
+
+        </div>
+    `);
+}
+
+function clearNotifications(){
+
+    state.notifications=[];
+    save();
+
+    showNotifications();
+}
+
+/* =========================
+   REFERRAL
+========================= */
+
+function showReferral(){
+
+    openPanel(`
+        <h2>🎁 دعوت دوستان</h2>
+
+        <div class="card">
+
+            <p>
+                کد دعوت تو:
+            </p>
+
+            <h2 class="green">
+                ${state.referralCode}
+            </h2>
+
+            <p class="small">
+                حداکثر 10 دعوت موفق قابل ثبت است.
+            </p>
+
+            <button class="action"
+                    onclick="simulateReferral()">
+                🎁 شبیه‌سازی دعوت موفق
+            </button>
+
+        </div>
+    `);
+}
+
+function simulateReferral(){
+
+    state.coins+=100;
+
+    state.notifications.unshift(
+        "🎁 پاداش دعوت موفق: 100 توکن"
+    );
+
+    save();
+
+    alert("100 توکن پاداش گرفتی.");
+
+    showReferral();
+}
+
+/* =========================
+   SETTINGS
+========================= */
+
+function showSettings(){
+
+    openPanel(`
+        <h2>⚙️ تنظیمات</h2>
+
+        <div class="card">
+
+            <button class="dark"
+                    onclick="cleanFarm()">
+                🧹 نظافت مرغداری
+            </button>
+
+            <button class="dark"
+                    onclick="cleanFeedStore()">
+                🌾 نظافت انبار خوراک
+            </button>
+
+            <button class="dark"
+                    onclick="cleanColdStore()">
+                ❄️ نظافت سردخانه
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <button class="danger"
+                    onclick="resetGame()">
+                🗑️ شروع دوباره بازی
+            </button>
+
+        </div>
+
+        <div class="small">
+            نسخه بازی: V22
+        </div>
+    `);
+}
+
+function cleanFarm(){
+
+    state.farmClean=true;
+
+    state.notifications.unshift(
+        "🧹 مرغداری تمیز شد."
+    );
+
+    save();
+
+    alert("مرغداری تمیز شد.");
+}
+
+function cleanFeedStore(){
+
+    state.feedStoreClean=true;
+
+    state.notifications.unshift(
+        "🧹 انبار خوراک تمیز شد."
+    );
+
+    save();
+
+    alert("انبار خوراک تمیز شد.");
+}
+
+function cleanColdStore(){
+
+    state.coldStoreClean=true;
+
+    state.notifications.unshift(
+        "🧹 سردخانه تمیز شد."
+    );
+
+    save();
+
+    alert("سردخانه تمیز شد.");
+}
+
+function resetGame(){
+
+    if(!confirm("تمام پیشرفت بازی پاک شود؟"))return;
+
+    localStorage.removeItem(SAVE_KEY);
+    location.reload();
+}
+
+/* =========================
+   INITIAL
+========================= */
+
+updateStats();
 
 </script>
 
 </body>
-                           </html>
+</html>
