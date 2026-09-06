@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<!DOCTYPE html><html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>مرغداری وحید</title>
-
-  <style>
+  <title>Farm Life Simulator</title>  <style>
     * {
       box-sizing: border-box;
       -webkit-tap-highlight-color: transparent;
@@ -48,6 +45,10 @@
         linear-gradient(rgba(238,245,233,.9), rgba(238,245,233,.96)),
         radial-gradient(circle at 30% 20%, #fff 0, transparent 35%);
       z-index: 50;
+
+      /* اجازه اسکرول فرم در موبایل */
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
 
     .auth-card {
@@ -55,7 +56,12 @@
       background: white;
       border-radius: 24px;
       padding: 24px;
+
+      /* فقط ۱۰ پیکسل بالاتر */
+      transform: translateY(-10px);
+
       box-shadow: 0 12px 40px rgba(0,0,0,.12);
+      flex-shrink: 0;
     }
 
     .logo {
@@ -130,6 +136,10 @@
       color: white;
       font-weight: bold;
       margin-top: 5px;
+    }
+
+    .primary:disabled {
+      opacity: .6;
     }
 
     .message {
@@ -339,235 +349,222 @@
       font-size: 12px;
     }
 
+    @media (max-width: 420px) {
+      #authScreen {
+        align-items: flex-start;
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+
+      .auth-card {
+        transform: translateY(-10px);
+      }
+    }
+
     @media (min-width: 700px) {
       #bottomPanel {
         left: 20px;
         right: 20px;
       }
     }
-  </style>
-</head>
+  </style></head><body><div id="app">  <!-- AUTH -->  <section id="authScreen"><div class="auth-card">
 
-<body>
+  <div class="logo">🐔</div>
 
-<div id="app">
+  <h1 class="auth-title">Farm Life Simulator</h1>
 
-  <!-- AUTH -->
-  <section id="authScreen">
+  <div class="auth-subtitle">
+    شبیه‌ساز مزرعه‌داری آنلاین
+  </div>
 
-    <div class="auth-card">
+  <div class="tabs">
+    <button id="loginTab" class="active">ورود</button>
+    <button id="registerTab">ثبت‌نام</button>
+  </div>
 
-      <div class="logo">🐔</div>
+  <div id="loginForm">
 
-      <h1 class="auth-title">مرغداری وحید</h1>
-
-      <div class="auth-subtitle">
-        ورود به مزرعه آنلاین
-      </div>
-
-      <div class="tabs">
-        <button id="loginTab" class="active">ورود</button>
-        <button id="registerTab">ثبت‌نام</button>
-      </div>
-
-      <div id="loginForm">
-
-        <div class="field">
-          <label>ایمیل، موبایل یا نام کاربری</label>
-          <input id="loginIdentifier" autocomplete="username">
-        </div>
-
-        <div class="field">
-          <label>رمز عبور</label>
-          <input id="loginPassword" type="password" autocomplete="current-password">
-        </div>
-
-        <button class="primary" id="loginButton">
-          ورود به بازی
-        </button>
-
-      </div>
-
-      <div id="registerForm" style="display:none">
-
-        <div class="field">
-          <label>ایمیل</label>
-          <input id="registerEmail" type="email">
-        </div>
-
-        <div class="field">
-          <label>شماره موبایل</label>
-          <input id="registerMobile" type="tel">
-        </div>
-
-        <div class="field">
-          <label>نام کاربری</label>
-          <input id="registerUsername">
-        </div>
-
-        <div class="field">
-          <label>نام مزرعه</label>
-          <input id="registerFarmName">
-        </div>
-
-        <div class="field">
-          <label>رمز عبور حداقل ۸ کاراکتر</label>
-          <input id="registerPassword" type="password">
-        </div>
-
-        <button class="primary" id="registerButton">
-          ساخت حساب
-        </button>
-
-      </div>
-
-      <div id="authMessage" class="message"></div>
-
+    <div class="field">
+      <label>ایمیل، موبایل یا نام کاربری</label>
+      <input id="loginIdentifier" autocomplete="username">
     </div>
 
-  </section>
-
-
-  <!-- GAME -->
-  <section id="gameScreen">
-
-    <canvas id="farmCanvas"></canvas>
-
-    <div id="topbar">
-
-      <div id="farmInfo" class="topbox">
-        <span id="playerName">بازیکن</span>
-        <span class="coin">🪙 <span id="coins">0</span></span>
-      </div>
-
-      <button id="menuButton">☰</button>
-
+    <div class="field">
+      <label>رمز عبور</label>
+      <input id="loginPassword" type="password" autocomplete="current-password">
     </div>
 
+    <button class="primary" id="loginButton">
+      ورود به بازی
+    </button>
 
-    <div id="sideMenu">
+  </div>
 
-      <div class="menu-title">
-        منوی مرغداری
-      </div>
+  <div id="registerForm" style="display:none">
 
-      <button class="menu-item" data-action="farm">
-        🏡 مزرعه
-      </button>
-
-      <button class="menu-item" data-action="profile">
-        👤 پروفایل
-      </button>
-
-      <button class="menu-item" data-action="social">
-        👥 بازیکنان
-      </button>
-
-      <button class="menu-item" data-action="ranking">
-        🏆 رتبه‌بندی
-      </button>
-
-      <button class="menu-item" data-action="market">
-        🛒 بازار
-      </button>
-
-      <button class="menu-item" data-action="wallet">
-        🪙 کیف پول
-      </button>
-
-      <button class="menu-item" data-action="notifications">
-        🔔 اعلان‌ها
-      </button>
-
-      <button class="menu-item" data-action="referral">
-        🎁 دعوت دوستان
-      </button>
-
-      <button class="menu-item" data-action="settings">
-        ⚙️ تنظیمات
-      </button>
-
-      <button class="menu-item danger" data-action="logout">
-        خروج
-      </button>
-
+    <div class="field">
+      <label>ایمیل</label>
+      <input id="registerEmail" type="email">
     </div>
 
-
-    <div id="bottomPanel">
-
-      <div class="stats">
-
-        <div class="stat">
-          🐔 مرغ
-          <strong id="chickens">0</strong>
-        </div>
-
-        <div class="stat">
-          🥚 تخم‌مرغ
-          <strong id="eggs">0</strong>
-        </div>
-
-        <div class="stat">
-          🌾 خوراک
-          <strong id="feed">0</strong>
-        </div>
-
-        <div class="stat">
-          💧 آب
-          <strong id="water">0</strong>
-        </div>
-
-      </div>
-
-      <div id="actions">
-
-        <button id="feedMorning">
-          🌅 خوراک صبح
-        </button>
-
-        <button id="feedEvening">
-          🌙 خوراک عصر
-        </button>
-
-        <button id="collectEggs">
-          🥚 جمع‌آوری
-        </button>
-
-        <button id="endDay">
-          📅 پایان روز
-        </button>
-
-      </div>
-
+    <div class="field">
+      <label>شماره موبایل</label>
+      <input id="registerMobile" type="tel">
     </div>
 
-
-    <div id="modal">
-
-      <div class="modal-card">
-
-        <div class="modal-head">
-          <strong id="modalTitle">اطلاعات</strong>
-          <button id="closeModal">✕</button>
-        </div>
-
-        <div id="modalBody"></div>
-
-      </div>
-
+    <div class="field">
+      <label>نام کاربری</label>
+      <input id="registerUsername">
     </div>
 
-  </section>
+    <div class="field">
+      <label>نام مزرعه</label>
+      <input id="registerFarmName">
+    </div>
+
+    <div class="field">
+      <label>رمز عبور حداقل ۸ کاراکتر</label>
+      <input id="registerPassword" type="password">
+    </div>
+
+    <button class="primary" id="registerButton">
+      ساخت حساب
+    </button>
+
+  </div>
+
+  <div id="authMessage" class="message"></div>
+
+</div>
+
+  </section>  <!-- GAME -->  <section id="gameScreen"><canvas id="farmCanvas"></canvas>
+
+<div id="topbar">
+
+  <div id="farmInfo" class="topbox">
+    <span id="playerName">بازیکن</span>
+    <span class="coin">🪙 <span id="coins">0</span></span>
+  </div>
+
+  <button id="menuButton">☰</button>
 
 </div>
 
 
-<script>
+<div id="sideMenu">
 
-  /*
-    اتصال به سرور واقعی Render
-  */
+  <div class="menu-title">
+    منوی مرغداری
+  </div>
+
+  <button class="menu-item" data-action="farm">
+    🏡 مزرعه
+  </button>
+
+  <button class="menu-item" data-action="profile">
+    👤 پروفایل
+  </button>
+
+  <button class="menu-item" data-action="social">
+    👥 بازیکنان
+  </button>
+
+  <button class="menu-item" data-action="ranking">
+    🏆 رتبه‌بندی
+  </button>
+
+  <button class="menu-item" data-action="market">
+    🛒 بازار
+  </button>
+
+  <button class="menu-item" data-action="wallet">
+    🪙 کیف پول
+  </button>
+
+  <button class="menu-item" data-action="notifications">
+    🔔 اعلان‌ها
+  </button>
+
+  <button class="menu-item" data-action="referral">
+    🎁 دعوت دوستان
+  </button>
+
+  <button class="menu-item" data-action="settings">
+    ⚙️ تنظیمات
+  </button>
+
+  <button class="menu-item danger" data-action="logout">
+    خروج
+  </button>
+
+</div>
+
+
+<div id="bottomPanel">
+
+  <div class="stats">
+
+    <div class="stat">
+      🐔 مرغ
+      <strong id="chickens">0</strong>
+    </div>
+
+    <div class="stat">
+      🥚 تخم‌مرغ
+      <strong id="eggs">0</strong>
+    </div>
+
+    <div class="stat">
+      🌾 خوراک
+      <strong id="feed">0</strong>
+    </div>
+
+    <div class="stat">
+      💧 آب
+      <strong id="water">0</strong>
+    </div>
+
+  </div>
+
+  <div id="actions">
+
+    <button id="feedMorning">
+      🌅 خوراک صبح
+    </button>
+
+    <button id="feedEvening">
+      🌙 خوراک عصر
+    </button>
+
+    <button id="collectEggs">
+      🥚 جمع‌آوری
+    </button>
+
+    <button id="endDay">
+      📅 پایان روز
+    </button>
+
+  </div>
+
+</div>
+
+
+<div id="modal">
+
+  <div class="modal-card">
+
+    <div class="modal-head">
+      <strong id="modalTitle">اطلاعات</strong>
+      <button id="closeModal">✕</button>
+    </div>
+
+    <div id="modalBody"></div>
+
+  </div>
+
+</div>
+
+  </section></div><script>
 
   const API_BASE =
     localStorage.getItem("chicken_api") ||
@@ -620,6 +617,7 @@
   function showAuthMessage(text, success = false) {
 
     $("authMessage").textContent = text;
+
     $("authMessage").style.color =
       success ? "#28723c" : "#b23a3a";
   }
@@ -688,24 +686,30 @@
       $("loginPassword").value;
 
     if (!identifier || !password) {
-      showAuthMessage("اطلاعات ورود را کامل کن.");
+
+      showAuthMessage(
+        "اطلاعات ورود را کامل کن."
+      );
+
       return;
+
     }
 
     try {
 
       $("loginButton").disabled = true;
 
-      const result = await api("/api/auth/login", {
+      const result = await api(
+        "/api/auth/login",
+        {
+          method: "POST",
 
-        method: "POST",
-
-        body: JSON.stringify({
-          identifier,
-          password
-        })
-
-      });
+          body: JSON.stringify({
+            identifier,
+            password
+          })
+        }
+      );
 
       token = result.token;
 
@@ -748,6 +752,7 @@
     const password =
       $("registerPassword").value;
 
+
     if (
       !email ||
       !mobile ||
@@ -780,22 +785,27 @@
 
       $("registerButton").disabled = true;
 
-      const result = await api(
-        "/api/auth/register",
-        {
-
-          method: "POST",
-
-          body: JSON.stringify({
-            email,
-            mobile,
-            username,
-            farmName,
-            password
-          })
-
-        }
+      showAuthMessage(
+        "در حال ساخت حساب...",
+        true
       );
+
+
+      const result =
+        await api(
+          "/api/auth/register",
+          {
+            method: "POST",
+
+            body: JSON.stringify({
+              email,
+              mobile,
+              username,
+              farmName,
+              password
+            })
+          }
+        );
 
 
       token = result.token;
@@ -811,7 +821,9 @@
 
     } catch (error) {
 
-      showAuthMessage(error.message);
+      showAuthMessage(
+        error.message
+      );
 
     } finally {
 
@@ -993,13 +1005,14 @@
 
       if (action === "social") {
 
+        const query =
+          prompt("نام بازیکن را وارد کن:") || "";
+
+
         const result =
           await api(
             "/api/social/search?q="
-            + encodeURIComponent(
-              prompt("نام بازیکن را وارد کن:")
-              || ""
-            )
+            + encodeURIComponent(query)
           );
 
 
@@ -1008,7 +1021,9 @@
         if (!result.players.length) {
 
           html =
-            `<div class="card">بازیکن واقعی پیدا نشد.</div>`;
+            `<div class="card">
+              بازیکن واقعی پیدا نشد.
+            </div>`;
 
         } else {
 
@@ -1062,17 +1077,23 @@
             <div class="card">
               #${index + 1}
               <b>${escapeHtml(p.username)}</b>
+
               <div class="muted">
-                مرغ: ${Number(p.chickens).toLocaleString()}
+                مرغ:
+                ${Number(p.chickens).toLocaleString()}
                 |
-                سطح: ${p.level}
+                سطح:
+                ${p.level}
               </div>
             </div>
           `;
 
         });
 
-        openModal("رتبه‌بندی واقعی", html);
+        openModal(
+          "رتبه‌بندی واقعی",
+          html
+        );
 
         return;
 
@@ -1099,14 +1120,21 @@
 
             html += `
               <div class="card">
-                <b>${escapeHtml(item.type)}</b>
+
+                <b>
+                  ${escapeHtml(item.type)}
+                </b>
+
                 <div>
-                  مقدار: ${Number(item.amount).toLocaleString()}
+                  مقدار:
+                  ${Number(item.amount).toLocaleString()}
                 </div>
+
                 <div>
                   قیمت واحد:
                   ${Number(item.price).toLocaleString()}
                 </div>
+
               </div>
             `;
 
@@ -1114,7 +1142,10 @@
 
         }
 
-        openModal("بازار", html);
+        openModal(
+          "بازار",
+          html
+        );
 
         return;
 
@@ -1129,10 +1160,13 @@
 
         let html = `
           <div class="card">
+
             موجودی:
+
             <b class="coin">
               ${Number(result.balance).toLocaleString()}
             </b>
+
           </div>
         `;
 
@@ -1141,17 +1175,27 @@
 
           html += `
             <div class="card">
-              ${escapeHtml(t.description || "")}
+
+              ${escapeHtml(
+                t.description || ""
+              )}
+
               <div class="muted">
-                ${Number(t.amount).toLocaleString()}
+                ${Number(
+                  t.amount
+                ).toLocaleString()}
               </div>
+
             </div>
           `;
 
         });
 
 
-        openModal("کیف پول", html);
+        openModal(
+          "کیف پول",
+          html
+        );
 
         return;
 
@@ -1179,10 +1223,15 @@
 
             html += `
               <div class="card">
-                <b>${escapeHtml(n.title)}</b>
+
+                <b>
+                  ${escapeHtml(n.title)}
+                </b>
+
                 <div>
                   ${escapeHtml(n.body)}
                 </div>
+
               </div>
             `;
 
@@ -1190,7 +1239,10 @@
 
         }
 
-        openModal("اعلان‌ها", html);
+        openModal(
+          "اعلان‌ها",
+          html
+        );
 
         return;
 
@@ -1202,18 +1254,30 @@
         const result =
           await api("/api/referral");
 
+
         openModal(
           "دعوت دوستان",
           `
             <div class="card">
+
               کد دعوت شما:
-              <b>${escapeHtml(result.code)}</b>
+
+              <b>
+                ${escapeHtml(result.code)}
+              </b>
+
             </div>
 
             <div class="card">
+
               دعوت موفق:
-              <b>${result.successful}</b>
+
+              <b>
+                ${result.successful}
+              </b>
+
               از حداکثر ۱۰ نفر
+
             </div>
           `
         );
@@ -1229,10 +1293,13 @@
           "تنظیمات",
           `
             <div class="card">
+
               سرور:
+
               <div class="muted">
                 ${escapeHtml(API_BASE)}
               </div>
+
             </div>
 
             <button
@@ -1272,7 +1339,9 @@
 
       openModal(
         "خطا",
-        `<div class="card">${escapeHtml(error.message)}</div>`
+        `<div class="card">
+          ${escapeHtml(error.message)}
+        </div>`
       );
 
     }
@@ -1293,6 +1362,7 @@
 
     } catch (_) {}
 
+
     token = "";
 
     localStorage.removeItem(
@@ -1305,31 +1375,35 @@
 
 
   $("feedMorning").onclick =
-    () => performAction(
-      "/api/game/feed",
-      "خوراک صبح"
-    );
+    () =>
+      performAction(
+        "/api/game/feed",
+        "خوراک صبح"
+      );
 
 
   $("feedEvening").onclick =
-    () => performAction(
-      "/api/game/feed",
-      "خوراک عصر"
-    );
+    () =>
+      performAction(
+        "/api/game/feed",
+        "خوراک عصر"
+      );
 
 
   $("collectEggs").onclick =
-    () => performAction(
-      "/api/game/collect-eggs",
-      "جمع‌آوری تخم‌مرغ"
-    );
+    () =>
+      performAction(
+        "/api/game/collect-eggs",
+        "جمع‌آوری تخم‌مرغ"
+      );
 
 
   $("endDay").onclick =
-    () => performAction(
-      "/api/game/end-day",
-      "پایان روز"
-    );
+    () =>
+      performAction(
+        "/api/game/end-day",
+        "پایان روز"
+      );
 
 
   async function performAction(
@@ -1356,7 +1430,9 @@
         player = result.player;
       }
 
+
       updateUI();
+
 
       openModal(
         title,
@@ -1373,13 +1449,16 @@
         `
       );
 
+
       drawFarm();
 
     } catch (error) {
 
       openModal(
         "خطا",
-        `<div class="card">${escapeHtml(error.message)}</div>`
+        `<div class="card">
+          ${escapeHtml(error.message)}
+        </div>`
       );
 
     }
@@ -1425,17 +1504,20 @@
         )
       );
 
+
     canvas.width =
       innerWidth * dpr;
 
     canvas.height =
       innerHeight * dpr;
 
+
     canvas.style.width =
       innerWidth + "px";
 
     canvas.style.height =
       innerHeight + "px";
+
 
     ctx.setTransform(
       dpr,
@@ -1445,6 +1527,7 @@
       0,
       0
     );
+
 
     drawFarm();
 
@@ -1461,6 +1544,7 @@
 
     const w = innerWidth;
     const h = innerHeight;
+
 
     ctx.clearRect(
       0,
@@ -1522,6 +1606,7 @@
     const bw = w * .34;
     const bh = h * .25;
 
+
     ctx.fillStyle =
       "#eee8d8";
 
@@ -1531,6 +1616,7 @@
       bw,
       bh
     );
+
 
     ctx.fillStyle =
       "#9e573e";
@@ -1608,7 +1694,9 @@
         25,
         Math.max(
           4,
-          Number(farm?.chickens || 4) / 8
+          Number(
+            farm?.chickens || 4
+          ) / 8
         )
       );
 
@@ -1623,9 +1711,15 @@
         w * .10 +
         (i * 47) % (w * .78);
 
+
       const cy =
         h * .52 +
-        ((i * 71) % Math.max(100, h * .30));
+        ((i * 71) %
+          Math.max(
+            100,
+            h * .30
+          ));
+
 
       drawChicken(
         cx,
@@ -1643,6 +1737,7 @@
     const py =
       h * playerY;
 
+
     ctx.beginPath();
 
     ctx.fillStyle =
@@ -1657,6 +1752,7 @@
     );
 
     ctx.fill();
+
 
     ctx.fillStyle =
       "white";
@@ -1676,9 +1772,13 @@
   }
 
 
-  function drawChicken(x, y) {
+  function drawChicken(
+    x,
+    y
+  ) {
 
     ctx.save();
+
 
     ctx.fillStyle =
       "#fffdf5";
@@ -1805,6 +1905,7 @@
         )
       );
 
+
     playerY =
       Math.max(
         .10,
@@ -1813,6 +1914,7 @@
           y / innerHeight
         )
       );
+
 
     drawFarm();
 
@@ -1835,7 +1937,5 @@
 
   }
 
-</script>
-
-</body>
+</script></body>
 </html>
